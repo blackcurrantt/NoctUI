@@ -2,7 +2,7 @@
 //  NoctUIApp.swift
 //  NoctUI
 //
-//  Created by BlackCurrant
+//  Created by blackcurrantt
 //
 
 import SwiftUI
@@ -11,7 +11,7 @@ import SwiftUI
 struct NoctUIApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            RootView()
         }
     }
 }

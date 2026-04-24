@@ -12,6 +12,7 @@ struct NoctUIApp: App {
     var body: some Scene {
         WindowGroup {
             RootView()
+                .noctTheme(NoctLunarTheme())
         }
     }
 }

@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct PlaygroundView<Result: View, Config: View>: View {
+    @Environment(\.noctTheme) private var theme
+    
     private let height: CGFloat
     private let result: Result
     private let config: Config
@@ -23,16 +25,23 @@ struct PlaygroundView<Result: View, Config: View>: View {
     }
 
     var body: some View {
-        VStack(spacing: 0) {
+        VStack(spacing: 24) {
             ZStack {
-                Spacer()
-                result
-                Spacer()
+                ZStack {
+                    Spacer()
+                    result
+                    Spacer()
+                }
+                .frame(height: height)
+                .frame(maxWidth: .infinity)
+                .padding(24)
             }
-            .frame(height: height)
-            .frame(maxWidth: .infinity)
-            .padding()
-
+            .background(
+                RoundedRectangle(cornerRadius: 16)
+                    .fill(theme.background)
+            )
+            .padding(.horizontal, 8)
+            
             ScrollView {
                 VStack(alignment: .leading, spacing: 24) {
                     config
@@ -40,5 +49,6 @@ struct PlaygroundView<Result: View, Config: View>: View {
                 .padding()
             }
         }
+        .padding(.top, 24)
     }
 }

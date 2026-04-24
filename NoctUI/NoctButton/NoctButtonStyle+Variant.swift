@@ -11,16 +11,16 @@ public extension NoctButtonStyle {
     static func primary(_ size: NoctButtonSize = .md) -> NoctButtonStyle {
         NoctButtonStyle(
             size: size,
-            background: NoctColor.primary,
-            foreground: .white
+            backgroundProvider: { $0.primary },
+            foregroundProvider: { $0.textDefault }
         )
     }
 
     static func secondary(_ size: NoctButtonSize = .md) -> NoctButtonStyle {
         NoctButtonStyle(
             size: size,
-            background: NoctColor.secondary,
-            foreground: .white
+            backgroundProvider: { $0.secondary },
+            foregroundProvider: { $0.textDefault }
         )
     }
 }

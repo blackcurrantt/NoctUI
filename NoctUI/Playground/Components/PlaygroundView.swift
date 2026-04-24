@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct PlaygroundView<Result: View, Config: View>: View {
-    @Environment(\.noctTheme) private var theme
+    @Environment(\.appTheme) private var appTheme
+    @Environment(\.noctTheme) private var noctTheme
     
     private let height: CGFloat
     private let result: Result
@@ -38,9 +39,10 @@ struct PlaygroundView<Result: View, Config: View>: View {
             }
             .background(
                 RoundedRectangle(cornerRadius: 16)
-                    .fill(theme.background)
+                    .fill(noctTheme.background)
             )
             .padding(.horizontal, 8)
+            .animation(.easeInOut, value: appTheme.wrappedValue)
             
             ScrollView {
                 VStack(alignment: .leading, spacing: 24) {

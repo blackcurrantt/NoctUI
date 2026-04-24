@@ -1,13 +1,13 @@
 //
-//  NoctLunarTheme.swift
+//  LunarTheme.swift
 //  NoctUI
 //
-//  Created by blackcurrant
+//  Created by blackcurrantt
 //
 
 import SwiftUI
 
-public struct NoctLunarTheme: NoctTheme {
+public struct LunarTheme: NoctTheme {
     public init() {}
     
     // MARK: - Colors

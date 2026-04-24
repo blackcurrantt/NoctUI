@@ -8,7 +8,7 @@
 import SwiftUI
 
 public struct NoctButtonStyle: ButtonStyle {
-    @Environment(\.noctTheme) private var theme
+    @Environment(\.noctTheme) private var noctTheme
     
     let dimension: NoctButtonDimension
     let backgroundProvider: (NoctTheme) -> Color
@@ -18,9 +18,9 @@ public struct NoctButtonStyle: ButtonStyle {
         configuration.label
             .frame(maxWidth: .infinity)
             .frame(height: dimension.height)
-            .foregroundColor(foregroundProvider(theme))
+            .foregroundColor(foregroundProvider(noctTheme))
             .padding(.horizontal, dimension.padding)
-            .background(backgroundProvider(theme))
+            .background(backgroundProvider(noctTheme))
             .clipShape(RoundedRectangle(cornerRadius: dimension.radius))
             .opacity(configuration.isPressed ? 0.85 : 1.0)
     }

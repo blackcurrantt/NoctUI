@@ -20,6 +20,7 @@ struct PlaygroundListView: View {
                 NavigationLink(pg.title) {
                     pg.destination
                         .navigationTitle(pg.title)
+                        .appThemeToolbar()
                 }
             }
         }

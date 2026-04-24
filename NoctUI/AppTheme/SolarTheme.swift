@@ -1,5 +1,5 @@
 //
-//  NoctSolarTheme.swift
+//  SolarTheme.swift
 //  NoctUI
 //
 //  Created by blackcurrantt
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-public struct NoctSolarTheme: NoctTheme {
+public struct SolarTheme: NoctTheme {
     public init() {}
 
     // MARK: - Colors

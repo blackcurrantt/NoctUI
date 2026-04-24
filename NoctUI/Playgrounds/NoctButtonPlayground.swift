@@ -13,7 +13,7 @@ struct NoctButtonPlayground: View {
     }
     @State private var selectedVariant: Variant = .primary
     
-    enum Size: CaseIterable {
+    enum Dimension: CaseIterable {
         case sm, md, lg
 
         var noct: NoctButtonDimension {
@@ -24,14 +24,14 @@ struct NoctButtonPlayground: View {
             }
         }
     }
-    @State private var selectedSize: Size = .md
+    @State private var selectedDimension: Dimension = .md
     
     private var currentStyle: NoctButtonStyle {
         switch selectedVariant {
         case .primary:
-            return .primary(selectedSize.noct)
+            return .primary(selectedDimension.noct)
         case .secondary:
-            return .secondary(selectedSize.noct)
+            return .secondary(selectedDimension.noct)
         }
     }
 
@@ -39,13 +39,15 @@ struct NoctButtonPlayground: View {
         PlaygroundView(height: NoctButtonDimension.lg.height) {
             Button("Noct") { }
                 .buttonStyle(currentStyle)
+                .animation(.spring(response: 0.35, dampingFraction: 0.8), value: selectedVariant)
+                .animation(.spring(response: 0.35, dampingFraction: 0.8), value: selectedDimension)
         } config: {
             PlaygroundSection("Variant") {
                 PlaygroundPicker($selectedVariant)
             }
 
-            PlaygroundSection("Size") {
-                PlaygroundPicker($selectedSize)
+            PlaygroundSection("Dimension") {
+                PlaygroundPicker($selectedDimension)
             }
         }
     }

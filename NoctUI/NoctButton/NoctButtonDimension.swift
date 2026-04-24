@@ -1,5 +1,5 @@
 //
-//  NoctButtonSize.swift
+//  NoctButtonDimension.swift
 //  NoctUI
 //
 //  Created by blackcurrantt on 24/04/26.
@@ -7,11 +7,11 @@
 
 import Foundation
 
-public enum NoctButtonSize {
+public enum NoctButtonDimension {
     case sm, md, lg
 }
 
-public extension NoctButtonSize {
+public extension NoctButtonDimension {
     var height: CGFloat {
         switch self {
         case .sm: return 32

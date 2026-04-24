@@ -16,7 +16,7 @@ struct NoctButtonPlayground: View {
     enum Size: CaseIterable {
         case sm, md, lg
 
-        var noct: NoctButtonSize {
+        var noct: NoctButtonDimension {
             switch self {
             case .sm: .sm
             case .md: .md
@@ -36,7 +36,7 @@ struct NoctButtonPlayground: View {
     }
 
     var body: some View {
-        PlaygroundView(height: NoctButtonSize.lg.height) {
+        PlaygroundView(height: NoctButtonDimension.lg.height) {
             Button("Noct") { }
                 .buttonStyle(currentStyle)
         } config: {

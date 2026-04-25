@@ -8,12 +8,14 @@
 import SwiftUI
 
 struct NoctButtonPlayground: View {
-    enum Variant: String, CaseIterable {
+    @Environment(\.noctTheme) private var noctTheme
+    
+    private enum Variant: String, CaseIterable, Equatable {
         case primary, secondary
     }
     @State private var selectedVariant: Variant = .primary
     
-    enum Dimension: CaseIterable {
+    private enum Dimension: CaseIterable, Equatable {
         case sm, md, lg
 
         var noct: NoctButtonDimension {
@@ -26,21 +28,45 @@ struct NoctButtonPlayground: View {
     }
     @State private var selectedDimension: Dimension = .md
     
+    private enum Shape: CaseIterable, Equatable {
+        case standard, pill
+        
+        var noct: NoctShape {
+            switch self {
+            case .standard: .standard
+            case .pill: .pill
+            }
+        }
+        
+        init(_ noct: NoctShape) {
+            switch noct {
+            case .standard:
+                self = .standard
+            case .pill:
+                self = .pill
+            }
+        }
+    }
+    @State private var selectedShape: Shape = .standard
+    
     private var currentStyle: NoctButtonStyle {
         switch selectedVariant {
         case .primary:
-            return .primary(selectedDimension.noct)
+            return .primary(selectedDimension.noct, shape: selectedShape.noct)
         case .secondary:
-            return .secondary(selectedDimension.noct)
+            return .secondary(selectedDimension.noct, shape: selectedShape.noct)
         }
     }
+    
+    let sprintAnimation = Animation.spring(response: 0.35, dampingFraction: 0.8)
 
     var body: some View {
         PlaygroundView(height: NoctButtonDimension.lg.height) {
             Button("Noct") { }
                 .buttonStyle(currentStyle)
-                .animation(.spring(response: 0.35, dampingFraction: 0.8), value: selectedVariant)
-                .animation(.spring(response: 0.35, dampingFraction: 0.8), value: selectedDimension)
+                .animation(sprintAnimation, value: selectedVariant)
+                .animation(sprintAnimation, value: selectedDimension)
+                .animation(sprintAnimation, value: selectedShape)
         } config: {
             PlaygroundSection("Variant") {
                 PlaygroundPicker($selectedVariant)
@@ -49,6 +75,16 @@ struct NoctButtonPlayground: View {
             PlaygroundSection("Dimension") {
                 PlaygroundPicker($selectedDimension)
             }
+            
+            PlaygroundSection("Shape") {
+                PlaygroundPicker($selectedShape)
+            }
+        }
+        .onAppear {
+            selectedShape = Shape(noctTheme.buttonShape)
+        }
+        .onChange(of: noctTheme.buttonShape) { _, newValue in
+            selectedShape = Shape(newValue)
         }
     }
 }

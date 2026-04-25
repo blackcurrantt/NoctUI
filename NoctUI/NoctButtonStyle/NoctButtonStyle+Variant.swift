@@ -8,17 +8,25 @@
 import SwiftUI
 
 public extension NoctButtonStyle {
-    static func primary(_ dimension: NoctButtonDimension = .md) -> NoctButtonStyle {
+    static func primary(
+        _ dimension: NoctButtonDimension = .md,
+        shape: NoctShape? = nil
+    ) -> NoctButtonStyle {
         NoctButtonStyle(
             dimension: dimension,
+            shape: shape,
             backgroundProvider: { $0.primary },
             foregroundProvider: { $0.textInverse }
         )
     }
 
-    static func secondary(_ dimension: NoctButtonDimension = .md) -> NoctButtonStyle {
+    static func secondary(
+        _ dimension: NoctButtonDimension = .md,
+        shape: NoctShape? = nil
+    ) -> NoctButtonStyle {
         NoctButtonStyle(
             dimension: dimension,
+            shape: shape,
             backgroundProvider: { $0.secondary },
             foregroundProvider: { $0.textDefault }
         )

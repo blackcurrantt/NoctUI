@@ -12,6 +12,7 @@ public struct NoctButtonStyle: ButtonStyle {
     @Environment(\.noctTypography) private var noctTypography
     
     let dimension: NoctButtonDimension
+    let shape: NoctShape?
     let backgroundProvider: (NoctTheme) -> Color
     let foregroundProvider: (NoctTheme) -> Color
 
@@ -30,7 +31,7 @@ public struct NoctButtonStyle: ButtonStyle {
     }
     
     private var cornerRadius: CGFloat {
-        switch noctTheme.buttonShape {
+        switch (shape ?? noctTheme.buttonShape) {
         case .standard:
             return dimension.radius
         case .pill:

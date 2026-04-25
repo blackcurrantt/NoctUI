@@ -18,6 +18,7 @@ struct NoctUIApp: App {
                 .appTheme($appTheme)
                 .noctTheme(appTheme.noct)
                 .preferredColorScheme(appTheme.colorScheme)
+                .noctTypography(NoctDefaultTypography())
         }
     }
 }

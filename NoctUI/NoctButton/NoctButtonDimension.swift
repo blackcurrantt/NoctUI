@@ -35,4 +35,12 @@ public extension NoctButtonDimension {
         case .lg: return NoctRadius.lg
         }
     }
+    
+    var typographyStyle: NoctTypographyStyle {
+        switch self {
+        case .sm: return .body(.sm)
+        case .md: return .body(.md)
+        case .lg: return .body(.lg)
+        }
+    }
 }

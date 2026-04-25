@@ -19,7 +19,7 @@ public struct SolarTheme: NoctTheme {
     public var secondary: Color { Color(hex: 0xF4F1EA) }
 
     // #FAF8F4 — soft parchment background
-    public var background: Color { Color(hex: 0xFAF8F4) }
+    public var card: Color { Color(hex: 0xFAF8F4) }
 
     // MARK: - Text Colors
 

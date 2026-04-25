@@ -19,7 +19,7 @@ public struct LunarTheme: NoctTheme {
     public var secondary: Color { Color(hex: 0x383D4D) }
 
     // #121318 — deep night
-    public var background: Color { Color(hex: 0x121318) }
+    public var card: Color { Color(hex: 0x121318) }
 
     // MARK: - Text Colors
 

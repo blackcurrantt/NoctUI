@@ -39,7 +39,7 @@ struct PlaygroundView<Result: View, Config: View>: View {
             }
             .background(
                 RoundedRectangle(cornerRadius: 16)
-                    .fill(noctTheme.background)
+                    .fill(noctTheme.card)
             )
             .padding(.horizontal, 8)
             .animation(.easeInOut, value: appTheme.wrappedValue)

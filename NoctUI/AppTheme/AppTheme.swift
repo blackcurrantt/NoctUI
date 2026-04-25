@@ -12,7 +12,7 @@ public enum AppTheme: String, CaseIterable {
     
     public var noct: NoctTheme {
         switch self {
-        case .lunar: return LunarTheme()
+        case .lunar: return NoctLunarTheme()
         case .solar: return SolarTheme()
         }
     }

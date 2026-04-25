@@ -8,7 +8,7 @@
 import SwiftUI
 
 private struct NoctThemeKey: EnvironmentKey {
-    static let defaultValue: NoctTheme = LunarTheme()
+    static let defaultValue: NoctTheme = NoctLunarTheme()
 }
 
 public extension EnvironmentValues {

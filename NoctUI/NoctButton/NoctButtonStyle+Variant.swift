@@ -12,7 +12,7 @@ public extension NoctButtonStyle {
         NoctButtonStyle(
             dimension: dimension,
             backgroundProvider: { $0.primary },
-            foregroundProvider: { $0.textDefault }
+            foregroundProvider: { $0.textInverse }
         )
     }
 

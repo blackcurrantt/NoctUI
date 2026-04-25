@@ -25,6 +25,8 @@ public struct SolarTheme: NoctTheme {
 
     // #1C1C1E — near black (slightly warm)
     public var textDefault: Color { Color(hex: 0x1C1C1E) }
+    
+    public var textInverse: Color { Color.white }
 
     // #6B6B6B — subtle text
     public var textSubtle: Color { Color(hex: 0x6B6B6B) }

@@ -15,6 +15,7 @@ public protocol NoctTheme {
     
     // MARK: - Text Colors
     var textDefault: Color { get }
+    var textInverse: Color { get }
     var textSubtle: Color { get }
     var textDisabled: Color { get }
 }

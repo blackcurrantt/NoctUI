@@ -24,6 +24,8 @@ public struct LunarTheme: NoctTheme {
     // MARK: - Text Colors
 
     public var textDefault: Color { Color.white }
+    
+    public var textInverse: Color { Color.white }
 
     public var textSubtle: Color { Color.white.opacity(0.7) }
 

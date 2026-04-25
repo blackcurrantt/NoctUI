@@ -9,12 +9,13 @@ import SwiftUI
 
 @main
 struct NoctUIApp: App {
-    @State private var appTheme: AppTheme = .lunar
+    @AppStorageEnum("app_theme")
+    private var appTheme: AppTheme = .lunar
 
     var body: some Scene {
         WindowGroup {
             RootView()
-                .environment(\.appTheme, $appTheme)
+                .appTheme($appTheme)
                 .noctTheme(appTheme.noct)
         }
     }

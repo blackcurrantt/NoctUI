@@ -16,6 +16,13 @@ public enum AppTheme: String, CaseIterable {
         case .solar: return SolarTheme()
         }
     }
+    
+    public var colorScheme: ColorScheme {
+        switch self {
+        case .lunar: return .dark
+        case .solar: return .light
+        }
+    }
 }
 
 private struct AppThemeKey: EnvironmentKey {

@@ -17,6 +17,7 @@ struct NoctUIApp: App {
             RootView()
                 .appTheme($appTheme)
                 .noctTheme(appTheme.noct)
+                .preferredColorScheme(appTheme.colorScheme)
         }
     }
 }

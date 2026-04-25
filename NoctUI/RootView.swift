@@ -13,6 +13,7 @@ struct RootView: View {
             PlaygroundListView()
                 .navigationTitle("NoctUI")
                 .navigationBarTitleDisplayMode(.inline)
+                .appThemeToolbar()
         }
     }
 }

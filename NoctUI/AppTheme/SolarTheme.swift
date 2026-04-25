@@ -33,4 +33,8 @@ public struct SolarTheme: NoctTheme {
 
     // #A1A1A1 — disabled
     public var textDisabled: Color { Color(hex: 0xA1A1A1) }
+    
+    // MARK: - Shapes
+    
+    public var buttonShape: NoctShape { .pill }
 }

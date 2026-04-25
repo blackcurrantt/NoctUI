@@ -23,7 +23,18 @@ public struct NoctButtonStyle: ButtonStyle {
             .foregroundColor(foregroundProvider(noctTheme))
             .padding(.horizontal, dimension.padding)
             .background(backgroundProvider(noctTheme))
-            .clipShape(RoundedRectangle(cornerRadius: dimension.radius))
+            .clipShape(
+                RoundedRectangle(cornerRadius: cornerRadius)
+            )
             .opacity(configuration.isPressed ? 0.85 : 1.0)
+    }
+    
+    private var cornerRadius: CGFloat {
+        switch noctTheme.buttonShape {
+        case .standard:
+            return dimension.radius
+        case .pill:
+            return dimension.height / 2
+        }
     }
 }

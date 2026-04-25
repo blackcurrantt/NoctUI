@@ -18,4 +18,7 @@ public protocol NoctTheme {
     var textInverse: Color { get }
     var textSubtle: Color { get }
     var textDisabled: Color { get }
+    
+    // MARK: - Shapes
+    var buttonShape: NoctShape { get }
 }

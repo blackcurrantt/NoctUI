@@ -30,4 +30,8 @@ public struct NoctLunarTheme: NoctTheme {
     public var textSubtle: Color { Color.white.opacity(0.7) }
 
     public var textDisabled: Color { Color.white.opacity(0.4) }
+    
+    // MARK: - Shapes
+    
+    public var buttonShape: NoctShape { .standard }
 }

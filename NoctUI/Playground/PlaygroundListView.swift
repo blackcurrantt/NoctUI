@@ -9,6 +9,7 @@ import SwiftUI
 
 enum Playground: String, CaseIterable, Identifiable {
     case button
+    case card
 }
 
 // MARK: - PlaygroundListView
@@ -35,6 +36,7 @@ extension Playground {
     var title: String {
         switch self {
         case .button: "NoctButton"
+        case .card: "NoctCard"
         }
     }
 
@@ -42,6 +44,7 @@ extension Playground {
     var destination: some View {
         switch self {
         case .button: NoctButtonPlayground()
+        case .card: NoctCardPlayground()
         }
     }
 }

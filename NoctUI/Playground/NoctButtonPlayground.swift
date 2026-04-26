@@ -58,7 +58,7 @@ struct NoctButtonPlayground: View {
         }
     }
     
-    let sprintAnimation = Animation.spring(response: 0.35, dampingFraction: 0.8)
+    private let sprintAnimation = Animation.spring(response: 0.35, dampingFraction: 0.8)
 
     var body: some View {
         PlaygroundView(height: NoctButtonDimension.lg.height) {

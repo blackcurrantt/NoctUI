@@ -16,8 +16,8 @@ struct NoctUIApp: App {
         WindowGroup {
             RootView()
                 .appTheme($appTheme)
-                .noctTheme(appTheme.noct)
                 .preferredColorScheme(appTheme.colorScheme)
+                .noctTheme(appTheme.noct)
                 .noctTypography(NoctDefaultTypography())
         }
     }

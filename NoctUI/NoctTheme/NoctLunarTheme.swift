@@ -12,14 +12,13 @@ public struct NoctLunarTheme: NoctTheme {
     
     // MARK: - Colors
     
-    // #5C75BF — moonlight blue
     public var primary: Color { Color(hex: 0x5C75BF) }
     
-    // #383D4D — muted slate
     public var secondary: Color { Color(hex: 0x383D4D) }
 
-    // #121318 — deep night
     public var card: Color { Color(hex: 0x121318) }
+    
+    public var border: Color { Color.white.opacity(0.3) }
 
     // MARK: - Text Colors
 

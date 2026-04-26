@@ -12,6 +12,7 @@ public protocol NoctTheme {
     var primary: Color { get }
     var secondary: Color { get }
     var card: Color { get }
+    var border: Color { get }
     
     // MARK: - Text Colors
     var textDefault: Color { get }

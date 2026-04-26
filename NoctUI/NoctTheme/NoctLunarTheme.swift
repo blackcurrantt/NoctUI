@@ -13,21 +13,19 @@ public struct NoctLunarTheme: NoctTheme {
     // MARK: - Colors
     
     public var primary: Color { Color(hex: 0x5C75BF) }
-    
     public var secondary: Color { Color(hex: 0x383D4D) }
-
+    public var success: Color { Color(hex: 0x4CAF50) }
+    public var warning: Color { Color(hex: 0xFFB74D) }
+    public var error: Color { Color(hex: 0xEF5350) }
+    public var info: Color { Color(hex: 0x42A5F5) }
     public var card: Color { Color(hex: 0x121318) }
-    
     public var border: Color { Color.white.opacity(0.3) }
 
     // MARK: - Text Colors
 
     public var textDefault: Color { Color.white }
-    
     public var textInverse: Color { Color.white }
-
     public var textSubtle: Color { Color.white.opacity(0.7) }
-
     public var textDisabled: Color { Color.white.opacity(0.4) }
     
     // MARK: - Radius

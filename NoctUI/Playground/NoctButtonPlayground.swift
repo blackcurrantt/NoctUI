@@ -11,7 +11,7 @@ struct NoctButtonPlayground: View {
     @Environment(\.noctTheme) private var noctTheme
     
     private enum Variant: String, CaseIterable, Equatable {
-        case primary, secondary
+        case primary, secondary, success, warning, error, info
     }
     @State private var selectedVariant: Variant = .primary
     
@@ -55,6 +55,14 @@ struct NoctButtonPlayground: View {
             return .primary(selectedDimension.noct, shape: selectedShape.noct)
         case .secondary:
             return .secondary(selectedDimension.noct, shape: selectedShape.noct)
+        case .success:
+            return .success(selectedDimension.noct, shape: selectedShape.noct)
+        case .warning:
+            return .warning(selectedDimension.noct, shape: selectedShape.noct)
+        case .error:
+            return .error(selectedDimension.noct, shape: selectedShape.noct)
+        case .info:
+            return .info(selectedDimension.noct, shape: selectedShape.noct)
         }
     }
     

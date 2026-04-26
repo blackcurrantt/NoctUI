@@ -31,4 +31,52 @@ public extension NoctButtonStyle {
             foregroundProvider: { $0.textDefault }
         )
     }
+    
+    static func success(
+        _ dimension: NoctButtonDimension = .md,
+        shape: NoctShape? = nil
+    ) -> NoctButtonStyle {
+        NoctButtonStyle(
+            dimension: dimension,
+            shape: shape,
+            backgroundProvider: { $0.success },
+            foregroundProvider: { $0.textInverse }
+        )
+    }
+    
+    static func warning(
+        _ dimension: NoctButtonDimension = .md,
+        shape: NoctShape? = nil
+    ) -> NoctButtonStyle {
+        NoctButtonStyle(
+            dimension: dimension,
+            shape: shape,
+            backgroundProvider: { $0.warning },
+            foregroundProvider: { $0.textInverse }
+        )
+    }
+    
+    static func error(
+        _ dimension: NoctButtonDimension = .md,
+        shape: NoctShape? = nil
+    ) -> NoctButtonStyle {
+        NoctButtonStyle(
+            dimension: dimension,
+            shape: shape,
+            backgroundProvider: { $0.error },
+            foregroundProvider: { $0.textInverse }
+        )
+    }
+    
+    static func info(
+        _ dimension: NoctButtonDimension = .md,
+        shape: NoctShape? = nil
+    ) -> NoctButtonStyle {
+        NoctButtonStyle(
+            dimension: dimension,
+            shape: shape,
+            backgroundProvider: { $0.info },
+            foregroundProvider: { $0.textInverse }
+        )
+    }
 }

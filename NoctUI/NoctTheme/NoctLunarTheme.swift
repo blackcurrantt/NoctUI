@@ -15,9 +15,9 @@ public struct NoctLunarTheme: NoctTheme {
     public var primary: Color { Color(hex: 0x5C75BF) }
     public var secondary: Color { Color(hex: 0x383D4D) }
     public var success: Color { Color(hex: 0x4CAF50) }
-    public var warning: Color { Color(hex: 0xFFB74D) }
+    public var warning: Color { Color(hex: 0xD9822B) }
     public var error: Color { Color(hex: 0xEF5350) }
-    public var info: Color { Color(hex: 0x42A5F5) }
+    public var info: Color { Color(hex: 0x2F7EDB) }
     public var card: Color { Color(hex: 0x121318) }
     public var border: Color { Color.white.opacity(0.3) }
 

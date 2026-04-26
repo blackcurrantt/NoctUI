@@ -13,7 +13,7 @@ public struct SolarTheme: NoctTheme {
     // MARK: - Colors
 
     public var primary: Color { Color(hex: 0xC9A646) }
-    public var secondary: Color { Color(hex: 0xF4F1EA) }
+    public var secondary: Color { Color(hex: 0xD8D2C4) }
     public var success: Color { Color(hex: 0x2E7D32) }
     public var warning: Color { Color(hex: 0xC68A00) }
     public var error: Color { Color(hex: 0xC62828) }

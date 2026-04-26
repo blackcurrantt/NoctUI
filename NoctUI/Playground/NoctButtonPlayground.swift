@@ -77,7 +77,8 @@ struct NoctButtonPlayground: View {
                 .animation(sprintAnimation, value: selectedShape)
         } config: {
             PlaygroundSection("Variant") {
-                PlaygroundPicker($selectedVariant)
+//                PlaygroundPicker($selectedVariant)
+                PlaygroundVariantPicker($selectedVariant)
             }
 
             PlaygroundSection("Dimension") {

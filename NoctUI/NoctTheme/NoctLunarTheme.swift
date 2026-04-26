@@ -30,6 +30,10 @@ public struct NoctLunarTheme: NoctTheme {
 
     public var textDisabled: Color { Color.white.opacity(0.4) }
     
+    // MARK: - Radius
+    
+    public var radius: NoctRadius { NoctRadius(sm: 8, md: 12, lg: 16) }
+    
     // MARK: - Shapes
     
     public var buttonShape: NoctShape { .standard }

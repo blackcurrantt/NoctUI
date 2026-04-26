@@ -27,14 +27,6 @@ public extension NoctButtonDimension {
         case .lg: return 16
         }
     }
-
-    var radius: CGFloat {
-        switch self {
-        case .sm: return NoctRadius.sm
-        case .md: return NoctRadius.md
-        case .lg: return NoctRadius.lg
-        }
-    }
     
     var typographyStyle: NoctTypographyStyle {
         switch self {

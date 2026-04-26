@@ -20,6 +20,9 @@ public protocol NoctTheme {
     var textSubtle: Color { get }
     var textDisabled: Color { get }
     
+    // MARK: - Radius
+    var radius: NoctRadius { get }
+    
     // MARK: - Shapes
     var buttonShape: NoctShape { get }
 }

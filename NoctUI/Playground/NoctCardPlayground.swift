@@ -31,17 +31,16 @@ struct NoctCardPlayground: View {
     
     private enum Radius: CaseIterable, Equatable {
         case sm, md, lg, none
-        
-        var value: CGFloat {
-            switch self {
-            case .sm: NoctRadius.sm
-            case .md: NoctRadius.md
-            case .lg: NoctRadius.lg
-            case .none: 0
-            }
-        }
     }
     @State private var selectedRadius: Radius = .md
+    private var selectedRadiusValue: CGFloat {
+        switch selectedRadius {
+        case .sm: noctTheme.radius.sm
+        case .md: noctTheme.radius.md
+        case .lg: noctTheme.radius.lg
+        case .none: 0
+        }
+    }
 
     
     private let width: CGFloat = 390
@@ -51,7 +50,7 @@ struct NoctCardPlayground: View {
     var body: some View {
         PlaygroundView(height: height, useCard: false) {
             NoctCard(
-                cornerRadius: selectedRadius.value,
+                radius: selectedRadiusValue,
                 border: selectedBorder == .on ? 1 : nil,
                 shadow: selectedShadow.noct
             ) {

@@ -30,6 +30,10 @@ public struct SolarTheme: NoctTheme {
 
     public var textDisabled: Color { Color(hex: 0xA1A1A1) }
     
+    // MARK: - Radius
+    
+    public var radius: NoctRadius { NoctRadius(sm: 8, md: 12, lg: 16) }
+    
     // MARK: - Shapes
     
     public var buttonShape: NoctShape { .pill }

@@ -33,7 +33,11 @@ public struct NoctButtonStyle: ButtonStyle {
     private var cornerRadius: CGFloat {
         switch (shape ?? noctTheme.buttonShape) {
         case .standard:
-            return dimension.radius
+            switch dimension {
+            case .sm: return noctTheme.radius.sm
+            case .md: return noctTheme.radius.md
+            case .lg: return noctTheme.radius.lg
+            }
         case .pill:
             return dimension.height / 2
         }

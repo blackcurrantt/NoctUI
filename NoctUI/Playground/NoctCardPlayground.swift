@@ -41,14 +41,13 @@ struct NoctCardPlayground: View {
         case .none: 0
         }
     }
-
     
     private let width: CGFloat = 390
     private let height: CGFloat = 200
     private let sprintAnimation = Animation.spring(response: 0.35, dampingFraction: 0.8)
     
     var body: some View {
-        PlaygroundView(height: height, useCard: false) {
+        PlaygroundView(height: height) {
             NoctCard(
                 radius: selectedRadiusValue,
                 border: selectedBorder == .on ? 1 : nil,
@@ -78,6 +77,6 @@ struct NoctCardPlayground: View {
 
 #Preview {
     NavigationStack {
-        NoctButtonPlayground()
+        NoctCardPlayground()
     }
 }

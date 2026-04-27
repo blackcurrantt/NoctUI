@@ -69,7 +69,7 @@ struct NoctButtonPlayground: View {
     private let sprintAnimation = Animation.spring(response: 0.35, dampingFraction: 0.8)
 
     var body: some View {
-        PlaygroundView(height: NoctButtonDimension.lg.height) {
+        PlaygroundView(height: NoctButtonDimension.lg.height, useCard: true) {
             Button("Noct") { }
                 .buttonStyle(currentStyle)
                 .animation(sprintAnimation, value: selectedVariant)
@@ -77,7 +77,6 @@ struct NoctButtonPlayground: View {
                 .animation(sprintAnimation, value: selectedShape)
         } config: {
             PlaygroundSection("Variant") {
-//                PlaygroundPicker($selectedVariant)
                 PlaygroundVariantPicker($selectedVariant)
             }
 

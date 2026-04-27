@@ -12,18 +12,16 @@ struct PlaygroundView<Result: View, Config: View>: View {
     @Environment(\.noctTheme) private var noctTheme
     
     private let height: CGFloat
-    private let useCard: Bool
     private let result: Result
     private let config: Config
 
     init(
         height: CGFloat,
-        useCard: Bool = true,
+        useCard: Bool = false,
         @ViewBuilder result: () -> Result,
         @ViewBuilder config: () -> Config
     ) {
         self.height = height
-        self.useCard = useCard
         self.result = result()
         self.config = config()
     }
@@ -31,14 +29,12 @@ struct PlaygroundView<Result: View, Config: View>: View {
     var body: some View {
         VStack(spacing: 24) {
             ZStack {
-                if useCard {
-                    NoctCard(padding: .all(24)) {
-                        content
-                    }
-                } else {
-                    content
-                }
+                Spacer()
+                result
+                Spacer()
             }
+            .frame(height: height)
+            .frame(maxWidth: .infinity)
             .padding()
             
             ScrollView {
@@ -49,15 +45,5 @@ struct PlaygroundView<Result: View, Config: View>: View {
             }
         }
         .padding(.top, 24)
-    }
-    
-    private var content: some View {
-        ZStack {
-            Spacer()
-            result
-            Spacer()
-        }
-        .frame(height: height)
-        .frame(maxWidth: .infinity)
     }
 }

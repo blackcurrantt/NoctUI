@@ -10,6 +10,22 @@ import SwiftUI
 enum Playground: String, CaseIterable, Identifiable {
     case button
     case card
+    case chip
+    
+    var id: String { rawValue }
+
+    var title: String {
+        String(describing: self.rawValue).capitalized
+    }
+
+    @ViewBuilder
+    var destination: some View {
+        switch self {
+        case .button: NoctButtonPlayground()
+        case .card: NoctCardPlayground()
+        case .chip: NoctChipPlayground()
+        }
+    }
 }
 
 // MARK: - PlaygroundListView
@@ -24,27 +40,6 @@ struct PlaygroundListView: View {
                         .appThemeToolbar()
                 }
             }
-        }
-    }
-}
-
-// MARK: - Config
-
-extension Playground {
-    var id: String { rawValue }
-
-    var title: String {
-        switch self {
-        case .button: "NoctButton"
-        case .card: "NoctCard"
-        }
-    }
-
-    @ViewBuilder
-    var destination: some View {
-        switch self {
-        case .button: NoctButtonPlayground()
-        case .card: NoctCardPlayground()
         }
     }
 }

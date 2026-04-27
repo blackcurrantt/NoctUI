@@ -18,7 +18,7 @@ public struct NoctButtonStyle: ButtonStyle {
 
     public func makeBody(configuration: Configuration) -> some View {
         configuration.label
-            .font(noctTypography.font(for: dimension.typographyStyle).weight(.semibold))
+            .noctTextStyle(dimension.typographyStyle, weight: .semibold)
             .frame(maxWidth: .infinity)
             .frame(height: dimension.height)
             .foregroundColor(foregroundProvider(noctTheme))

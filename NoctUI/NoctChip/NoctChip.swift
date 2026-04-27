@@ -7,10 +7,6 @@
 
 import SwiftUI
 
-public enum NoctChipStyle {
-    case filled, outlined
-}
-
 public struct NoctChip<Prefix: View, Suffix: View>: View {
     @Environment(\.noctTheme) private var noctTheme
     @Environment(\.noctTypography) private var noctTypography
@@ -99,6 +95,8 @@ private extension NoctChip {
             return isSelected ? noctTheme.primary : noctTheme.secondary
         case .outlined:
             return Color(.systemBackground)
+        case let .custom(custom):
+            return isSelected ? custom.backgroundColor.selected : custom.backgroundColor.normal
         }
     }
     
@@ -106,13 +104,22 @@ private extension NoctChip {
         switch style {
         case .outlined:
             return isSelected ? noctTheme.primary : noctTheme.border
+        case let .custom(custom):
+            return isSelected ? custom.borderColor.selected : custom.borderColor.normal
         default:
             return .clear
         }
     }
     
     var borderWidth: CGFloat {
-        style == .outlined ? 2 : 0
+        switch style {
+        case .outlined:
+            return 2
+        case let .custom(custom):
+            return custom.borderWidth
+        default:
+            return 0
+        }
     }
     
     var textColor: Color {
@@ -121,6 +128,8 @@ private extension NoctChip {
             return noctTheme.textDefault
         case .outlined:
             return isSelected ? noctTheme.primary : noctTheme.textDefault
+        case let .custom(custom):
+            return isSelected ? custom.textColor.selected : custom.textColor.normal
         }
     }
 }

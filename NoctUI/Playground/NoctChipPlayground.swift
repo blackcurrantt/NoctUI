@@ -12,12 +12,21 @@ struct NoctChipPlayground: View {
     @Environment(\.noctTypography) private var noctTypography
     
     private enum Style: CaseIterable, Equatable {
-        case filled, outlined
+        case filled, outlined, custom
         
         var noct: NoctChipStyle {
             switch self {
-            case .filled: .filled
-            case .outlined: .outlined
+            case .filled:
+                return .filled
+            case .outlined:
+                return .outlined
+            case .custom:
+                return .custom(NoctChipCustomStyle(
+                    backgroundColor: NoctChipColor(normal: Color(.label), selected: Color(.systemBackground)),
+                    borderColor: NoctChipColor(normal: Color(.systemBackground), selected: Color(.label)),
+                    borderWidth: 2,
+                    textColor: NoctChipColor(normal: Color(.systemBackground), selected: Color(.label))
+                ))
             }
         }
     }

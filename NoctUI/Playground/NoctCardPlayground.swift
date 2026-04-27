@@ -12,17 +12,23 @@ struct NoctCardPlayground: View {
     @Environment(\.noctTypography) private var noctTypography
     
     private enum Shadow: CaseIterable, Equatable {
-        case card, elevated, none
+        case card, elevated, custom
         
         var noct: NoctShadow? {
             switch self {
             case .card: NoctShadow.card
             case .elevated: NoctShadow.elevated
-            case .none: nil
+            case .custom: NoctShadow(color: Color(.red), radius: 8, x: 0, y: 2)
             }
         }
     }
     @State private var selectedShadow: Shadow = .card
+    
+    private enum ColorOption: CaseIterable, Equatable {
+        case `default`, custom
+    }
+    @State private var selectedBackground: ColorOption = .default
+    @State private var selectedBorderColor: ColorOption = .default
     
     private enum Border: CaseIterable, Equatable {
         case on, off
@@ -30,7 +36,7 @@ struct NoctCardPlayground: View {
     @State private var selectedBorder: Border = .on
     
     private enum Radius: CaseIterable, Equatable {
-        case sm, md, lg, none
+        case sm, md, lg, custom
     }
     @State private var selectedRadius: Radius = .md
     private var selectedRadiusValue: CGFloat {
@@ -38,7 +44,7 @@ struct NoctCardPlayground: View {
         case .sm: noctTheme.radius.sm
         case .md: noctTheme.radius.md
         case .lg: noctTheme.radius.lg
-        case .none: 0
+        case .custom: 0
         }
     }
     
@@ -50,23 +56,33 @@ struct NoctCardPlayground: View {
         PlaygroundView(height: height) {
             NoctCard(
                 radius: selectedRadiusValue,
+                background: selectedBackground == .custom ? Color(.label) : nil,
                 border: selectedBorder == .on ? 1 : nil,
+                borderColor: selectedBorderColor == .custom ? Color(.red) : nil,
                 shadow: selectedShadow.noct
             ) {
                 Text("Noct")
                     .frame(maxWidth: width, maxHeight: .infinity)
                     .font(noctTypography.font(for: .title()))
-                    .foregroundColor(noctTheme.textDefault)
+                    .foregroundColor(selectedBackground == .custom ? Color(.systemBackground) : noctTheme.textDefault)
             }
             .animation(springAnimation, value: selectedShadow)
+            .animation(springAnimation, value: selectedBackground)
             .animation(springAnimation, value: selectedBorder)
+            .animation(springAnimation, value: selectedBorderColor)
             .animation(springAnimation, value: selectedRadius)
         } config: {
             PlaygroundSection("Shadow") {
                 PlaygroundPicker($selectedShadow)
             }
+            PlaygroundSection("Background") {
+                PlaygroundPicker($selectedBackground)
+            }
             PlaygroundSection("Border") {
                 PlaygroundPicker($selectedBorder)
+            }
+            PlaygroundSection("BorderColor") {
+                PlaygroundPicker($selectedBorderColor)
             }
             PlaygroundSection("Radius") {
                 PlaygroundPicker($selectedRadius)

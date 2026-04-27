@@ -46,9 +46,9 @@ struct NoctChipPlayground: View {
         PlaygroundView(height: 40) {
             NoctChip(
                 title: title,
+                style: selectedStyle.noct,
                 isSelected: isSelected,
                 isEnabled: isEnabled.isOn,
-                style: selectedStyle.noct,
                 prefix: { textColor in
                     isPrefixIcon.isOn ? NoctIcon(prefixIcon, size: .sm, color: textColor) : nil
                 },

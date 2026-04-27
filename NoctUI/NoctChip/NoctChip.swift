@@ -20,16 +20,16 @@ public struct NoctChip<Prefix: View, Suffix: View>: View {
     @ViewBuilder let suffix: (_ textColor: Color) -> Suffix?
     
     let title: String
+    let style: NoctChipStyle
     let isSelected: Bool
     let isEnabled: Bool
-    let style: NoctChipStyle
     let action: () -> Void
     
     public init(
         title: String,
+        style: NoctChipStyle = .filled,
         isSelected: Bool = false,
         isEnabled: Bool = true,
-        style: NoctChipStyle = .filled,
         prefix: @escaping (_ textColor: Color) -> Prefix? = { _ in nil },
         suffix: @escaping (_ textColor: Color) -> Suffix? = { _ in nil },
         action: @escaping () -> Void
@@ -130,17 +130,17 @@ private extension NoctChip {
 extension NoctChip where Prefix == NoctIcon, Suffix == NoctIcon {
     public init(
         title: String,
+        style: NoctChipStyle = .filled,
         isSelected: Bool = false,
         isEnabled: Bool = true,
-        style: NoctChipStyle = .filled,
         prefixIcon: String? = nil,
         suffixIcon: String? = nil,
         action: @escaping () -> Void
     ) {
         self.title = title
+        self.style = style
         self.isSelected = isSelected
         self.isEnabled = isEnabled
-        self.style = style
         self.action = action
         self.prefix = { textColor in
             guard let prefixIcon else { return nil }
@@ -158,17 +158,17 @@ extension NoctChip where Prefix == NoctIcon, Suffix == NoctIcon {
 extension NoctChip where Suffix == NoctIcon {
     public init(
         title: String,
+        style: NoctChipStyle = .filled,
         isSelected: Bool = false,
         isEnabled: Bool = true,
-        style: NoctChipStyle = .filled,
         prefix: @escaping (_ textColor: Color) -> Prefix? = { _ in nil },
         suffixIcon: String? = nil,
         action: @escaping () -> Void
     ) {
         self.title = title
+        self.style = style
         self.isSelected = isSelected
         self.isEnabled = isEnabled
-        self.style = style
         self.action = action
         self.prefix = prefix
         self.suffix = { textColor in
@@ -183,17 +183,17 @@ extension NoctChip where Suffix == NoctIcon {
 extension NoctChip where Prefix == NoctIcon {
     public init(
         title: String,
+        style: NoctChipStyle = .filled,
         isSelected: Bool = false,
         isEnabled: Bool = true,
-        style: NoctChipStyle = .filled,
         prefixIcon: String? = nil,
         suffix: @escaping (_ textColor: Color) -> Suffix? = { _ in nil },
         action: @escaping () -> Void
     ) {
         self.title = title
+        self.style = style
         self.isSelected = isSelected
         self.isEnabled = isEnabled
-        self.style = style
         self.action = action
         self.prefix = { textColor in
             guard let prefixIcon else { return nil }

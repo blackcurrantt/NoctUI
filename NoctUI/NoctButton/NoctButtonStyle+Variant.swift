@@ -79,4 +79,20 @@ public extension NoctButtonStyle {
             foregroundProvider: { $0.textInverse }
         )
     }
+    
+    static func custom(
+        _ dimension: NoctButtonDimension = .md,
+        shape: NoctShape? = nil,
+        background: Color,
+        foreground: Color
+    ) -> NoctButtonStyle {
+        NoctButtonStyle(
+            dimension: dimension,
+            shape: shape,
+            background: background,
+            foreground: foreground,
+            backgroundProvider: { $0.primary },
+            foregroundProvider: { $0.textInverse }
+        )
+    }
 }

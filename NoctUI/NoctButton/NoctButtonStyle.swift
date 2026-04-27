@@ -13,6 +13,8 @@ public struct NoctButtonStyle: ButtonStyle {
     
     let dimension: NoctButtonDimension
     let shape: NoctShape?
+    var background: Color?
+    var foreground: Color?
     let backgroundProvider: (NoctTheme) -> Color
     let foregroundProvider: (NoctTheme) -> Color
 
@@ -21,9 +23,9 @@ public struct NoctButtonStyle: ButtonStyle {
             .noctTextStyle(dimension.typographyStyle, weight: .semibold)
             .frame(maxWidth: .infinity)
             .frame(height: dimension.height)
-            .foregroundColor(foregroundProvider(noctTheme))
+            .foregroundColor(foreground ?? foregroundProvider(noctTheme))
             .padding(.horizontal, dimension.padding)
-            .background(backgroundProvider(noctTheme))
+            .background(background ?? backgroundProvider(noctTheme))
             .clipShape(
                 RoundedRectangle(cornerRadius: cornerRadius)
             )

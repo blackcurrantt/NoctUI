@@ -9,7 +9,6 @@ import SwiftUI
 
 public struct NoctButtonStyle: ButtonStyle {
     @Environment(\.noctTheme) private var noctTheme
-    @Environment(\.noctTypography) private var noctTypography
     
     let dimension: NoctButtonDimension
     let shape: NoctShape?

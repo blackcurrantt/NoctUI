@@ -9,7 +9,6 @@ import SwiftUI
 
 struct NoctCardPlayground: View {
     @Environment(\.noctTheme) private var noctTheme
-    @Environment(\.noctTypography) private var noctTypography
     
     private enum Shadow: CaseIterable, Equatable {
         case card, elevated, custom
@@ -63,7 +62,7 @@ struct NoctCardPlayground: View {
             ) {
                 Text("Noct")
                     .frame(maxWidth: width, maxHeight: .infinity)
-                    .font(noctTypography.font(for: .title()))
+                    .noctTextStyle(.title())
                     .foregroundColor(selectedBackground == .custom ? Color(.systemBackground) : noctTheme.textDefault)
             }
             .animation(springAnimation, value: selectedShadow)

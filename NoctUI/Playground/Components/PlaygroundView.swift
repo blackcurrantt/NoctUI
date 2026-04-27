@@ -29,9 +29,7 @@ struct PlaygroundView<Result: View, Config: View>: View {
     var body: some View {
         VStack(spacing: 24) {
             ZStack {
-                Spacer()
                 result
-                Spacer()
             }
             .frame(height: height)
             .frame(maxWidth: .infinity)

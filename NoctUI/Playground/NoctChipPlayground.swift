@@ -9,7 +9,6 @@ import SwiftUI
 
 struct NoctChipPlayground: View {
     @Environment(\.noctTheme) private var noctTheme
-    @Environment(\.noctTypography) private var noctTypography
     
     private enum Style: CaseIterable, Equatable {
         case filled, outlined, custom

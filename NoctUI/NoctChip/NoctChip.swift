@@ -9,8 +9,6 @@ import SwiftUI
 
 public struct NoctChip<Prefix: View, Suffix: View>: View {
     @Environment(\.noctTheme) private var noctTheme
-    @Environment(\.noctTypography) private var noctTypography
-    @Environment(\.colorScheme) private var scheme
     
     @ViewBuilder let prefix: (_ textColor: Color) -> Prefix?
     @ViewBuilder let suffix: (_ textColor: Color) -> Suffix?
@@ -71,7 +69,7 @@ public struct NoctChip<Prefix: View, Suffix: View>: View {
             .overlay {
                 if !isEnabled {
                     Capsule()
-                        .fill(Color.black.opacity(scheme == .dark ? 0.5 : 0.2))
+                        .fill(Color.black.opacity(0.3))
                 }
             }
         }

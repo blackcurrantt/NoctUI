@@ -25,27 +25,47 @@ struct NoctChipPlayground: View {
     
     private enum Enabled: CaseIterable, Equatable {
         case on, off
+        var isOn: Bool { self == .on }
     }
     @State private var isEnabled: Enabled = .on
+    @State private var isPrefixIcon: Enabled = .on
+    @State private var isSuffixIcon: Enabled = .on
     
-    @State private var isSelected: Bool = false
+    @State private var title: String = "Noct"
+    @State private var isSelected: Bool = false {
+        didSet {
+            title = isSelected ? "Selected" : "Noct"
+        }
+    }
+    
+    private let springAnimation = Animation.spring(response: 0.35, dampingFraction: 0.8)
     
     var body: some View {
         PlaygroundView(height: 40) {
             NoctChip(
-                title: "Noct",
+                title: title,
                 isSelected: isSelected,
-                isEnabled: isEnabled == .on,
-                style: selectedStyle.noct
+                isEnabled: isEnabled.isOn,
+                style: selectedStyle.noct,
+                prefixIcon: isPrefixIcon.isOn ? "line.3.horizontal.decrease" : nil,
+                suffixIcon: isSuffixIcon.isOn ? "chevron.right" : nil
             ) {
                 isSelected.toggle()
             }
+            .animation(springAnimation, value: isPrefixIcon)
+            .animation(springAnimation, value: isSuffixIcon)
         } config: {
             PlaygroundSection("Style") {
                 PlaygroundPicker($selectedStyle)
             }
             PlaygroundSection("Enabled") {
                 PlaygroundPicker($isEnabled)
+            }
+            PlaygroundSection("Prefix Icon") {
+                PlaygroundPicker($isPrefixIcon)
+            }
+            PlaygroundSection("Suffix Icon") {
+                PlaygroundPicker($isSuffixIcon)
             }
         }
     }

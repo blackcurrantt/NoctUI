@@ -11,31 +11,55 @@ public enum NoctChipStyle {
     case filled, outlined
 }
 
-public struct NoctChip<Prefix: View, Suffix: View>: View {
+public struct NoctChip: View {
     @Environment(\.noctTheme) private var noctTheme
     @Environment(\.noctTypography) private var noctTypography
     @Environment(\.colorScheme) private var scheme
-    
-    @ViewBuilder let prefix: () -> Prefix
-    @ViewBuilder let suffix: () -> Suffix
     
     let title: String
     let isSelected: Bool
     let isEnabled: Bool
     let style: NoctChipStyle
+    let prefixIcon: NoctIcon?
+    let suffixIcon: NoctIcon?
     let action: () -> Void
+    
+    public init(
+        title: String,
+        isSelected: Bool = false,
+        isEnabled: Bool = true,
+        style: NoctChipStyle = .filled,
+        prefixIcon: NoctIcon? = nil,
+        suffixIcon: NoctIcon? = nil,
+        action: @escaping () -> Void
+    ) {
+        self.title = title
+        self.isSelected = isSelected
+        self.isEnabled = isEnabled
+        self.style = style
+        self.prefixIcon = prefixIcon
+        self.suffixIcon = suffixIcon
+        self.action = action
+    }
     
     public var body: some View {
         Button(action: action) {
-            HStack(spacing: 6) {
-                prefix()
+            HStack(spacing: 8) {
+                if let prefixIcon {
+                    prefixIcon
+                        .color(textColor)
+                }
                 Text(title)
                     .noctTextStyle(.body(), weight: isSelected ? .bold : .regular)
-                suffix()
+                if let suffixIcon {
+                    suffixIcon
+                        .color(textColor)
+                }
             }
             .foregroundStyle(textColor)
-            .padding(.horizontal, 16)
             .padding(.vertical, 6)
+            .padding(.leading, prefixIcon != nil ? 12 : 16)
+            .padding(.trailing, suffixIcon != nil ? 12 : 16)
             .background(
                 Capsule()
                     .fill(backgroundColor)
@@ -53,24 +77,6 @@ public struct NoctChip<Prefix: View, Suffix: View>: View {
         }
         .buttonStyle(NoctChipPressStyle())
         .disabled(!isEnabled)
-    }
-}
-
-extension NoctChip where Prefix == EmptyView, Suffix == EmptyView {
-    public init(
-        title: String,
-        isSelected: Bool = false,
-        isEnabled: Bool = true,
-        style: NoctChipStyle = .filled,
-        action: @escaping () -> Void
-    ) {
-        self.title = title
-        self.isSelected = isSelected
-        self.isEnabled = isEnabled
-        self.style = style
-        self.action = action
-        self.prefix = { EmptyView() }
-        self.suffix = { EmptyView() }
     }
 }
 
@@ -112,5 +118,27 @@ private extension NoctChip {
         case .outlined:
             return isSelected ? noctTheme.primary : noctTheme.textDefault
         }
+    }
+}
+
+// MARK: - Icon Prefix & Icon Suffix
+
+extension NoctChip {
+    public init(
+        title: String,
+        isSelected: Bool = false,
+        isEnabled: Bool = true,
+        style: NoctChipStyle = .filled,
+        prefixIcon: String? = nil,
+        suffixIcon: String? = nil,
+        action: @escaping () -> Void
+    ) {
+        self.title = title
+        self.isSelected = isSelected
+        self.isEnabled = isEnabled
+        self.style = style
+        self.prefixIcon = prefixIcon != nil ? NoctIcon(prefixIcon!, size: .sm) : nil
+        self.suffixIcon = suffixIcon != nil ? NoctIcon(suffixIcon!, size: .sm) : nil
+        self.action = action
     }
 }

@@ -44,7 +44,7 @@ struct NoctCardPlayground: View {
     
     private let width: CGFloat = 390
     private let height: CGFloat = 200
-    private let sprintAnimation = Animation.spring(response: 0.35, dampingFraction: 0.8)
+    private let springAnimation = Animation.spring(response: 0.35, dampingFraction: 0.8)
     
     var body: some View {
         PlaygroundView(height: height) {
@@ -58,9 +58,9 @@ struct NoctCardPlayground: View {
                     .font(noctTypography.font(for: .title()))
                     .foregroundColor(noctTheme.textDefault)
             }
-            .animation(sprintAnimation, value: selectedShadow)
-            .animation(sprintAnimation, value: selectedBorder)
-            .animation(sprintAnimation, value: selectedRadius)
+            .animation(springAnimation, value: selectedShadow)
+            .animation(springAnimation, value: selectedBorder)
+            .animation(springAnimation, value: selectedRadius)
         } config: {
             PlaygroundSection("Shadow") {
                 PlaygroundPicker($selectedShadow)

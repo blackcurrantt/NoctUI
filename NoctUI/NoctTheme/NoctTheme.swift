@@ -45,6 +45,7 @@ extension NoctTheme {
     public var info: Color { Color(hex: 0x2F7EDB) }
     
     // MARK: - Component Colors
+    
     public var card: Color { Color(hex: 0x121318) }
     public var border: Color { Color.white.opacity(0.3) }
     public var toast: Color { Color(hex: 0x1F1E1F) }

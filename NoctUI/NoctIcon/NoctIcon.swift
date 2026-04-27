@@ -31,12 +31,6 @@ public struct NoctIcon: View {
     }
 }
 
-extension NoctIcon {
-    public func color(_ color: Color) -> NoctIcon {
-        NoctIcon(name, size: size, color: color)
-    }
-}
-
 public enum NoctIconSize {
     case sm, md, lg
     

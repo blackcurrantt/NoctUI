@@ -101,6 +101,7 @@ public struct NoctToastView: View {
             }
             .buttonStyle(.plain)
             .noctTextStyle(.body(.sm), weight: .semibold)
+            .foregroundStyle(foreground)
             
         case let .icon(icon):
             Button {

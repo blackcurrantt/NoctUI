@@ -64,8 +64,8 @@ struct NoctButtonPlayground: View {
         case .info:
             return .info(selectedDimension.noct, shape: selectedShape.noct)
         case .custom:
-            return .custom(
-                selectedDimension.noct,
+            return NoctButtonStyle(
+                dimension: selectedDimension.noct,
                 shape: selectedShape.noct,
                 background: Color(.label),
                 foreground: Color(.systemBackground)

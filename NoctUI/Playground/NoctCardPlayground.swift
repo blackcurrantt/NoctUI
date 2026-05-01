@@ -63,7 +63,7 @@ struct NoctCardPlayground: View {
                 Text("Noct")
                     .frame(maxWidth: width, maxHeight: .infinity)
                     .noctTextStyle(.title())
-                    .foregroundColor(selectedBackground == .custom ? Color(.systemBackground) : noctTheme.textDefault)
+                    .foregroundStyle(selectedBackground == .custom ? Color(.systemBackground) : noctTheme.textDefault)
             }
             .animation(springAnimation, value: selectedShadow)
             .animation(springAnimation, value: selectedBackground)

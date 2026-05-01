@@ -12,10 +12,38 @@ public struct NoctButtonStyle: ButtonStyle {
     
     let dimension: NoctButtonDimension
     let shape: NoctShape?
-    var background: Color?
-    var foreground: Color?
+    let background: Color?
+    let foreground: Color?
     let backgroundProvider: (NoctTheme) -> Color
     let foregroundProvider: (NoctTheme) -> Color
+    
+    public init(
+        dimension: NoctButtonDimension = .md,
+        shape: NoctShape? = nil,
+        background: Color,
+        foreground: Color
+    ) {
+        self.dimension = dimension
+        self.shape = shape
+        self.background = background
+        self.foreground = foreground
+        self.backgroundProvider = { $0.primary }
+        self.foregroundProvider = { $0.textInverse }
+    }
+    
+    init(
+        dimension: NoctButtonDimension = .md,
+        shape: NoctShape? = nil,
+        backgroundProvider: @escaping (NoctTheme) -> Color,
+        foregroundProvider: @escaping (NoctTheme) -> Color
+    ) {
+        self.dimension = dimension
+        self.shape = shape
+        self.background = nil
+        self.foreground = nil
+        self.backgroundProvider = backgroundProvider
+        self.foregroundProvider = foregroundProvider
+    }
 
     public func makeBody(configuration: Configuration) -> some View {
         configuration.label

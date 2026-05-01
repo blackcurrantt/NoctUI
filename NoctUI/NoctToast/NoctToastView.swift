@@ -61,9 +61,16 @@ public struct NoctToastView: View {
     
     private var toast: some View {
         HStack {
-            Text(state.message)
-                .noctTextStyle(.body())
-                .foregroundStyle(foreground)
+            VStack(alignment: .leading, spacing: 6) {
+                if let title = state.title {
+                    Text(title)
+                        .noctTextStyle(.body(), weight: .bold)
+                        .foregroundStyle(foreground)
+                }
+                Text(state.message)
+                    .noctTextStyle(.body())
+                    .foregroundStyle(foreground)
+            }
             Spacer(minLength: 0)
             if let action = state.action {
                 actionView(action)
@@ -91,7 +98,7 @@ public struct NoctToastView: View {
                 action.handler()
             }
             .buttonStyle(.plain)
-            .noctTextStyle(.caption, weight: .semibold)
+            .noctTextStyle(.body(.sm), weight: .semibold)
             
         case let .icon(icon):
             Button {

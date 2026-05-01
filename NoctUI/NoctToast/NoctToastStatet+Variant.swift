@@ -10,6 +10,7 @@ import SwiftUI
 public extension NoctToastState {
     static func success(
         _ message: String,
+        title: String? = nil,
         duration: TimeInterval = NoctToastDuration.default,
         position: NoctToastPosition = .top,
         dismissible: Bool = true,
@@ -17,6 +18,7 @@ public extension NoctToastState {
     ) -> NoctToastState {
         NoctToastState(
             message: message,
+            title: title,
             duration: duration,
             position: position,
             backgroundProvider: { $0.success },
@@ -28,6 +30,7 @@ public extension NoctToastState {
     
     static func warning(
         _ message: String,
+        title: String? = nil,
         duration: TimeInterval = NoctToastDuration.default,
         position: NoctToastPosition = .top,
         dismissible: Bool = true,
@@ -35,6 +38,7 @@ public extension NoctToastState {
     ) -> NoctToastState {
         NoctToastState(
             message: message,
+            title: title,
             duration: duration,
             position: position,
             backgroundProvider: { $0.warning },
@@ -46,6 +50,7 @@ public extension NoctToastState {
     
     static func error(
         _ message: String,
+        title: String? = nil,
         duration: TimeInterval = NoctToastDuration.default,
         position: NoctToastPosition = .top,
         dismissible: Bool = true,
@@ -53,6 +58,7 @@ public extension NoctToastState {
     ) -> NoctToastState {
         NoctToastState(
             message: message,
+            title: title,
             duration: duration,
             position: position,
             backgroundProvider: { $0.error },
@@ -64,6 +70,7 @@ public extension NoctToastState {
     
     static func info(
         _ message: String,
+        title: String? = nil,
         duration: TimeInterval = NoctToastDuration.default,
         position: NoctToastPosition = .top,
         dismissible: Bool = true,
@@ -71,6 +78,7 @@ public extension NoctToastState {
     ) -> NoctToastState {
         NoctToastState(
             message: message,
+            title: title,
             duration: duration,
             position: position,
             backgroundProvider: { $0.info },

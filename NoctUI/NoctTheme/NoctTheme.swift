@@ -39,7 +39,7 @@ extension NoctTheme {
     
     public var primary: Color { Color(hex: 0x5C75BF) }
     public var secondary: Color { Color(hex: 0x383D4D) }
-    public var success: Color { Color(hex: 0x4CAF50) }
+    public var success: Color { Color(hex: 0x388E3C) }
     public var warning: Color { Color(hex: 0xD9822B) }
     public var error: Color { Color(hex: 0xEF5350) }
     public var info: Color { Color(hex: 0x2F7EDB) }

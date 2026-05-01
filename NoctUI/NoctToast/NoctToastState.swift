@@ -16,24 +16,6 @@ public enum NoctToastPosition {
     case top, bottom
 }
 
-public struct NoctToastAction {
-    public enum ViewType {
-        case text(String)
-        case icon(String)
-    }
-    
-    public let view: ViewType
-    public let handler: @MainActor () -> Void
-    
-    public init(
-        _ view: ViewType,
-        _ handler: @escaping () -> Void
-    ) {
-        self.view = view
-        self.handler = handler
-    }
-}
-
 public struct NoctToastState: Identifiable, Equatable {
     public let id = UUID()
     

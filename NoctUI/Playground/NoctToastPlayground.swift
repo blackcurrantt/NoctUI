@@ -28,7 +28,7 @@ struct NoctToastPlayground: View {
     @State private var selectedPosition: Position = .top
     
     private enum Action: CaseIterable, Equatable {
-        case text, icon, none
+        case text, close, none
     }
     @State private var selectedAction: Action = .text
     
@@ -51,21 +51,17 @@ struct NoctToastPlayground: View {
     private var currentAction: NoctToastAction? {
         switch selectedAction {
         case .text:
-            return NoctToastAction(.text("Action")) {
-                
-            }
-        case .icon:
-            return NoctToastAction(.icon("xmark")) {
-                NoctToast.dismiss()
-            }
+            return NoctToastAction.text("Action") { }
+        case .close:
+            return NoctToastAction.close()
         case .none:
             return nil
         }
     }
     
     private var currentState: NoctToastState {
-        let title: String? = showsTitle.isOn ? "Noct Title" : nil
-        let message = selectedMessageLength == .long ? "Noct ipsum dolor sit amet, noctis interface adipiscing elit. Sed do eiusmod tempor incididunt ut labore et nocte magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat." : "Noct"
+        let title: String? = showsTitle.isOn ? "Noct" : nil
+        let message = selectedMessageLength == .long ? "Noct ipsum dolor sit amet, noctis interface adipiscing elit. Sed do eiusmod tempor incididunt ut labore et nocte magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat." : "The noct toast"
         switch selectedVariant {
         case .normal:
             return NoctToastState(
@@ -128,8 +124,8 @@ struct NoctToastPlayground: View {
     
     var body: some View {
         NoctToastContainer {
-            PlaygroundView(height: 140) {
-                VStack {
+            PlaygroundView(height: 116) {
+                VStack(spacing: 8) {
                     Spacer()
                     Button("Show Toast") {
                         NoctToast.show(currentState)
@@ -146,6 +142,9 @@ struct NoctToastPlayground: View {
                 }
                 PlaygroundSection("Title") {
                     PlaygroundPicker($showsTitle)
+                }
+                PlaygroundSection("Icon") {
+                    PlaygroundPicker($showsIcon)
                 }
                 PlaygroundSection("Message") {
                     PlaygroundPicker($selectedMessageLength)

@@ -76,7 +76,7 @@ public struct NoctToastView: View {
                     .foregroundStyle(foreground)
                     .lineLimit(2)
             }
-            Spacer(minLength: 12)
+            Spacer()
             if let action = state.action {
                 actionView(action)
             }
@@ -110,7 +110,7 @@ public struct NoctToastView: View {
             Button {
                 action.handler()
             } label: {
-                NoctIcon(icon, size: .sm, color: foreground)
+                NoctIcon(icon, size: .md, color: foreground)
             }
             .buttonStyle(.plain)
         }

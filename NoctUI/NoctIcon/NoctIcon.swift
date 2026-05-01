@@ -8,8 +8,6 @@
 import SwiftUI
 
 public struct NoctIcon: View {
-    @Environment(\.noctTheme) private var noctTheme
-    
     let name: String
     let size: NoctIconSize
     let color: Color?
@@ -27,7 +25,7 @@ public struct NoctIcon: View {
     public var body: some View {
         Image(systemName: name)
             .font(size.font)
-            .foregroundStyle(color ?? noctTheme.primary)
+            .foregroundStyle(color ?? .primary)
     }
 }
 

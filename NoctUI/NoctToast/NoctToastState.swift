@@ -16,6 +16,24 @@ public enum NoctToastPosition {
     case top, bottom
 }
 
+public struct NoctToastAction {
+    public enum ViewType {
+        case text(String)
+        case icon(String)
+    }
+    
+    public let view: ViewType
+    public let handler: @MainActor () -> Void
+    
+    public init(
+        _ view: ViewType,
+        _ handler: @escaping () -> Void
+    ) {
+        self.view = view
+        self.handler = handler
+    }
+}
+
 public struct NoctToastState: Identifiable, Equatable {
     public let id = UUID()
     
@@ -26,13 +44,17 @@ public struct NoctToastState: Identifiable, Equatable {
     let foreground: Color?
     let backgroundProvider: ((NoctTheme) -> Color)?
     let foregroundProvider: ((NoctTheme) -> Color)?
+    let dismissible: Bool
+    let action: NoctToastAction?
 
     public init(
         _ message: String,
         duration: TimeInterval = NoctToastDuration.default,
         position: NoctToastPosition = .top,
         background: Color? = nil,
-        foreground: Color? = nil
+        foreground: Color? = nil,
+        dismissible: Bool = true,
+        action: NoctToastAction? = nil
     ) {
         self.message = message
         self.duration = duration
@@ -41,6 +63,8 @@ public struct NoctToastState: Identifiable, Equatable {
         self.foreground = foreground
         self.backgroundProvider = nil
         self.foregroundProvider = nil
+        self.dismissible = dismissible
+        self.action = action
     }
     
     init(
@@ -48,7 +72,9 @@ public struct NoctToastState: Identifiable, Equatable {
         duration: TimeInterval = NoctToastDuration.default,
         position: NoctToastPosition = .top,
         backgroundProvider: @escaping (NoctTheme) -> Color,
-        foregroundProvider: @escaping (NoctTheme) -> Color
+        foregroundProvider: @escaping (NoctTheme) -> Color,
+        dismissible: Bool = true,
+        action: NoctToastAction? = nil
     ) {
         self.message = message
         self.duration = duration
@@ -57,6 +83,8 @@ public struct NoctToastState: Identifiable, Equatable {
         self.foreground = nil
         self.backgroundProvider = backgroundProvider
         self.foregroundProvider = foregroundProvider
+        self.dismissible = dismissible
+        self.action = action
     }
     
     public static func == (lhs: NoctToastState, rhs: NoctToastState) -> Bool {

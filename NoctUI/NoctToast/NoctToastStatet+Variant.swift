@@ -12,13 +12,17 @@ public extension NoctToastState {
         _ message: String,
         duration: TimeInterval = NoctToastDuration.default,
         position: NoctToastPosition = .top,
+        dismissible: Bool = true,
+        action: NoctToastAction? = nil
     ) -> NoctToastState {
         NoctToastState(
             message: message,
             duration: duration,
             position: position,
             backgroundProvider: { $0.success },
-            foregroundProvider: { $0.textInverse }
+            foregroundProvider: { $0.textInverse },
+            dismissible: dismissible,
+            action: action
         )
     }
     
@@ -26,13 +30,17 @@ public extension NoctToastState {
         _ message: String,
         duration: TimeInterval = NoctToastDuration.default,
         position: NoctToastPosition = .top,
+        dismissible: Bool = true,
+        action: NoctToastAction? = nil
     ) -> NoctToastState {
         NoctToastState(
             message: message,
             duration: duration,
             position: position,
             backgroundProvider: { $0.warning },
-            foregroundProvider: { $0.textInverse }
+            foregroundProvider: { $0.textInverse },
+            dismissible: dismissible,
+            action: action
         )
     }
     
@@ -40,13 +48,17 @@ public extension NoctToastState {
         _ message: String,
         duration: TimeInterval = NoctToastDuration.default,
         position: NoctToastPosition = .top,
+        dismissible: Bool = true,
+        action: NoctToastAction? = nil
     ) -> NoctToastState {
         NoctToastState(
             message: message,
             duration: duration,
             position: position,
             backgroundProvider: { $0.error },
-            foregroundProvider: { $0.textInverse }
+            foregroundProvider: { $0.textInverse },
+            dismissible: dismissible,
+            action: action
         )
     }
     
@@ -54,13 +66,17 @@ public extension NoctToastState {
         _ message: String,
         duration: TimeInterval = NoctToastDuration.default,
         position: NoctToastPosition = .top,
+        dismissible: Bool = true,
+        action: NoctToastAction? = nil
     ) -> NoctToastState {
         NoctToastState(
             message: message,
             duration: duration,
             position: position,
             backgroundProvider: { $0.info },
-            foregroundProvider: { $0.textInverse }
+            foregroundProvider: { $0.textInverse },
+            dismissible: dismissible,
+            action: action
         )
     }
 }

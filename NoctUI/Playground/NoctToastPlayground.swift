@@ -44,7 +44,8 @@ struct NoctToastPlayground: View {
             self == .on
         }
     }
-    @State private var showTitle: Option = .on
+    @State private var showsTitle: Option = .on
+    @State private var showsIcon: Option = .on
     @State private var dismissible: Option = .on
     
     private var currentAction: NoctToastAction? {
@@ -63,13 +64,14 @@ struct NoctToastPlayground: View {
     }
     
     private var currentState: NoctToastState {
-        let title: String? = showTitle.isOn ? "Noct Title" : nil
+        let title: String? = showsTitle.isOn ? "Noct Title" : nil
         let message = selectedMessageLength == .long ? "Noct ipsum dolor sit amet, noctis interface adipiscing elit. Sed do eiusmod tempor incididunt ut labore et nocte magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat." : "Noct"
         switch selectedVariant {
         case .normal:
             return NoctToastState(
                 message,
                 title: title,
+                icon: showsIcon.isOn ? "bell.fill" : nil,
                 position: selectedPosition.noct,
                 dismissible: dismissible.isOn,
                 action: currentAction
@@ -78,6 +80,7 @@ struct NoctToastPlayground: View {
             return NoctToastState.success(
                 message,
                 title: title,
+                showsIcon: showsIcon.isOn,
                 position: selectedPosition.noct,
                 dismissible: dismissible.isOn,
                 action: currentAction
@@ -86,6 +89,7 @@ struct NoctToastPlayground: View {
             return NoctToastState.warning(
                 message,
                 title: title,
+                showsIcon: showsIcon.isOn,
                 position: selectedPosition.noct,
                 dismissible: dismissible.isOn,
                 action: currentAction
@@ -94,6 +98,7 @@ struct NoctToastPlayground: View {
             return NoctToastState.error(
                 message,
                 title: title,
+                showsIcon: showsIcon.isOn,
                 position: selectedPosition.noct,
                 dismissible: dismissible.isOn,
                 action: currentAction
@@ -102,6 +107,7 @@ struct NoctToastPlayground: View {
             return NoctToastState.info(
                 message,
                 title: title,
+                showsIcon: showsIcon.isOn,
                 position: selectedPosition.noct,
                 dismissible: dismissible.isOn,
                 action: currentAction
@@ -110,6 +116,7 @@ struct NoctToastPlayground: View {
             return NoctToastState(
                 message,
                 title: title,
+                icon: showsIcon.isOn ? "hourglass.circle" : nil,
                 position: selectedPosition.noct,
                 background: Color(.label),
                 foreground: Color(.systemBackground),
@@ -138,7 +145,7 @@ struct NoctToastPlayground: View {
                     PlaygroundVariantPicker($selectedVariant)
                 }
                 PlaygroundSection("Title") {
-                    PlaygroundPicker($showTitle)
+                    PlaygroundPicker($showsTitle)
                 }
                 PlaygroundSection("Message") {
                     PlaygroundPicker($selectedMessageLength)

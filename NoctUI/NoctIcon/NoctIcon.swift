@@ -24,19 +24,20 @@ public struct NoctIcon: View {
     
     public var body: some View {
         Image(systemName: name)
-            .font(size.font)
+            .font(.system(size: size.pointSize, weight: .semibold))
             .foregroundStyle(color ?? .primary)
     }
 }
 
 public enum NoctIconSize {
-    case sm, md, lg
+    case sm, md, lg, xl
     
-    var font: Font {
+    var pointSize: CGFloat {
         switch self {
-        case .sm: .footnote
-        case .md: .subheadline
-        case .lg: .body
+        case .sm: 12
+        case .md: 14
+        case .lg: 16
+        case .xl: 20
         }
     }
 }

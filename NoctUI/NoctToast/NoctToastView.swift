@@ -60,7 +60,11 @@ public struct NoctToastView: View {
     }
     
     private var toast: some View {
-        HStack {
+        HStack(spacing: 12) {
+            if let icon = state.icon {
+                NoctIcon(icon, size: .xl, color: foreground)
+            }
+            
             VStack(alignment: .leading, spacing: 6) {
                 if let title = state.title {
                     Text(title)
@@ -73,7 +77,7 @@ public struct NoctToastView: View {
                     .foregroundStyle(foreground)
                     .lineLimit(2)
             }
-            Spacer(minLength: 12)
+            
             if let action = state.action {
                 actionView(action)
             }

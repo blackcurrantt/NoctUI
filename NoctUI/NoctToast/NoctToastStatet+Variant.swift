@@ -11,6 +11,7 @@ public extension NoctToastState {
     static func success(
         _ message: String,
         title: String? = nil,
+        showsIcon: Bool = false,
         duration: TimeInterval = NoctToastDuration.default,
         position: NoctToastPosition = .top,
         dismissible: Bool = true,
@@ -19,6 +20,7 @@ public extension NoctToastState {
         NoctToastState(
             message: message,
             title: title,
+            icon: showsIcon ? "checkmark.circle.fill" : nil,
             duration: duration,
             position: position,
             backgroundProvider: { $0.success },
@@ -31,6 +33,7 @@ public extension NoctToastState {
     static func warning(
         _ message: String,
         title: String? = nil,
+        showsIcon: Bool = false,
         duration: TimeInterval = NoctToastDuration.default,
         position: NoctToastPosition = .top,
         dismissible: Bool = true,
@@ -39,6 +42,7 @@ public extension NoctToastState {
         NoctToastState(
             message: message,
             title: title,
+            icon: showsIcon ? "exclamationmark.triangle.fill" : nil,
             duration: duration,
             position: position,
             backgroundProvider: { $0.warning },
@@ -51,6 +55,7 @@ public extension NoctToastState {
     static func error(
         _ message: String,
         title: String? = nil,
+        showsIcon: Bool = false,
         duration: TimeInterval = NoctToastDuration.default,
         position: NoctToastPosition = .top,
         dismissible: Bool = true,
@@ -59,6 +64,7 @@ public extension NoctToastState {
         NoctToastState(
             message: message,
             title: title,
+            icon: showsIcon ? "xmark.circle.fill" : nil,
             duration: duration,
             position: position,
             backgroundProvider: { $0.error },
@@ -71,6 +77,7 @@ public extension NoctToastState {
     static func info(
         _ message: String,
         title: String? = nil,
+        showsIcon: Bool = false,
         duration: TimeInterval = NoctToastDuration.default,
         position: NoctToastPosition = .top,
         dismissible: Bool = true,
@@ -79,6 +86,7 @@ public extension NoctToastState {
         NoctToastState(
             message: message,
             title: title,
+            icon: showsIcon ? "info.circle.fill" : nil,
             duration: duration,
             position: position,
             backgroundProvider: { $0.info },

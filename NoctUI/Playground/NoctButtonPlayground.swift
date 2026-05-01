@@ -76,7 +76,7 @@ struct NoctButtonPlayground: View {
     private let springAnimation = Animation.spring(response: 0.35, dampingFraction: 0.8)
 
     var body: some View {
-        PlaygroundView(height: NoctButtonDimension.lg.height, useCard: true) {
+        PlaygroundView(height: NoctButtonDimension.lg.height) {
             Button("Noct") { }
                 .buttonStyle(currentStyle)
                 .animation(springAnimation, value: selectedVariant)

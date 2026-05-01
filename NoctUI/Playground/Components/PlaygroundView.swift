@@ -17,7 +17,6 @@ struct PlaygroundView<Result: View, Config: View>: View {
 
     init(
         height: CGFloat,
-        useCard: Bool = false,
         @ViewBuilder result: () -> Result,
         @ViewBuilder config: () -> Config
     ) {

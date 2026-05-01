@@ -112,7 +112,7 @@ struct NoctToastPlayground: View {
             return NoctToastState(
                 message,
                 title: title,
-                icon: showsIcon.isOn ? "hourglass.circle" : nil,
+                icon: showsIcon.isOn ? "hourglass" : nil,
                 position: selectedPosition.noct,
                 background: Color(.label),
                 foreground: Color(.systemBackground),

@@ -32,6 +32,11 @@ struct NoctToastPlayground: View {
     }
     @State private var selectedAction: Action = .text
     
+    private enum MessageLength: CaseIterable, Equatable {
+        case long, short
+    }
+    @State private var selectedMessageLength: MessageLength = .long
+    
     private enum Option: CaseIterable, Equatable {
         case on, off
         
@@ -39,6 +44,7 @@ struct NoctToastPlayground: View {
             self == .on
         }
     }
+    @State private var showTitle: Option = .on
     @State private var dismissible: Option = .on
     
     private var currentAction: NoctToastAction? {
@@ -57,11 +63,13 @@ struct NoctToastPlayground: View {
     }
     
     private var currentState: NoctToastState {
-        let message = "Noct"
+        let title: String? = showTitle.isOn ? "Noct Title" : nil
+        let message = selectedMessageLength == .long ? "Noct ipsum dolor sit amet, noctis interface adipiscing elit. Sed do eiusmod tempor incididunt ut labore et nocte magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat." : "Noct"
         switch selectedVariant {
         case .normal:
             return NoctToastState(
                 message,
+                title: title,
                 position: selectedPosition.noct,
                 dismissible: dismissible.isOn,
                 action: currentAction
@@ -69,6 +77,7 @@ struct NoctToastPlayground: View {
         case .success:
             return NoctToastState.success(
                 message,
+                title: title,
                 position: selectedPosition.noct,
                 dismissible: dismissible.isOn,
                 action: currentAction
@@ -76,6 +85,7 @@ struct NoctToastPlayground: View {
         case .warning:
             return NoctToastState.warning(
                 message,
+                title: title,
                 position: selectedPosition.noct,
                 dismissible: dismissible.isOn,
                 action: currentAction
@@ -83,6 +93,7 @@ struct NoctToastPlayground: View {
         case .error:
             return NoctToastState.error(
                 message,
+                title: title,
                 position: selectedPosition.noct,
                 dismissible: dismissible.isOn,
                 action: currentAction
@@ -90,6 +101,7 @@ struct NoctToastPlayground: View {
         case .info:
             return NoctToastState.info(
                 message,
+                title: title,
                 position: selectedPosition.noct,
                 dismissible: dismissible.isOn,
                 action: currentAction
@@ -97,6 +109,7 @@ struct NoctToastPlayground: View {
         case .custom:
             return NoctToastState(
                 message,
+                title: title,
                 position: selectedPosition.noct,
                 background: Color(.label),
                 foreground: Color(.systemBackground),
@@ -123,6 +136,12 @@ struct NoctToastPlayground: View {
             } config: {
                 PlaygroundSection("Variant") {
                     PlaygroundVariantPicker($selectedVariant)
+                }
+                PlaygroundSection("Title") {
+                    PlaygroundPicker($showTitle)
+                }
+                PlaygroundSection("Message") {
+                    PlaygroundPicker($selectedMessageLength)
                 }
                 PlaygroundSection("Position") {
                     PlaygroundPicker($selectedPosition)

@@ -66,12 +66,14 @@ public struct NoctToastView: View {
                     Text(title)
                         .noctTextStyle(.body(), weight: .bold)
                         .foregroundStyle(foreground)
+                        .lineLimit(1)
                 }
                 Text(state.message)
                     .noctTextStyle(.body())
                     .foregroundStyle(foreground)
+                    .lineLimit(2)
             }
-            Spacer(minLength: 0)
+            Spacer(minLength: 12)
             if let action = state.action {
                 actionView(action)
             }

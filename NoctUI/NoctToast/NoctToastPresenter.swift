@@ -10,8 +10,6 @@ import SwiftUI
 @MainActor
 @Observable
 final class NoctToastPresenter {
-    static let shared = NoctToastPresenter()
-    
     var currentState: NoctToastState?
     
     private var task: Task<Void, Never>?
@@ -69,5 +67,16 @@ final class NoctToastPresenter {
         Task { @MainActor in
             continuation.resume()
         }
+    }
+}
+
+private struct NoctToastPresenterKey: EnvironmentKey {
+    static let defaultValue: NoctToastPresenter? = nil
+}
+
+extension EnvironmentValues {
+    var noctToastPresenter: NoctToastPresenter? {
+        get { self[NoctToastPresenterKey.self] }
+        set { self[NoctToastPresenterKey.self] = newValue }
     }
 }

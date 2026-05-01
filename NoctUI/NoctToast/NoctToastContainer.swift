@@ -8,7 +8,7 @@
 import SwiftUI
 
 public struct NoctToastContainer<Content: View>: View {
-    private let presenter = NoctToastPresenter.shared
+    @State private var presenter = NoctToastPresenter()
     private let content: Content
     
     public init(
@@ -25,12 +25,16 @@ public struct NoctToastContainer<Content: View>: View {
                     .transition(transition(for: toast.position))
                     .zIndex(999)
                     .onDisappear {
-                        NoctToastPresenter.shared.notifyDismissAnimationCompleted()
+                        presenter.notifyDismissAnimationCompleted()
                     }
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .animation(.spring(response: 0.35, dampingFraction: 0.8), value: presenter.currentState)
+        .environment(\.noctToastPresenter, presenter)
+        .onAppear {
+            NoctToast.presenter = presenter
+        }
     }
     
     private func transition(for position: NoctToastPosition) -> AnyTransition {

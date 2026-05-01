@@ -8,11 +8,17 @@
 import SwiftUI
 
 public enum NoctToast {
+    @MainActor static weak var presenter: NoctToastPresenter?
+    
     public static func show(_ state: NoctToastState) {
-        NoctToastPresenter.shared.show(state)
+        Task { @MainActor in
+            presenter?.show(state)
+        }
     }
     
     public static func dismiss() {
-        NoctToastPresenter.shared.dismiss()
+        Task { @MainActor in
+            presenter?.dismiss()
+        }
     }
 }

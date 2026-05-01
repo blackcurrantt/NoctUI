@@ -13,11 +13,11 @@ public struct NoctChip<Prefix: View, Suffix: View>: View {
     @ViewBuilder let prefix: (_ textColor: Color) -> Prefix?
     @ViewBuilder let suffix: (_ textColor: Color) -> Suffix?
     
-    let title: String
-    let style: NoctChipStyle
-    let isSelected: Bool
-    let isEnabled: Bool
-    let action: () -> Void
+    private let title: String
+    private let style: NoctChipStyle
+    private let isSelected: Bool
+    private let isEnabled: Bool
+    private let action: () -> Void
     
     public init(
         title: String,

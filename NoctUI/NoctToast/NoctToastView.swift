@@ -17,17 +17,9 @@ public struct NoctToastView: View {
     }
     
     public var body: some View {
-        VStack {
-            if state.position == .top {
-                toast
-                Spacer()
-            } else {
-                Spacer()
-                toast
-            }
-        }
-        .frame(maxWidth: .infinity)
-        .padding()
+        toast
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: alignment)
+            .padding(edgeInsets)
     }
     
     private var toast: some View {
@@ -66,27 +58,20 @@ public struct NoctToastView: View {
             return noctTheme.textInverse
         }
     }
-}
-
-// MARK: - NoctToastContainer
-
-public struct NoctToastContainer<Content: View>: View {
-    private let presenter = NoctToastPresenter.shared
-    private let content: Content
     
-    public init(
-        @ViewBuilder content: () -> Content
-    ) {
-        self.content = content()
-    }
-
-    public var body: some View {
-        ZStack {
-            content
-            if let toast = presenter.currentState {
-                NoctToastView(state: toast)
-            }
+    private var alignment: Alignment {
+        switch state.position {
+        case .top: return .top
+        case .bottom: return .bottom
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+    }
+    
+    private var edgeInsets: EdgeInsets {
+        switch state.position {
+        case .top:
+            return EdgeInsets(top: 16, leading: 16, bottom: 0, trailing: 16)
+        case .bottom:
+            return EdgeInsets(top: 0, leading: 16, bottom: 16, trailing: 16)
+        }
     }
 }

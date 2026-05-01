@@ -16,7 +16,7 @@ public enum NoctToastPosition {
     case top, bottom
 }
 
-public struct NoctToastState: Identifiable {
+public struct NoctToastState: Identifiable, Equatable {
     public let id = UUID()
     
     let message: String
@@ -57,5 +57,9 @@ public struct NoctToastState: Identifiable {
         self.foreground = nil
         self.backgroundProvider = backgroundProvider
         self.foregroundProvider = foregroundProvider
+    }
+    
+    public static func == (lhs: NoctToastState, rhs: NoctToastState) -> Bool {
+        lhs.id == rhs.id
     }
 }

@@ -46,8 +46,8 @@ public struct NoctChip<Prefix: View, Suffix: View>: View {
         style: NoctChipStyle = .filled,
         isSelected: Bool = false,
         isEnabled: Bool = true,
-        prefixIcon: String? = nil,
-        suffixIcon: String? = nil,
+        prefixIcon: NoctIconToken? = nil,
+        suffixIcon: NoctIconToken? = nil,
         action: @escaping () -> Void
     ) where Prefix == NoctIcon, Suffix == NoctIcon {
         self.title = title
@@ -57,11 +57,11 @@ public struct NoctChip<Prefix: View, Suffix: View>: View {
         self.action = action
         self.prefix = { textColor in
             guard let prefixIcon else { return nil }
-            return NoctIcon(prefixIcon, size: .sm, color: textColor)
+            return NoctIcon(prefixIcon, size: .xs, color: textColor)
         }
         self.suffix = { textColor in
             guard let suffixIcon else { return nil }
-            return NoctIcon(suffixIcon, size: .sm, color: textColor)
+            return NoctIcon(suffixIcon, size: .xs, color: textColor)
         }
     }
     
@@ -73,7 +73,7 @@ public struct NoctChip<Prefix: View, Suffix: View>: View {
         isSelected: Bool = false,
         isEnabled: Bool = true,
         prefix: @escaping (_ textColor: Color) -> Prefix? = { _ in nil },
-        suffixIcon: String? = nil,
+        suffixIcon: NoctIconToken? = nil,
         action: @escaping () -> Void
     ) where Suffix == NoctIcon {
         self.title = title
@@ -84,7 +84,7 @@ public struct NoctChip<Prefix: View, Suffix: View>: View {
         self.prefix = prefix
         self.suffix = { textColor in
             guard let suffixIcon else { return nil }
-            return NoctIcon(suffixIcon, size: .sm, color: textColor)
+            return NoctIcon(suffixIcon, size: .xs, color: textColor)
         }
     }
     
@@ -95,7 +95,7 @@ public struct NoctChip<Prefix: View, Suffix: View>: View {
         style: NoctChipStyle = .filled,
         isSelected: Bool = false,
         isEnabled: Bool = true,
-        prefixIcon: String? = nil,
+        prefixIcon: NoctIconToken? = nil,
         suffix: @escaping (_ textColor: Color) -> Suffix? = { _ in nil },
         action: @escaping () -> Void
     ) where Prefix == NoctIcon {
@@ -106,7 +106,7 @@ public struct NoctChip<Prefix: View, Suffix: View>: View {
         self.action = action
         self.prefix = { textColor in
             guard let prefixIcon else { return nil }
-            return NoctIcon(prefixIcon, size: .sm, color: textColor)
+            return NoctIcon(prefixIcon, size: .xs, color: textColor)
         }
         self.suffix = suffix
     }

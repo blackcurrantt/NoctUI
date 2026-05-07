@@ -63,7 +63,7 @@ public struct NoctTextField<Icon: View>: View {
         label: String? = nil,
         placeholder: String? = nil,
         hint: String? = nil,
-        icon: String? = nil,
+        icon: NoctIconToken? = nil,
         state: NoctTextFieldState = .normal,
         clearable: Bool = true,
         capitalize: Bool = false,
@@ -79,7 +79,7 @@ public struct NoctTextField<Icon: View>: View {
         self.submitLabel = submitLabel
         self.icon = { color in
             guard let icon else { return nil }
-            return NoctIcon(icon, size: .lg, color: color)
+            return NoctIcon(icon, size: .md, color: color)
         }
     }
     
@@ -119,7 +119,7 @@ public struct NoctTextField<Icon: View>: View {
                         Button {
                             text = ""
                         } label: {
-                            NoctIcon("xmark.circle.fill", size: .lg, color: iconColor)
+                            NoctIcon(.clear, size: .sm, color: iconColor)
                         }
                     }
                 }

@@ -36,6 +36,8 @@ public protocol NoctTheme {
     var buttonShape: NoctShape { get }
 }
 
+// MARK: - Default Implementation
+
 extension NoctTheme {
     // MARK: - Colors
     

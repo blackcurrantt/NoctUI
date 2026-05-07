@@ -62,7 +62,7 @@ public struct NoctToastView: View {
     private var toast: some View {
         HStack(spacing: 12) {
             if let icon = state.icon {
-                NoctIcon(icon, size: .xl, color: foreground)
+                NoctIcon(icon, size: .lg, color: foreground)
             }
             VStack(alignment: .leading, spacing: 6) {
                 if let title = state.title {

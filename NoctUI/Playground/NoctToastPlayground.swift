@@ -67,7 +67,7 @@ struct NoctToastPlayground: View {
             return NoctToastState(
                 message,
                 title: title,
-                icon: showsIcon.isOn ? "bell.fill" : nil,
+                icon: showsIcon.isOn ? NoctIconToken.notification : nil,
                 position: selectedPosition.noct,
                 dismissible: dismissible.isOn,
                 action: currentAction
@@ -112,7 +112,7 @@ struct NoctToastPlayground: View {
             return NoctToastState(
                 message,
                 title: title,
-                icon: showsIcon.isOn ? "hourglass" : nil,
+                icon: showsIcon.isOn ? .custom(.system("hourglass")) : nil,
                 position: selectedPosition.noct,
                 background: Color(.label),
                 foreground: Color(.systemBackground),

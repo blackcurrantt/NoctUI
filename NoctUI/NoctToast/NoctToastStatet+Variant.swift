@@ -20,7 +20,7 @@ public extension NoctToastState {
         NoctToastState(
             message: message,
             title: title,
-            icon: showsIcon ? "checkmark.circle.fill" : nil,
+            icon: showsIcon ? NoctIconToken.success : nil,
             duration: duration,
             position: position,
             backgroundProvider: { $0.success },
@@ -42,7 +42,7 @@ public extension NoctToastState {
         NoctToastState(
             message: message,
             title: title,
-            icon: showsIcon ? "exclamationmark.triangle.fill" : nil,
+            icon: showsIcon ? NoctIconToken.warning : nil,
             duration: duration,
             position: position,
             backgroundProvider: { $0.warning },
@@ -64,7 +64,7 @@ public extension NoctToastState {
         NoctToastState(
             message: message,
             title: title,
-            icon: showsIcon ? "xmark.circle.fill" : nil,
+            icon: showsIcon ? NoctIconToken.error : nil,
             duration: duration,
             position: position,
             backgroundProvider: { $0.error },
@@ -86,7 +86,7 @@ public extension NoctToastState {
         NoctToastState(
             message: message,
             title: title,
-            icon: showsIcon ? "info.circle.fill" : nil,
+            icon: showsIcon ? NoctIconToken.info : nil,
             duration: duration,
             position: position,
             backgroundProvider: { $0.info },

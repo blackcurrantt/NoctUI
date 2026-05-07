@@ -40,11 +40,11 @@ struct NoctChipPlayground: View {
     @State private var isSuffixIcon: Enabled = .on
     
     @State private var title: String = "Noct"
-    @State private var prefixIcon: String = "line.3.horizontal.decrease"
+    @State private var prefixIcon: NoctIconToken = .filter
     @State private var isSelected: Bool = false {
         didSet {
             title = isSelected ? "Selected" : "Noct"
-            prefixIcon = isSelected ? "xmark.circle.fill" : "line.3.horizontal.decrease"
+            prefixIcon = isSelected ? .clear : .filter
         }
     }
     
@@ -60,7 +60,7 @@ struct NoctChipPlayground: View {
                 prefix: { textColor in
                     isPrefixIcon.isOn ? NoctIcon(prefixIcon, size: .sm, color: textColor) : nil
                 },
-                suffixIcon: isSuffixIcon.isOn ? "chevron.right" : nil
+                suffixIcon: isSuffixIcon.isOn ? .chevronRight : nil
             ) {
                 isSelected.toggle()
             }

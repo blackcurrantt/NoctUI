@@ -8,36 +8,70 @@
 import SwiftUI
 
 public struct NoctIcon: View {
-    let name: String
+    @Environment(\.noctIconSet) private var noctIconSet
+    
+    let token: NoctIconToken
     let size: NoctIconSize
-    let color: Color?
+    let color: Color
     
     public init(
-        _ name: String,
+        _ token: NoctIconToken,
         size: NoctIconSize = .md,
-        color: Color? = nil
+        color: Color = .primary
     ) {
-        self.name = name
+        self.token = token
         self.size = size
         self.color = color
     }
     
     public var body: some View {
-        Image(systemName: name)
-            .font(.system(size: size.pointSize, weight: .semibold))
-            .foregroundStyle(color ?? .primary)
+        image
+            .renderingMode(.template)
+            .resizable()
+            .scaledToFit()
+            .frame(width: size.pointSize, height: size.pointSize)
+            .foregroundStyle(color)
+    }
+    
+    private var image: Image {
+        switch content {
+        case let .system(name):
+            Image(systemName: name)
+        case let .asset(name):
+            Image(name)
+        }
     }
 }
 
-public enum NoctIconSize {
-    case sm, md, lg, xl
-    
-    var pointSize: CGFloat {
-        switch self {
-        case .sm: 12
-        case .md: 14
-        case .lg: 16
-        case .xl: 20
+// MARK: - Content
+
+private extension NoctIcon {
+    var content: NoctIconContent {
+        switch token {
+        case .success:
+            return noctIconSet.success
+        case .warning:
+            return noctIconSet.warning
+        case .error:
+            return noctIconSet.error
+        case .info:
+            return noctIconSet.info
+        case .close:
+            return noctIconSet.close    
+        case .clear:
+            return noctIconSet.clear
+        case .filter:
+            return noctIconSet.filter
+        case .search:
+            return noctIconSet.search
+        case .email:
+            return noctIconSet.email
+        case .notification:
+            return noctIconSet.notification
+        case .chevronRight:
+            return noctIconSet.chevronRight
+        case let .custom(custom):
+            return custom
         }
     }
 }

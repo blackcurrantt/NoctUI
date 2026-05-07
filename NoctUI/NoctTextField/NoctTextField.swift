@@ -128,10 +128,10 @@ public struct NoctTextField<Icon: View>: View {
             .padding(.vertical, 16)
             .background(backgroundColor)
             .overlay(
-                RoundedRectangle(cornerRadius: 12)
+                RoundedRectangle(cornerRadius: noctTheme.radius.md)
                     .stroke(borderColor, lineWidth: borderWidth)
             )
-            .cornerRadius(12)
+            .cornerRadius(noctTheme.radius.md)
             .animation(.easeInOut(duration: 0.15), value: isFocused)
             .animation(.easeInOut(duration: 0.15), value: state)
             

@@ -18,11 +18,13 @@ public struct SolarTheme: NoctTheme {
     public var warning: Color { Color(hex: 0xC68A00) }
     public var error: Color { Color(hex: 0xC62828) }
     public var info: Color { Color(hex: 0x1565C0) }
+    public var surface: Color { Color(hex: 0xFFFFFF) }
+    public var muted: Color { Color(hex: 0xE5E7EB) }
     
     // MARK: - Component Colors
     
     public var card: Color { Color(hex: 0xF3EFE8) }
-    public var border: Color { Color(hex: 0xD4AF37).opacity(0.3) }
+    public var border: Color { Color(hex: 0xC7CDD4) }
 
     // MARK: - Text Colors
 

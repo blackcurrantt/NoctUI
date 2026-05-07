@@ -15,6 +15,8 @@ public protocol NoctTheme {
     var warning: Color { get }
     var error: Color { get }
     var info: Color { get }
+    var surface: Color { get }
+    var muted: Color { get }
     
     // MARK: - Component Colors
     var card: Color { get }
@@ -43,19 +45,21 @@ extension NoctTheme {
     public var warning: Color { Color(hex: 0xD9822B) }
     public var error: Color { Color(hex: 0xEF5350) }
     public var info: Color { Color(hex: 0x2F7EDB) }
+    public var surface: Color { Color(hex: 0x181A20) }
+    public var muted: Color { Color(hex: 0x6B7280) }
     
     // MARK: - Component Colors
     
     public var card: Color { Color(hex: 0x121318) }
-    public var border: Color { Color.white.opacity(0.3) }
+    public var border: Color { Color(hex: 0x343843) }
     public var toast: Color { Color(hex: 0x1F1E1F) }
     
     // MARK: - Text Colors
 
-    public var textDefault: Color { Color.white }
-    public var textInverse: Color { Color.white }
-    public var textSubtle: Color { Color.white.opacity(0.7) }
-    public var textDisabled: Color { Color.white.opacity(0.4) }
+    public var textDefault: Color { Color(hex: 0xFFFFFF) }
+    public var textInverse: Color { Color(hex: 0xFFFFFF) }
+    public var textSubtle: Color { Color(hex: 0xB0B3BD) }
+    public var textDisabled: Color { Color(hex: 0x6B7280) }
     
     // MARK: - Radius
     

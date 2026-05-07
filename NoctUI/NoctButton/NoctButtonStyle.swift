@@ -9,6 +9,7 @@ import SwiftUI
 
 public struct NoctButtonStyle: ButtonStyle {
     @Environment(\.noctTheme) private var noctTheme
+    @Environment(\.isEnabled) private var isEnabled
     
     let dimension: NoctButtonDimension
     let shape: NoctShape?
@@ -50,16 +51,20 @@ public struct NoctButtonStyle: ButtonStyle {
             .noctTextStyle(dimension.typographyStyle, weight: .semibold)
             .frame(maxWidth: .infinity)
             .frame(height: dimension.height)
-            .foregroundColor(foreground ?? foregroundProvider(noctTheme))
+            .foregroundColor(foregroundColor)
             .padding(.horizontal, dimension.padding)
-            .background(background ?? backgroundProvider(noctTheme))
+            .background(backgroundColor)
             .clipShape(
                 RoundedRectangle(cornerRadius: cornerRadius)
             )
             .opacity(configuration.isPressed ? 0.85 : 1.0)
     }
-    
-    private var cornerRadius: CGFloat {
+}
+
+// MARK: - Styling
+
+private extension NoctButtonStyle {
+    var cornerRadius: CGFloat {
         switch (shape ?? noctTheme.buttonShape) {
         case .standard:
             switch dimension {
@@ -70,5 +75,15 @@ public struct NoctButtonStyle: ButtonStyle {
         case .pill:
             return dimension.height / 2
         }
+    }
+    
+    var foregroundColor: Color {
+        guard isEnabled else { return noctTheme.textDisabled }
+        return foreground ?? foregroundProvider(noctTheme)
+    }
+    
+    var backgroundColor: Color {
+        guard isEnabled else { return noctTheme.muted }
+        return background ?? backgroundProvider(noctTheme)
     }
 }

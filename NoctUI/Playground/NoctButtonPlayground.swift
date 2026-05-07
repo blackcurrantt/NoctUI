@@ -49,6 +49,12 @@ struct NoctButtonPlayground: View {
     }
     @State private var selectedShape: Shape = .standard
     
+    private enum Option: CaseIterable, Equatable {
+        case on, off
+        var isOn: Bool { self == .on }
+    }
+    @State private var disabled: Option = .off
+    
     private var currentStyle: NoctButtonStyle {
         switch selectedVariant {
         case .primary:
@@ -79,6 +85,7 @@ struct NoctButtonPlayground: View {
         PlaygroundView(height: NoctButtonDimension.lg.height) {
             Button("Noct") { }
                 .buttonStyle(currentStyle)
+                .disabled(disabled.isOn)
                 .animation(springAnimation, value: selectedVariant)
                 .animation(springAnimation, value: selectedDimension)
                 .animation(springAnimation, value: selectedShape)
@@ -86,13 +93,14 @@ struct NoctButtonPlayground: View {
             PlaygroundSection("Variant") {
                 PlaygroundVariantPicker($selectedVariant)
             }
-
             PlaygroundSection("Dimension") {
                 PlaygroundPicker($selectedDimension)
             }
-            
             PlaygroundSection("Shape") {
                 PlaygroundPicker($selectedShape)
+            }
+            PlaygroundSection("Disabled") {
+                PlaygroundPicker($disabled)
             }
         }
         .onAppear {

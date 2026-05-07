@@ -19,6 +19,8 @@ public struct NoctChip<Prefix: View, Suffix: View>: View {
     private let isEnabled: Bool
     private let action: () -> Void
     
+    // MARK: - Default Init
+    
     public init(
         title: String,
         style: NoctChipStyle = .filled,
@@ -36,6 +38,81 @@ public struct NoctChip<Prefix: View, Suffix: View>: View {
         self.suffix = suffix
         self.action = action
     }
+    
+    // MARK: - Icon Prefix & Icon Suffix Init
+    
+    public init(
+        title: String,
+        style: NoctChipStyle = .filled,
+        isSelected: Bool = false,
+        isEnabled: Bool = true,
+        prefixIcon: String? = nil,
+        suffixIcon: String? = nil,
+        action: @escaping () -> Void
+    ) where Prefix == NoctIcon, Suffix == NoctIcon {
+        self.title = title
+        self.style = style
+        self.isSelected = isSelected
+        self.isEnabled = isEnabled
+        self.action = action
+        self.prefix = { textColor in
+            guard let prefixIcon else { return nil }
+            return NoctIcon(prefixIcon, size: .sm, color: textColor)
+        }
+        self.suffix = { textColor in
+            guard let suffixIcon else { return nil }
+            return NoctIcon(suffixIcon, size: .sm, color: textColor)
+        }
+    }
+    
+    // MARK: - Custom Prefix & Icon Suffix Init
+    
+    public init(
+        title: String,
+        style: NoctChipStyle = .filled,
+        isSelected: Bool = false,
+        isEnabled: Bool = true,
+        prefix: @escaping (_ textColor: Color) -> Prefix? = { _ in nil },
+        suffixIcon: String? = nil,
+        action: @escaping () -> Void
+    ) where Suffix == NoctIcon {
+        self.title = title
+        self.style = style
+        self.isSelected = isSelected
+        self.isEnabled = isEnabled
+        self.action = action
+        self.prefix = prefix
+        self.suffix = { textColor in
+            guard let suffixIcon else { return nil }
+            return NoctIcon(suffixIcon, size: .sm, color: textColor)
+        }
+    }
+    
+    // MARK: - Icon Prefix & Custom Suffix Init
+    
+    public init(
+        title: String,
+        style: NoctChipStyle = .filled,
+        isSelected: Bool = false,
+        isEnabled: Bool = true,
+        prefixIcon: String? = nil,
+        suffix: @escaping (_ textColor: Color) -> Suffix? = { _ in nil },
+        action: @escaping () -> Void
+    ) where Prefix == NoctIcon {
+        self.title = title
+        self.style = style
+        self.isSelected = isSelected
+        self.isEnabled = isEnabled
+        self.action = action
+        self.prefix = { textColor in
+            guard let prefixIcon else { return nil }
+            return NoctIcon(prefixIcon, size: .sm, color: textColor)
+        }
+        self.suffix = suffix
+    }
+
+    
+    // MARK: - Body
     
     public var body: some View {
         Button(action: action) {
@@ -129,83 +206,5 @@ private extension NoctChip {
         case let .custom(custom):
             return isSelected ? custom.textColor.selected : custom.textColor.normal
         }
-    }
-}
-
-// MARK: - Icon Prefix & Icon Suffix
-
-extension NoctChip where Prefix == NoctIcon, Suffix == NoctIcon {
-    public init(
-        title: String,
-        style: NoctChipStyle = .filled,
-        isSelected: Bool = false,
-        isEnabled: Bool = true,
-        prefixIcon: String? = nil,
-        suffixIcon: String? = nil,
-        action: @escaping () -> Void
-    ) {
-        self.title = title
-        self.style = style
-        self.isSelected = isSelected
-        self.isEnabled = isEnabled
-        self.action = action
-        self.prefix = { textColor in
-            guard let prefixIcon else { return nil }
-            return NoctIcon(prefixIcon, size: .sm, color: textColor)
-        }
-        self.suffix = { textColor in
-            guard let suffixIcon else { return nil }
-            return NoctIcon(suffixIcon, size: .sm, color: textColor)
-        }
-    }
-}
-
-// MARK: - Custom Prefix & Icon Suffix
-
-extension NoctChip where Suffix == NoctIcon {
-    public init(
-        title: String,
-        style: NoctChipStyle = .filled,
-        isSelected: Bool = false,
-        isEnabled: Bool = true,
-        prefix: @escaping (_ textColor: Color) -> Prefix? = { _ in nil },
-        suffixIcon: String? = nil,
-        action: @escaping () -> Void
-    ) {
-        self.title = title
-        self.style = style
-        self.isSelected = isSelected
-        self.isEnabled = isEnabled
-        self.action = action
-        self.prefix = prefix
-        self.suffix = { textColor in
-            guard let suffixIcon else { return nil }
-            return NoctIcon(suffixIcon, size: .sm, color: textColor)
-        }
-    }
-}
-
-// MARK: - Icon Prefix & Custom Suffix
-
-extension NoctChip where Prefix == NoctIcon {
-    public init(
-        title: String,
-        style: NoctChipStyle = .filled,
-        isSelected: Bool = false,
-        isEnabled: Bool = true,
-        prefixIcon: String? = nil,
-        suffix: @escaping (_ textColor: Color) -> Suffix? = { _ in nil },
-        action: @escaping () -> Void
-    ) {
-        self.title = title
-        self.style = style
-        self.isSelected = isSelected
-        self.isEnabled = isEnabled
-        self.action = action
-        self.prefix = { textColor in
-            guard let prefixIcon else { return nil }
-            return NoctIcon(prefixIcon, size: .sm, color: textColor)
-        }
-        self.suffix = suffix
     }
 }

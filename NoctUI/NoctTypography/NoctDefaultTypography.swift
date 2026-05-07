@@ -11,27 +11,35 @@ public struct NoctDefaultTypography: NoctTypography {
     public init() {}
 
     public func font(for style: NoctTypographyStyle) -> Font {
+        let size = fontSize(for: style)
         switch style {
         case .title(.lg):
-            return .system(size: 24, weight: .bold)
-
+            return .system(size: size, weight: .bold)
         case .title(.md):
-            return .system(size: 20, weight: .semibold)
-
+            return .system(size: size, weight: .semibold)
         case .title(.sm):
-            return .system(size: 18, weight: .semibold)
-            
+            return .system(size: size, weight: .semibold)
+        default:
+            return .system(size: size)
+        }
+    }
+    
+    public func fontSize(for style: NoctTypographyStyle) -> CGFloat {
+        switch style {
+        case .title(.lg):
+            return 24
+        case .title(.md):
+            return 20
+        case .title(.sm):
+            return 18
         case .body(.lg):
-            return .system(size: 18)
-
+            return 18
         case .body(.md):
-            return .system(size: 16)
-
+            return 16
         case .body(.sm):
-            return .system(size: 14)
-
+            return 14
         case .caption:
-            return .system(size: 12)
+            return 12
         }
     }
 

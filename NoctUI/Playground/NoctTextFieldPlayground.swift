@@ -16,6 +16,7 @@ struct NoctTextFieldPlayground: View {
     }
     @State private var showsLabel: Option = .on
     @State private var showsPlaceholder: Option = .on
+    @State private var showsHint: Option = .on
     @State private var showsIcon: Option = .on
     @State private var clearable: Option = .on
     @State private var capitalize: Option = .off
@@ -38,6 +39,7 @@ struct NoctTextFieldPlayground: View {
                 text: $email,
                 label: showsLabel.isOn ? "Email" : nil,
                 placeholder: showsPlaceholder.isOn ? "example@mail.com" : "",
+                hint: showsHint.isOn ? "Please enter a valid email" : nil,
                 icon: showsIcon.isOn ? "envelope" : nil,
                 state: state,
                 clearable: clearable.isOn,
@@ -51,6 +53,9 @@ struct NoctTextFieldPlayground: View {
             }
             PlaygroundSection("Placeholder") {
                 PlaygroundPicker($showsPlaceholder)
+            }
+            PlaygroundSection("Hint") {
+                PlaygroundPicker($showsHint)
             }
             PlaygroundSection("Icon") {
                 PlaygroundPicker($showsIcon)

@@ -15,12 +15,14 @@ public enum NoctTextFieldState: Equatable {
 
 public struct NoctTextField<Icon: View>: View {
     @Environment(\.noctTheme) private var noctTheme
+    @Environment(\.noctTypography) private var noctTypography
     
     // MARK: - Properties
     
     @Binding private var text: String
     private let label: String?
     private let placeholder: String?
+    private let hint: String?
     private let state: NoctTextFieldState
     private let clearable: Bool
     private let capitalize: Bool
@@ -36,6 +38,7 @@ public struct NoctTextField<Icon: View>: View {
         text: Binding<String>,
         label: String? = nil,
         placeholder: String? = nil,
+        hint: String? = nil,
         state: NoctTextFieldState = .normal,
         clearable: Bool = true,
         capitalize: Bool = false,
@@ -45,6 +48,7 @@ public struct NoctTextField<Icon: View>: View {
         self._text = text
         self.label = label
         self.placeholder = placeholder
+        self.hint = hint
         self.state = state
         self.clearable = clearable
         self.capitalize = capitalize
@@ -58,6 +62,7 @@ public struct NoctTextField<Icon: View>: View {
         text: Binding<String>,
         label: String? = nil,
         placeholder: String? = nil,
+        hint: String? = nil,
         icon: String? = nil,
         state: NoctTextFieldState = .normal,
         clearable: Bool = true,
@@ -67,6 +72,7 @@ public struct NoctTextField<Icon: View>: View {
         self._text = text
         self.label = label
         self.placeholder = placeholder
+        self.hint = hint
         self.state = state
         self.clearable = clearable
         self.capitalize = capitalize
@@ -130,13 +136,17 @@ public struct NoctTextField<Icon: View>: View {
             .animation(.easeInOut(duration: 0.15), value: state)
             
             ZStack {
-                if case let .error(message) = state {
-                    Text(message)
+                if case let .error(error) = state {
+                    Text(error)
                         .foregroundStyle(noctTheme.error)
+                        .noctTextStyle(.caption)
+                } else if let hint {
+                    Text(hint)
+                        .foregroundStyle(noctTheme.textSubtle)
                         .noctTextStyle(.caption)
                 }
             }
-            .frame(height: 14)
+            .frame(height: noctTypography.lineHeight(for: .caption))
         }
     }
 }

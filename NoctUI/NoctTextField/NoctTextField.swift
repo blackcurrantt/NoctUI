@@ -88,7 +88,7 @@ public struct NoctTextField<Icon: View>: View {
             }
             
             HStack(spacing: 8) {
-                if let icon = icon(noctTheme.textSubtle) {
+                if let icon = icon(iconColor) {
                     icon
                 }
                 
@@ -113,7 +113,7 @@ public struct NoctTextField<Icon: View>: View {
                         Button {
                             text = ""
                         } label: {
-                            NoctIcon("xmark.circle.fill", size: .lg, color: noctTheme.textSubtle)
+                            NoctIcon("xmark.circle.fill", size: .lg, color: iconColor)
                         }
                     }
                 }
@@ -149,8 +149,12 @@ private extension NoctTextField {
         return false
     }
     
+    var iconColor: Color {
+        isDisabled ? noctTheme.textDisabled : noctTheme.textSubtle
+    }
+    
     var textColor: Color {
-        isDisabled ? noctTheme.textSubtle : noctTheme.textDefault
+        isDisabled ? noctTheme.textDisabled : noctTheme.textDefault
     }
     
     var backgroundColor: Color {

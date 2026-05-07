@@ -143,12 +143,6 @@ public struct NoctChip<Prefix: View, Suffix: View>: View {
                 Capsule()
                     .stroke(borderColor, lineWidth: borderWidth)
             )
-            .overlay {
-                if !isEnabled {
-                    Capsule()
-                        .fill(Color.black.opacity(0.3))
-                }
-            }
         }
         .buttonStyle(NoctChipPressStyle())
         .disabled(!isEnabled)
@@ -165,17 +159,19 @@ private struct NoctChipPressStyle: ButtonStyle {
 
 private extension NoctChip {
     var backgroundColor: Color {
+        guard isEnabled else { return noctTheme.muted }
         switch style {
         case .filled:
             return isSelected ? noctTheme.primary : noctTheme.secondary
         case .outlined:
-            return Color(.systemBackground)
+            return noctTheme.surface
         case let .custom(custom):
             return isSelected ? custom.backgroundColor.selected : custom.backgroundColor.normal
         }
     }
     
     var borderColor: Color {
+        guard isEnabled else { return noctTheme.muted }
         switch style {
         case .outlined:
             return isSelected ? noctTheme.primary : noctTheme.border
@@ -198,6 +194,7 @@ private extension NoctChip {
     }
     
     var textColor: Color {
+        guard isEnabled else { return noctTheme.textDisabled }
         switch style {
         case .filled:
             return noctTheme.textDefault

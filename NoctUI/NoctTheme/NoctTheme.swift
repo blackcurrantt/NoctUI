@@ -59,7 +59,7 @@ extension NoctTheme {
     public var textDefault: Color { Color(hex: 0xFFFFFF) }
     public var textInverse: Color { Color(hex: 0xFFFFFF) }
     public var textSubtle: Color { Color(hex: 0xB0B3BD) }
-    public var textDisabled: Color { Color(hex: 0x6B7280) }
+    public var textDisabled: Color { Color(hex: 0xB0B3BD) }
     
     // MARK: - Radius
     

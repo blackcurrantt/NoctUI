@@ -1,5 +1,5 @@
 //
-//  NoctTextField.swift
+//  NoctTextView.swift
 //  NoctUI
 //
 //  Created by blackcurrantt
@@ -7,32 +7,26 @@
 
 import SwiftUI
 
-public enum NoctTextFieldState: Equatable {
-    case normal
-    case error(String)
-    case disabled
-}
-
-public struct NoctTextField: View {
+public struct NoctTextView: View {
     @Environment(\.noctTheme) private var noctTheme
     @Environment(\.noctTypography) private var noctTypography
-    
+
     // MARK: - Properties
-    
+
     @Binding private var text: String
     private let label: String?
     private let placeholder: String?
     private let hint: String?
     private let icon: NoctIcon?
     private let state: NoctTextFieldState
-    private let clearable: Bool
     private let capitalize: Bool
     private let submitLabel: SubmitLabel
-    
+    private let minHeight: CGFloat
+
     @FocusState private var isFocused: Bool
-    
-    // MARK: - Default Init
-    
+
+    // MARK: - Init
+
     public init(
         text: Binding<String>,
         label: String? = nil,
@@ -40,9 +34,9 @@ public struct NoctTextField: View {
         hint: String? = nil,
         icon: NoctIcon? = nil,
         state: NoctTextFieldState = .normal,
-        clearable: Bool = true,
-        capitalize: Bool = false,
-        submitLabel: SubmitLabel = .done
+        capitalize: Bool = true,
+        submitLabel: SubmitLabel = .done,
+        minHeight: CGFloat = 120
     ) {
         self._text = text
         self.label = label
@@ -50,13 +44,13 @@ public struct NoctTextField: View {
         self.hint = hint
         self.icon = icon
         self.state = state
-        self.clearable = clearable
         self.capitalize = capitalize
         self.submitLabel = submitLabel
+        self.minHeight = minHeight
     }
-    
+
     // MARK: - Body
-    
+
     public var body: some View {
         VStack(alignment: .leading, spacing: 6) {
             if let label {
@@ -64,37 +58,33 @@ public struct NoctTextField: View {
                     .foregroundStyle(noctTheme.textDefault)
                     .noctTextStyle(.caption)
             }
-            
-            HStack(spacing: 8) {
+
+            HStack(alignment: .top, spacing: 8) {
                 if let icon {
                     NoctIconView(icon, size: .md, color: iconColor)
                 }
-                
-                ZStack(alignment: .leading) {
+
+                ZStack(alignment: .topLeading) {
                     if let placeholder, text.isEmpty {
                         Text(placeholder)
                             .foregroundStyle(noctTheme.textSubtle)
                             .font(font)
                     }
-                    
-                    TextField("", text: $text)
-                        .textInputAutocapitalization(capitalize ? .sentences : .never)
+
+                    TextEditor(text: $text)
+                        .scrollContentBackground(.hidden)
+                        .textInputAutocapitalization(
+                            capitalize ? .sentences : .never
+                        )
                         .disableAutocorrection(true)
                         .submitLabel(submitLabel)
-                        .font(font)
                         .foregroundStyle(textColor)
+                        .font(font)
+                        .frame(minHeight: minHeight)
                         .focused($isFocused)
                         .disabled(isDisabled)
-                }
-                
-                if clearable, !isDisabled {
-                    if !text.isEmpty {
-                        Button {
-                            text = ""
-                        } label: {
-                            NoctIconView(.clear, size: .sm, color: iconColor)
-                        }
-                    }
+                        .padding(.horizontal, -4)
+                        .padding(.vertical, -8)
                 }
             }
             .padding(.horizontal, 12)
@@ -107,7 +97,7 @@ public struct NoctTextField: View {
             .cornerRadius(noctTheme.radius.md)
             .animation(.easeInOut(duration: 0.15), value: isFocused)
             .animation(.easeInOut(duration: 0.15), value: state)
-            
+
             ZStack {
                 if case let .error(error) = state {
                     Text(error)
@@ -126,7 +116,7 @@ public struct NoctTextField: View {
 
 // MARK: - Styling
 
-private extension NoctTextField {
+private extension NoctTextView {
     var isDisabled: Bool {
         if case .disabled = state { return true }
         return false
@@ -135,30 +125,34 @@ private extension NoctTextField {
     var font: Font {
         noctTypography.font(for: .body())
     }
-    
+
     var iconColor: Color {
         isDisabled ? noctTheme.textDisabled : noctTheme.textSubtle
     }
-    
+
     var textColor: Color {
         isDisabled ? noctTheme.textDisabled : noctTheme.textDefault
     }
-    
+
     var backgroundColor: Color {
         isDisabled ? noctTheme.muted : noctTheme.surface
     }
-    
+
     var borderColor: Color {
         switch state {
         case .error:
             return noctTheme.error
+
         case .disabled:
             return noctTheme.border
+
         case .normal:
-            return isFocused ? noctTheme.primary : noctTheme.border
+            return isFocused
+                ? noctTheme.primary
+                : noctTheme.border
         }
     }
-    
+
     var borderWidth: CGFloat {
         isFocused ? 2 : 1.5
     }

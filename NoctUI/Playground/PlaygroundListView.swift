@@ -13,6 +13,7 @@ enum Playground: String, CaseIterable, Identifiable {
     case chip
     case icon
     case textfield
+    case textview
     case toast
     
     var id: String { rawValue }
@@ -29,6 +30,7 @@ enum Playground: String, CaseIterable, Identifiable {
         case .chip: NoctChipPlayground()
         case .icon: NoctIconPlayground()
         case .textfield: NoctTextFieldPlayground()
+        case .textview: NoctTextViewPlayground()
         case .toast: NoctToastPlayground()
         }
     }

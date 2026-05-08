@@ -7,168 +7,35 @@
 
 import SwiftUI
 
-public struct NoctChip<Prefix: View, Suffix: View>: View {
+public struct NoctChip: View {
     @Environment(\.noctTheme) private var noctTheme
-    
-    private let prefix: (_ textColor: Color) -> Prefix
-    private let suffix: (_ textColor: Color) -> Suffix
     
     private let title: String
     private let style: NoctChipStyle
     private let isSelected: Bool
     private let isEnabled: Bool
+    private let prefixIcon: NoctIcon?
+    private let suffixIcon: NoctIcon?
     private let action: () -> Void
     
-    // MARK: - Default Init
+    // MARK: - Init
     
     public init(
         title: String,
         style: NoctChipStyle = .filled,
         isSelected: Bool = false,
         isEnabled: Bool = true,
-        @ViewBuilder prefix: @escaping (_ textColor: Color) -> Prefix,
-        @ViewBuilder suffix: @escaping (_ textColor: Color) -> Suffix,
+        prefixIcon: NoctIcon? = nil,
+        suffixIcon: NoctIcon? = nil,
         action: @escaping () -> Void
     ) {
         self.title = title
         self.isSelected = isSelected
         self.isEnabled = isEnabled
         self.style = style
-        self.prefix = prefix
-        self.suffix = suffix
+        self.prefixIcon = prefixIcon
+        self.suffixIcon = suffixIcon
         self.action = action
-    }
-    
-    public init(
-        title: String,
-        style: NoctChipStyle = .filled,
-        isSelected: Bool = false,
-        isEnabled: Bool = true,
-        action: @escaping () -> Void
-    ) where Prefix == EmptyView, Suffix == EmptyView {
-        self.init(
-            title: title,
-            style: style,
-            isSelected: isSelected,
-            isEnabled: isEnabled,
-            prefix: { _ in EmptyView() },
-            suffix: { _ in EmptyView() },
-            action: action
-        )
-    }
-    
-    // MARK: - Icon Prefix & Icon Suffix Init
-    
-    public init(
-        title: String,
-        style: NoctChipStyle = .filled,
-        isSelected: Bool = false,
-        isEnabled: Bool = true,
-        prefixIcon: NoctIconToken? = nil,
-        suffixIcon: NoctIconToken? = nil,
-        action: @escaping () -> Void
-    ) where Prefix == NoctIcon?, Suffix == NoctIcon? {
-        self.title = title
-        self.style = style
-        self.isSelected = isSelected
-        self.isEnabled = isEnabled
-        self.action = action
-        self.prefix = { textColor in
-            guard let prefixIcon else { return nil }
-            return NoctIcon(prefixIcon, size: .xs, color: textColor)
-        }
-        self.suffix = { textColor in
-            guard let suffixIcon else { return nil }
-            return NoctIcon(suffixIcon, size: .xs, color: textColor)
-        }
-    }
-    
-    // MARK: - Custom Prefix & Icon Suffix Init
-    
-    public init(
-        title: String,
-        style: NoctChipStyle = .filled,
-        isSelected: Bool = false,
-        isEnabled: Bool = true,
-        @ViewBuilder prefix: @escaping (_ textColor: Color) -> Prefix,
-        suffixIcon: NoctIconToken? = nil,
-        action: @escaping () -> Void
-    ) where Suffix == NoctIcon? {
-        self.title = title
-        self.style = style
-        self.isSelected = isSelected
-        self.isEnabled = isEnabled
-        self.action = action
-        self.prefix = prefix
-        self.suffix = { textColor in
-            guard let suffixIcon else { return nil }
-            return NoctIcon(suffixIcon, size: .xs, color: textColor)
-        }
-    }
-    
-    // MARK: - Icon Prefix & Custom Suffix Init
-    
-    public init(
-        title: String,
-        style: NoctChipStyle = .filled,
-        isSelected: Bool = false,
-        isEnabled: Bool = true,
-        prefixIcon: NoctIconToken? = nil,
-        @ViewBuilder suffix: @escaping (_ textColor: Color) -> Suffix,
-        action: @escaping () -> Void
-    ) where Prefix == NoctIcon? {
-        self.title = title
-        self.style = style
-        self.isSelected = isSelected
-        self.isEnabled = isEnabled
-        self.action = action
-        self.prefix = { textColor in
-            guard let prefixIcon else { return nil }
-            return NoctIcon(prefixIcon, size: .xs, color: textColor)
-        }
-        self.suffix = suffix
-    }
-    
-    // MARK: - Custom Prefix Init
-    
-    public init(
-        title: String,
-        style: NoctChipStyle = .filled,
-        isSelected: Bool = false,
-        isEnabled: Bool = true,
-        @ViewBuilder prefix: @escaping (_ textColor: Color) -> Prefix,
-        action: @escaping () -> Void
-    ) where Suffix == EmptyView {
-        self.init(
-            title: title,
-            style: style,
-            isSelected: isSelected,
-            isEnabled: isEnabled,
-            prefix: prefix,
-            suffix: { _ in EmptyView() },
-            action: action
-        )
-    }
-    
-    // MARK: - Custom Suffix Init
-    
-    public init(
-        title: String,
-        style: NoctChipStyle = .filled,
-        isSelected: Bool = false,
-        isEnabled: Bool = true,
-        @ViewBuilder suffix: @escaping (_ textColor: Color) -> Suffix,
-        action: @escaping () -> Void
-    ) where Prefix == EmptyView {
-        self.init(
-            title: title,
-            style: style,
-            isSelected: isSelected,
-            isEnabled: isEnabled,
-            prefix: { _ in EmptyView() },
-            suffix: suffix,
-            action: action
-        )
     }
 
     
@@ -177,12 +44,16 @@ public struct NoctChip<Prefix: View, Suffix: View>: View {
     public var body: some View {
         Button(action: action) {
             HStack(spacing: 8) {
-                prefix(textColor)
+                if let prefixIcon {
+                    NoctIconView(prefixIcon, size: .xs, color: textColor)
+                }
                 
                 Text(title)
                     .noctTextStyle(.body(), weight: isSelected ? .bold : .regular)
                 
-                suffix(textColor)
+                if let suffixIcon {
+                    NoctIconView(suffixIcon, size: .xs, color: textColor)
+                }
             }
             .foregroundStyle(textColor)
             .padding(.vertical, 6)

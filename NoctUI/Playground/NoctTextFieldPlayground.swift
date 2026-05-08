@@ -40,15 +40,12 @@ struct NoctTextFieldPlayground: View {
                 label: showsLabel.isOn ? "Email" : nil,
                 placeholder: showsPlaceholder.isOn ? "example@mail.com" : "",
                 hint: showsHint.isOn ? "Please enter a valid email" : nil,
+                icon: showsIcon.isOn ? .system("envelope") : nil,
                 state: state,
                 clearable: clearable.isOn,
                 capitalize: capitalize.isOn,
                 submitLabel: .done
-            ) { color in
-                if showsIcon.isOn {
-                    NoctIcon(.system("envelope"), size: .md, color: color)
-                }
-            }
+            )
             .focused($focusedField, equals: .email)
         } config: {
             PlaygroundSection("Label") {

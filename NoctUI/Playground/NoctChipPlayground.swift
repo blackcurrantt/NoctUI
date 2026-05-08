@@ -48,6 +48,11 @@ struct NoctChipPlayground: View {
     
     private let springAnimation = Animation.spring(response: 0.35, dampingFraction: 0.8)
     
+    private var currentPrefixIcon: NoctIcon? {
+        guard isPrefixIcon.isOn else { return nil }
+        return isSelected ? NoctIcon(.clear) : .system("line.3.horizontal.decrease")
+    }
+    
     var body: some View {
         PlaygroundView(height: 40) {
             NoctChip(
@@ -55,16 +60,8 @@ struct NoctChipPlayground: View {
                 style: selectedStyle.noct,
                 isSelected: isSelected,
                 isEnabled: isEnabled.isOn,
-                prefix: { textColor in
-                    if isPrefixIcon.isOn {
-                        if isSelected {
-                            NoctIcon(.clear, size: .sm, color: textColor)
-                        } else {
-                            NoctIcon(.system("line.3.horizontal.decrease"), size: .sm, color: textColor)
-                        }
-                    }
-                },
-                suffixIcon: isSuffixIcon.isOn ? .chevronRight : nil
+                prefixIcon: currentPrefixIcon,
+                suffixIcon: isSuffixIcon.isOn ? NoctIcon(.chevronRight) : nil
             ) {
                 isSelected.toggle()
             }

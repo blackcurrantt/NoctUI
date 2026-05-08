@@ -20,7 +20,7 @@ public extension NoctToastState {
         NoctToastState(
             message: message,
             title: title,
-            icon: showsIcon ? NoctIconToken.success : nil,
+            icon: showsIcon ? NoctIcon(.success) : nil,
             duration: duration,
             position: position,
             backgroundProvider: { $0.success },
@@ -42,7 +42,7 @@ public extension NoctToastState {
         NoctToastState(
             message: message,
             title: title,
-            icon: showsIcon ? NoctIconToken.warning : nil,
+            icon: showsIcon ? NoctIcon(.warning) : nil,
             duration: duration,
             position: position,
             backgroundProvider: { $0.warning },
@@ -64,7 +64,7 @@ public extension NoctToastState {
         NoctToastState(
             message: message,
             title: title,
-            icon: showsIcon ? NoctIconToken.error : nil,
+            icon: showsIcon ? NoctIcon(.error) : nil,
             duration: duration,
             position: position,
             backgroundProvider: { $0.error },
@@ -86,7 +86,7 @@ public extension NoctToastState {
         NoctToastState(
             message: message,
             title: title,
-            icon: showsIcon ? NoctIconToken.info : nil,
+            icon: showsIcon ? NoctIcon(.info) : nil,
             duration: duration,
             position: position,
             backgroundProvider: { $0.info },

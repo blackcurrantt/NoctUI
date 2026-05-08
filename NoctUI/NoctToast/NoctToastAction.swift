@@ -10,7 +10,7 @@ import SwiftUI
 public struct NoctToastAction {
     enum ViewType {
         case text(String)
-        case icon(NoctIconToken)
+        case icon(NoctIcon)
     }
     
     let view: ViewType
@@ -33,8 +33,15 @@ extension NoctToastAction {
         NoctToastAction(.text(text), handler)
     }
     
+    public static func icon(
+        _ icon: NoctIcon,
+        _ handler: @escaping @MainActor () -> Void
+    ) -> NoctToastAction {
+        NoctToastAction(.icon(icon), handler)
+    }
+    
     public static func close() -> NoctToastAction {
-        NoctToastAction(.icon(.close)) {
+        NoctToastAction(.icon(NoctIcon(.close))) {
             NoctToast.dismiss()
         }
     }

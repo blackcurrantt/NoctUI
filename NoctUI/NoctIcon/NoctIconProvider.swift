@@ -8,28 +8,28 @@
 import Foundation
 
 public struct NoctIconProvider {
-    private let resolver: (NoctIconToken) -> NoctIconContent?
-    private let fallbackResolver: ((NoctIconToken) -> NoctIconContent?)?
+    private let resolver: (NoctIconToken) -> NoctIcon?
+    private let fallbackResolver: ((NoctIconToken) -> NoctIcon?)?
 
     public init(
         fallback: NoctIconProvider? = .system,
-        _ resolver: @escaping (NoctIconToken) -> NoctIconContent?
+        _ resolver: @escaping (NoctIconToken) -> NoctIcon?
     ) {
         self.resolver = resolver
-        self.fallbackResolver = fallback?.content(for:)
+        self.fallbackResolver = fallback?.icon(for:)
     }
 
     public init() {
         self = .system
     }
 
-    public func content(for token: NoctIconToken) -> NoctIconContent? {
+    public func icon(for token: NoctIconToken) -> NoctIcon? {
         resolver(token) ?? fallbackResolver?(token)
     }
     
     public func fallback(to fallback: NoctIconProvider) -> NoctIconProvider {
         NoctIconProvider(fallback: nil) { token in
-            content(for: token) ?? fallback.content(for: token)
+            icon(for: token) ?? fallback.icon(for: token)
         }
     }
 }

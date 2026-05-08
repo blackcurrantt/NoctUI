@@ -26,7 +26,7 @@ struct NoctTextViewPlayground: View {
         case text
     }
     @FocusState private var focusedField: Field?
-    @State private var text = ""
+    @State private var text = "Noct ipsum dolor sit amet, noctis interface adipiscing elit. Sed do eiusmod tempor incididunt ut labore et nocte magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
     
     private var state: NoctTextViewState {
         guard !disabled.isOn else { return .disabled }

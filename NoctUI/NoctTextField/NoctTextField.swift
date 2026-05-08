@@ -13,7 +13,7 @@ public enum NoctTextFieldState: Equatable {
     case disabled
 }
 
-public struct NoctTextField<Icon: View>: View {
+public struct NoctTextField: View {
     @Environment(\.noctTheme) private var noctTheme
     @Environment(\.noctTypography) private var noctTypography
     
@@ -27,8 +27,7 @@ public struct NoctTextField<Icon: View>: View {
     private let clearable: Bool
     private let capitalize: Bool
     private let submitLabel: SubmitLabel
-
-    private let icon: (_ color: Color) -> Icon?
+    private let icon: NoctIcon?
     
     @FocusState private var isFocused: Bool
     
@@ -39,11 +38,11 @@ public struct NoctTextField<Icon: View>: View {
         label: String? = nil,
         placeholder: String? = nil,
         hint: String? = nil,
+        icon: NoctIcon? = nil,
         state: NoctTextFieldState = .normal,
         clearable: Bool = true,
         capitalize: Bool = false,
-        submitLabel: SubmitLabel = .done,
-        @ViewBuilder icon: @escaping (_ color: Color) -> Icon? = { _ in nil },
+        submitLabel: SubmitLabel = .done
     ) {
         self._text = text
         self.label = label
@@ -54,33 +53,6 @@ public struct NoctTextField<Icon: View>: View {
         self.capitalize = capitalize
         self.submitLabel = submitLabel
         self.icon = icon
-    }
-    
-    // MARK: - NoctIcon init
-    
-    public init(
-        text: Binding<String>,
-        label: String? = nil,
-        placeholder: String? = nil,
-        hint: String? = nil,
-        icon: String? = nil,
-        state: NoctTextFieldState = .normal,
-        clearable: Bool = true,
-        capitalize: Bool = false,
-        submitLabel: SubmitLabel = .done,
-    ) where Icon == NoctIcon {
-        self._text = text
-        self.label = label
-        self.placeholder = placeholder
-        self.hint = hint
-        self.state = state
-        self.clearable = clearable
-        self.capitalize = capitalize
-        self.submitLabel = submitLabel
-        self.icon = { color in
-            guard let icon else { return nil }
-            return NoctIcon(icon, size: .lg, color: color)
-        }
     }
     
     // MARK: - Body
@@ -94,8 +66,8 @@ public struct NoctTextField<Icon: View>: View {
             }
             
             HStack(spacing: 8) {
-                if let icon = icon(iconColor) {
-                    icon
+                if let icon {
+                    NoctIconView(icon, size: .md, color: iconColor)
                 }
                 
                 ZStack(alignment: .leading) {
@@ -119,7 +91,7 @@ public struct NoctTextField<Icon: View>: View {
                         Button {
                             text = ""
                         } label: {
-                            NoctIcon("xmark.circle.fill", size: .lg, color: iconColor)
+                            NoctIconView(.clear, size: .sm, color: iconColor)
                         }
                     }
                 }

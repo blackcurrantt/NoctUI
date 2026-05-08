@@ -21,7 +21,7 @@ public struct NoctToastState: Identifiable, Equatable {
     
     let message: String
     let title: String?
-    let icon: String?
+    let icon: NoctIcon?
     let duration: TimeInterval
     let position: NoctToastPosition
     let background: Color?
@@ -34,7 +34,7 @@ public struct NoctToastState: Identifiable, Equatable {
     public init(
         _ message: String,
         title: String? = nil,
-        icon: String? = nil,
+        icon: NoctIcon? = nil,
         duration: TimeInterval = NoctToastDuration.default,
         position: NoctToastPosition = .top,
         background: Color? = nil,
@@ -58,7 +58,7 @@ public struct NoctToastState: Identifiable, Equatable {
     init(
         message: String,
         title: String? = nil,
-        icon: String? = nil,
+        icon: NoctIcon? = nil,
         duration: TimeInterval = NoctToastDuration.default,
         position: NoctToastPosition = .top,
         backgroundProvider: @escaping (NoctTheme) -> Color,

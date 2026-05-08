@@ -62,7 +62,7 @@ public struct NoctToastView: View {
     private var toast: some View {
         HStack(spacing: 12) {
             if let icon = state.icon {
-                NoctIcon(icon, size: .xl, color: foreground)
+                NoctIconView(icon, size: .lg, color: foreground)
             }
             VStack(alignment: .leading, spacing: 6) {
                 if let title = state.title {
@@ -110,7 +110,7 @@ public struct NoctToastView: View {
             Button {
                 action.handler()
             } label: {
-                NoctIcon(icon, size: .md, color: foreground)
+                NoctIconView(icon, size: .md, color: foreground)
             }
             .buttonStyle(.plain)
         }

@@ -18,7 +18,8 @@ struct NoctUIApp: App {
                 .appTheme($appTheme)
                 .preferredColorScheme(appTheme.colorScheme)
                 .noctTheme(appTheme.noct)
-                .noctTypography(NoctDefaultTypography())
+                .noctTypography(NoctLunarTypography())
+                .noctIconProvider(NoctIconProvider.system)
         }
     }
 }

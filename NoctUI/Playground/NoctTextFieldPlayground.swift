@@ -40,7 +40,7 @@ struct NoctTextFieldPlayground: View {
                 label: showsLabel.isOn ? "Email" : nil,
                 placeholder: showsPlaceholder.isOn ? "example@mail.com" : "",
                 hint: showsHint.isOn ? "Please enter a valid email" : nil,
-                icon: showsIcon.isOn ? "envelope" : nil,
+                icon: showsIcon.isOn ? .system("envelope") : nil,
                 state: state,
                 clearable: clearable.isOn,
                 capitalize: capitalize.isOn,

@@ -8,7 +8,7 @@
 import SwiftUI
 
 private struct NoctTypographyKey: EnvironmentKey {
-    static let defaultValue: NoctTypography = NoctDefaultTypography()
+    static let defaultValue: NoctTypography = NoctLunarTypography()
 }
 
 public extension EnvironmentValues {

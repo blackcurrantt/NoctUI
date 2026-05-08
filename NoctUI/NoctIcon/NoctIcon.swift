@@ -1,43 +1,40 @@
 //
-//  NoctIcon.swift
+//  NoctIconView.swift
 //  NoctUI
 //
 //  Created by blackcurrantt
 //
 
-import SwiftUI
+import Foundation
 
-public struct NoctIcon: View {
-    let name: String
-    let size: NoctIconSize
-    let color: Color?
+public enum NoctIcon {
+    case token(NoctIconToken)
+    case system(String)
+    case asset(String)
     
-    public init(
-        _ name: String,
-        size: NoctIconSize = .md,
-        color: Color? = nil
-    ) {
-        self.name = name
-        self.size = size
-        self.color = color
-    }
-    
-    public var body: some View {
-        Image(systemName: name)
-            .font(.system(size: size.pointSize, weight: .semibold))
-            .foregroundStyle(color ?? .primary)
+    public init(_ token: NoctIconToken) {
+        self = .token(token)
     }
 }
 
 public enum NoctIconSize {
-    case sm, md, lg, xl
+    case xs, sm, md, lg, xl
+    case custom(CGFloat)
     
     var pointSize: CGFloat {
         switch self {
-        case .sm: 12
-        case .md: 14
-        case .lg: 16
-        case .xl: 20
+        case .xs:
+            return 12
+        case .sm:
+            return 14
+        case .md:
+            return 20
+        case .lg:
+            return 24
+        case .xl:
+            return 32
+        case let .custom(value):
+            return value
         }
     }
 }

@@ -7,6 +7,11 @@
 
 import SwiftUI
 
+private extension NoctIconToken {
+    static let notification = NoctIconToken("notification")
+    static let hourglass = NoctIconToken("hourglass")
+}
+
 struct NoctToastPlayground: View {
     @Environment(\.noctTheme) private var noctTheme
     
@@ -67,7 +72,7 @@ struct NoctToastPlayground: View {
             return NoctToastState(
                 message,
                 title: title,
-                icon: showsIcon.isOn ? NoctIconToken.notification : nil,
+                icon: showsIcon.isOn ? .notification : nil,
                 position: selectedPosition.noct,
                 dismissible: dismissible.isOn,
                 action: currentAction
@@ -112,7 +117,7 @@ struct NoctToastPlayground: View {
             return NoctToastState(
                 message,
                 title: title,
-                icon: showsIcon.isOn ? .custom(.system("hourglass")) : nil,
+                icon: showsIcon.isOn ? .hourglass : nil,
                 position: selectedPosition.noct,
                 background: Color(.label),
                 foreground: Color(.systemBackground),
@@ -160,5 +165,15 @@ struct NoctToastPlayground: View {
                 }
             }
         }
+        .noctIconProvider(NoctIconProvider { token in
+            switch token {
+            case .hourglass:
+                return .system("hourglass")
+            case .notification:
+                return .system("bell.fill")
+            default:
+                return nil
+            }
+        })
     }
 }

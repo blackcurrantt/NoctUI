@@ -28,7 +28,7 @@ public struct NoctTextField<Icon: View>: View {
     private let capitalize: Bool
     private let submitLabel: SubmitLabel
 
-    private let icon: (_ color: Color) -> Icon?
+    private let icon: (_ color: Color) -> Icon
     
     @FocusState private var isFocused: Bool
     
@@ -43,7 +43,7 @@ public struct NoctTextField<Icon: View>: View {
         clearable: Bool = true,
         capitalize: Bool = false,
         submitLabel: SubmitLabel = .done,
-        @ViewBuilder icon: @escaping (_ color: Color) -> Icon? = { _ in nil },
+        @ViewBuilder icon: @escaping (_ color: Color) -> Icon,
     ) {
         self._text = text
         self.label = label
@@ -54,6 +54,29 @@ public struct NoctTextField<Icon: View>: View {
         self.capitalize = capitalize
         self.submitLabel = submitLabel
         self.icon = icon
+    }
+    
+    public init(
+        text: Binding<String>,
+        label: String? = nil,
+        placeholder: String? = nil,
+        hint: String? = nil,
+        state: NoctTextFieldState = .normal,
+        clearable: Bool = true,
+        capitalize: Bool = false,
+        submitLabel: SubmitLabel = .done
+    ) where Icon == EmptyView {
+        self.init(
+            text: text,
+            label: label,
+            placeholder: placeholder,
+            hint: hint,
+            state: state,
+            clearable: clearable,
+            capitalize: capitalize,
+            submitLabel: submitLabel,
+            icon: { _ in EmptyView() }
+        )
     }
     
     // MARK: - NoctIcon init
@@ -68,7 +91,7 @@ public struct NoctTextField<Icon: View>: View {
         clearable: Bool = true,
         capitalize: Bool = false,
         submitLabel: SubmitLabel = .done,
-    ) where Icon == NoctIcon {
+    ) where Icon == NoctIcon? {
         self._text = text
         self.label = label
         self.placeholder = placeholder
@@ -94,9 +117,7 @@ public struct NoctTextField<Icon: View>: View {
             }
             
             HStack(spacing: 8) {
-                if let icon = icon(iconColor) {
-                    icon
-                }
+                icon(iconColor)
                 
                 ZStack(alignment: .leading) {
                     if let placeholder, text.isEmpty {

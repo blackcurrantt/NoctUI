@@ -10,8 +10,8 @@ import SwiftUI
 public struct NoctChip<Prefix: View, Suffix: View>: View {
     @Environment(\.noctTheme) private var noctTheme
     
-    @ViewBuilder let prefix: (_ textColor: Color) -> Prefix?
-    @ViewBuilder let suffix: (_ textColor: Color) -> Suffix?
+    private let prefix: (_ textColor: Color) -> Prefix
+    private let suffix: (_ textColor: Color) -> Suffix
     
     private let title: String
     private let style: NoctChipStyle
@@ -26,8 +26,8 @@ public struct NoctChip<Prefix: View, Suffix: View>: View {
         style: NoctChipStyle = .filled,
         isSelected: Bool = false,
         isEnabled: Bool = true,
-        prefix: @escaping (_ textColor: Color) -> Prefix? = { _ in nil },
-        suffix: @escaping (_ textColor: Color) -> Suffix? = { _ in nil },
+        @ViewBuilder prefix: @escaping (_ textColor: Color) -> Prefix,
+        @ViewBuilder suffix: @escaping (_ textColor: Color) -> Suffix,
         action: @escaping () -> Void
     ) {
         self.title = title
@@ -37,6 +37,24 @@ public struct NoctChip<Prefix: View, Suffix: View>: View {
         self.prefix = prefix
         self.suffix = suffix
         self.action = action
+    }
+    
+    public init(
+        title: String,
+        style: NoctChipStyle = .filled,
+        isSelected: Bool = false,
+        isEnabled: Bool = true,
+        action: @escaping () -> Void
+    ) where Prefix == EmptyView, Suffix == EmptyView {
+        self.init(
+            title: title,
+            style: style,
+            isSelected: isSelected,
+            isEnabled: isEnabled,
+            prefix: { _ in EmptyView() },
+            suffix: { _ in EmptyView() },
+            action: action
+        )
     }
     
     // MARK: - Icon Prefix & Icon Suffix Init
@@ -49,7 +67,7 @@ public struct NoctChip<Prefix: View, Suffix: View>: View {
         prefixIcon: NoctIconToken? = nil,
         suffixIcon: NoctIconToken? = nil,
         action: @escaping () -> Void
-    ) where Prefix == NoctIcon, Suffix == NoctIcon {
+    ) where Prefix == NoctIcon?, Suffix == NoctIcon? {
         self.title = title
         self.style = style
         self.isSelected = isSelected
@@ -72,10 +90,10 @@ public struct NoctChip<Prefix: View, Suffix: View>: View {
         style: NoctChipStyle = .filled,
         isSelected: Bool = false,
         isEnabled: Bool = true,
-        prefix: @escaping (_ textColor: Color) -> Prefix? = { _ in nil },
+        @ViewBuilder prefix: @escaping (_ textColor: Color) -> Prefix,
         suffixIcon: NoctIconToken? = nil,
         action: @escaping () -> Void
-    ) where Suffix == NoctIcon {
+    ) where Suffix == NoctIcon? {
         self.title = title
         self.style = style
         self.isSelected = isSelected
@@ -96,9 +114,9 @@ public struct NoctChip<Prefix: View, Suffix: View>: View {
         isSelected: Bool = false,
         isEnabled: Bool = true,
         prefixIcon: NoctIconToken? = nil,
-        suffix: @escaping (_ textColor: Color) -> Suffix? = { _ in nil },
+        @ViewBuilder suffix: @escaping (_ textColor: Color) -> Suffix,
         action: @escaping () -> Void
-    ) where Prefix == NoctIcon {
+    ) where Prefix == NoctIcon? {
         self.title = title
         self.style = style
         self.isSelected = isSelected
@@ -110,6 +128,48 @@ public struct NoctChip<Prefix: View, Suffix: View>: View {
         }
         self.suffix = suffix
     }
+    
+    // MARK: - Custom Prefix Init
+    
+    public init(
+        title: String,
+        style: NoctChipStyle = .filled,
+        isSelected: Bool = false,
+        isEnabled: Bool = true,
+        @ViewBuilder prefix: @escaping (_ textColor: Color) -> Prefix,
+        action: @escaping () -> Void
+    ) where Suffix == EmptyView {
+        self.init(
+            title: title,
+            style: style,
+            isSelected: isSelected,
+            isEnabled: isEnabled,
+            prefix: prefix,
+            suffix: { _ in EmptyView() },
+            action: action
+        )
+    }
+    
+    // MARK: - Custom Suffix Init
+    
+    public init(
+        title: String,
+        style: NoctChipStyle = .filled,
+        isSelected: Bool = false,
+        isEnabled: Bool = true,
+        @ViewBuilder suffix: @escaping (_ textColor: Color) -> Suffix,
+        action: @escaping () -> Void
+    ) where Prefix == EmptyView {
+        self.init(
+            title: title,
+            style: style,
+            isSelected: isSelected,
+            isEnabled: isEnabled,
+            prefix: { _ in EmptyView() },
+            suffix: suffix,
+            action: action
+        )
+    }
 
     
     // MARK: - Body
@@ -117,20 +177,12 @@ public struct NoctChip<Prefix: View, Suffix: View>: View {
     public var body: some View {
         Button(action: action) {
             HStack(spacing: 8) {
-                if let prefix = prefix(textColor) {
-                    prefix
-                } else {
-                    Spacer().frame(width: 2)
-                }
+                prefix(textColor)
                 
                 Text(title)
                     .noctTextStyle(.body(), weight: isSelected ? .bold : .regular)
                 
-                if let suffix = suffix(textColor) {
-                    suffix
-                } else {
-                    Spacer().frame(width: 2)
-                }
+                suffix(textColor)
             }
             .foregroundStyle(textColor)
             .padding(.vertical, 6)

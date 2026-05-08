@@ -8,11 +8,12 @@
 import SwiftUI
 
 public struct NoctIcon: View {
-    @Environment(\.noctIconSet) private var noctIconSet
+    @Environment(\.noctIconProvider) private var noctIconProvider
     
-    let token: NoctIconToken
-    let size: NoctIconSize
-    let color: Color
+    private let token: NoctIconToken?
+    private let explicitContent: NoctIconContent?
+    private let size: NoctIconSize
+    private let color: Color
     
     public init(
         _ token: NoctIconToken,
@@ -20,25 +21,42 @@ public struct NoctIcon: View {
         color: Color = .primary
     ) {
         self.token = token
+        self.explicitContent = nil
         self.size = size
         self.color = color
     }
     
-    public var body: some View {
-        image
-            .renderingMode(.template)
-            .resizable()
-            .scaledToFit()
-            .frame(width: size.pointSize, height: size.pointSize)
-            .foregroundStyle(color)
+    public init(
+        _ content: NoctIconContent,
+        size: NoctIconSize = .md,
+        color: Color = .primary
+    ) {
+        self.token = nil
+        self.explicitContent = content
+        self.size = size
+        self.color = color
     }
     
-    private var image: Image {
+    @ViewBuilder
+    public var body: some View {
+        if let image {
+            image
+                .renderingMode(.template)
+                .resizable()
+                .scaledToFit()
+                .frame(width: size.pointSize, height: size.pointSize)
+                .foregroundStyle(color)
+        }
+    }
+    
+    private var image: Image? {
+        guard let content = resolvedContent else { return nil }
+        
         switch content {
         case let .system(name):
-            Image(systemName: name)
+            return Image(systemName: name)
         case let .asset(name):
-            Image(name)
+            return Image(name)
         }
     }
 }
@@ -46,32 +64,12 @@ public struct NoctIcon: View {
 // MARK: - Content
 
 private extension NoctIcon {
-    var content: NoctIconContent {
-        switch token {
-        case .success:
-            return noctIconSet.success
-        case .warning:
-            return noctIconSet.warning
-        case .error:
-            return noctIconSet.error
-        case .info:
-            return noctIconSet.info
-        case .close:
-            return noctIconSet.close    
-        case .clear:
-            return noctIconSet.clear
-        case .filter:
-            return noctIconSet.filter
-        case .search:
-            return noctIconSet.search
-        case .email:
-            return noctIconSet.email
-        case .notification:
-            return noctIconSet.notification
-        case .chevronRight:
-            return noctIconSet.chevronRight
-        case let .custom(custom):
-            return custom
+    var resolvedContent: NoctIconContent? {
+        if let explicitContent {
+            return explicitContent
         }
+        
+        guard let token else { return nil }
+        return noctIconProvider.content(for: token)
     }
 }

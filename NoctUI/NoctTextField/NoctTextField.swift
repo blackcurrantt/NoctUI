@@ -76,7 +76,7 @@ public struct NoctTextField: View {
                     if let placeholder, text.isEmpty {
                         Text(placeholder)
                             .foregroundStyle(noctTheme.textSubtle)
-                            .font(font)
+                            .noctTextStyle(textStyle)
                     }
                     inputField
                 }
@@ -128,7 +128,7 @@ public struct NoctTextField: View {
         .textInputAutocapitalization(capitalize ? .sentences : .never)
         .disableAutocorrection(true)
         .submitLabel(submitLabel)
-        .font(font)
+        .noctTextStyle(textStyle)
         .foregroundStyle(textColor)
         .focused($isFocused)
         .disabled(state.disabled)
@@ -163,8 +163,8 @@ private extension NoctTextFieldAccessory {
 // MARK: - Styling
 
 private extension NoctTextField {
-    var font: Font {
-        noctTypography.font(for: .body())
+    var textStyle: NoctTypographyStyle {
+        .body()
     }
     
     var iconColor: Color {

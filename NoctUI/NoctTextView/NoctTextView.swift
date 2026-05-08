@@ -75,7 +75,7 @@ public struct NoctTextView: View {
                     if let placeholder, text.isEmpty {
                         Text(placeholder)
                             .foregroundStyle(noctTheme.textSubtle)
-                            .font(font)
+                            .noctTextStyle(textStyle)
                     }
 
                     TextEditor(text: $text)
@@ -86,7 +86,7 @@ public struct NoctTextView: View {
                         .disableAutocorrection(true)
                         .submitLabel(submitLabel)
                         .foregroundStyle(textColor)
-                        .font(font)
+                        .noctTextStyle(textStyle)
                         .frame(minHeight: minHeight)
                         .focused($isFocused)
                         .disabled(disabled)
@@ -138,8 +138,8 @@ private extension NoctTextView {
         isDisabled || isReadOnly
     }
     
-    var font: Font {
-        noctTypography.font(for: .body())
+    var textStyle: NoctTypographyStyle {
+        .body()
     }
 
     var iconColor: Color {

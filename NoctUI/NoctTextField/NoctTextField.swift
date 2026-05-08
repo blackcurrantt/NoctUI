@@ -11,6 +11,7 @@ public enum NoctTextFieldState: Equatable {
     case normal
     case error(String)
     case disabled
+    case readOnly
 }
 
 public struct NoctTextField: View {
@@ -25,11 +26,12 @@ public struct NoctTextField: View {
     private let hint: String?
     private let icon: NoctIcon?
     private let state: NoctTextFieldState
-    private let clearable: Bool
+    private let accessory: NoctTextFieldAccessory?
     private let capitalize: Bool
     private let submitLabel: SubmitLabel
     
     @FocusState private var isFocused: Bool
+    @State private var isRevealed = false
     
     // MARK: - Default Init
     
@@ -40,7 +42,7 @@ public struct NoctTextField: View {
         hint: String? = nil,
         icon: NoctIcon? = nil,
         state: NoctTextFieldState = .normal,
-        clearable: Bool = true,
+        accessory: NoctTextFieldAccessory? = nil,
         capitalize: Bool = false,
         submitLabel: SubmitLabel = .done
     ) {
@@ -50,7 +52,7 @@ public struct NoctTextField: View {
         self.hint = hint
         self.icon = icon
         self.state = state
-        self.clearable = clearable
+        self.accessory = accessory
         self.capitalize = capitalize
         self.submitLabel = submitLabel
     }
@@ -76,25 +78,16 @@ public struct NoctTextField: View {
                             .foregroundStyle(noctTheme.textSubtle)
                             .font(font)
                     }
-                    
-                    TextField("", text: $text)
-                        .textInputAutocapitalization(capitalize ? .sentences : .never)
-                        .disableAutocorrection(true)
-                        .submitLabel(submitLabel)
-                        .font(font)
-                        .foregroundStyle(textColor)
-                        .focused($isFocused)
-                        .disabled(isDisabled)
+                    inputField
                 }
                 
-                if clearable, !isDisabled {
-                    if !text.isEmpty {
-                        Button {
-                            text = ""
-                        } label: {
-                            NoctIconView(.clear, size: .sm, color: iconColor)
-                        }
-                    }
+                if let accessory {
+                    NoctTextFieldAccessoryView(
+                        accessory: accessory,
+                        text: $text,
+                        state: state,
+                        isRevealed: $isRevealed
+                    )
                 }
             }
             .padding(.horizontal, 12)
@@ -122,30 +115,68 @@ public struct NoctTextField: View {
             .frame(height: noctTypography.lineHeight(for: .caption))
         }
     }
+    
+    @ViewBuilder
+    private var inputField: some View {
+        Group {
+            if accessory?.isSecure == true && !isRevealed {
+                SecureField("", text: $text)
+            } else {
+                TextField("", text: $text)
+            }
+        }
+        .textInputAutocapitalization(capitalize ? .sentences : .never)
+        .disableAutocorrection(true)
+        .submitLabel(submitLabel)
+        .font(font)
+        .foregroundStyle(textColor)
+        .focused($isFocused)
+        .disabled(state.disabled)
+    }
+}
+
+// MARK: - Conditions
+
+extension NoctTextFieldState {
+    var isDisabled: Bool {
+        if case .disabled = self { return true }
+        return false
+    }
+    
+    var isReadOnly: Bool {
+        if case .readOnly = self { return true }
+        return false
+    }
+    
+    var disabled: Bool {
+        isDisabled || isReadOnly
+    }
+}
+
+private extension NoctTextFieldAccessory {
+    var isSecure: Bool {
+        guard case .secure = self else { return false }
+        return true
+    }
 }
 
 // MARK: - Styling
 
 private extension NoctTextField {
-    var isDisabled: Bool {
-        if case .disabled = state { return true }
-        return false
-    }
-    
     var font: Font {
         noctTypography.font(for: .body())
     }
     
     var iconColor: Color {
-        isDisabled ? noctTheme.textDisabled : noctTheme.textSubtle
+        state.isDisabled ? noctTheme.textDisabled : noctTheme.textSubtle
     }
     
     var textColor: Color {
-        isDisabled ? noctTheme.textDisabled : noctTheme.textDefault
+        state.isDisabled ? noctTheme.textDisabled : noctTheme.textDefault
     }
     
     var backgroundColor: Color {
-        isDisabled ? noctTheme.muted : noctTheme.surface
+        state.isDisabled ? noctTheme.muted : noctTheme.surface
     }
     
     var borderColor: Color {
@@ -154,7 +185,7 @@ private extension NoctTextField {
             return noctTheme.error
         case .disabled:
             return noctTheme.border
-        case .normal:
+        default:
             return isFocused ? noctTheme.primary : noctTheme.border
         }
     }

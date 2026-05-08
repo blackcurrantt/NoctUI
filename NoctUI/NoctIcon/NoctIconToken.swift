@@ -25,6 +25,8 @@ public extension NoctIconToken {
     // MARK: Utility
     static let close = NoctIconToken("close")
     static let clear = NoctIconToken("clear")
+    static let eye = NoctIconToken("eye")
+    static let eyeOff = NoctIconToken("eyeOff")
     
     // MARK: Navigation
     static let chevronUp = NoctIconToken("chevronUp")

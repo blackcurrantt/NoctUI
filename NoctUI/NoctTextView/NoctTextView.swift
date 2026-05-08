@@ -7,6 +7,13 @@
 
 import SwiftUI
 
+public enum NoctTextViewState: Equatable {
+    case normal
+    case error(String)
+    case disabled
+    case readOnly
+}
+
 public struct NoctTextView: View {
     @Environment(\.noctTheme) private var noctTheme
     @Environment(\.noctTypography) private var noctTypography
@@ -18,7 +25,7 @@ public struct NoctTextView: View {
     private let placeholder: String?
     private let hint: String?
     private let icon: NoctIcon?
-    private let state: NoctTextFieldState
+    private let state: NoctTextViewState
     private let capitalize: Bool
     private let submitLabel: SubmitLabel
     private let minHeight: CGFloat
@@ -33,7 +40,7 @@ public struct NoctTextView: View {
         placeholder: String? = nil,
         hint: String? = nil,
         icon: NoctIcon? = nil,
-        state: NoctTextFieldState = .normal,
+        state: NoctTextViewState = .normal,
         capitalize: Bool = true,
         submitLabel: SubmitLabel = .done,
         minHeight: CGFloat = 120
@@ -82,7 +89,7 @@ public struct NoctTextView: View {
                         .font(font)
                         .frame(minHeight: minHeight)
                         .focused($isFocused)
-                        .disabled(isDisabled)
+                        .disabled(disabled)
                         .padding(.horizontal, -4)
                         .padding(.vertical, -8)
                 }
@@ -122,6 +129,15 @@ private extension NoctTextView {
         return false
     }
     
+    var isReadOnly: Bool {
+        if case .readOnly = state { return true }
+        return false
+    }
+    
+    var disabled: Bool {
+        isDisabled || isReadOnly
+    }
+    
     var font: Font {
         noctTypography.font(for: .body())
     }
@@ -142,14 +158,10 @@ private extension NoctTextView {
         switch state {
         case .error:
             return noctTheme.error
-
         case .disabled:
             return noctTheme.border
-
-        case .normal:
-            return isFocused
-                ? noctTheme.primary
-                : noctTheme.border
+        default:
+            return isFocused ? noctTheme.primary : noctTheme.border
         }
     }
 

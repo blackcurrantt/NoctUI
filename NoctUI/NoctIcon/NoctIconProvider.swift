@@ -49,6 +49,10 @@ public extension NoctIconProvider {
             return .system("xmark")
         case .clear:
             return .system("xmark.circle.fill")
+        case .eye:
+            return .system("eye")
+        case .eyeOff:
+            return .system("eye.slash")
         case .chevronUp:
             return .system("chevron.up")
         case .chevronDown:

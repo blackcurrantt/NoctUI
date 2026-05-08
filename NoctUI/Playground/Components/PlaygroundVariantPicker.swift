@@ -45,7 +45,7 @@ struct PlaygroundVariantPicker<Selection: CaseIterable & Hashable>: View {
     private func chip(_ option: Selection) -> some View {
         let isSelected = selection == option
         
-        return Text(title(for: option))
+        return Text(label(for: option))
             .font(.subheadline)
             .foregroundStyle(textColor)
             .fixedSize()
@@ -66,9 +66,13 @@ struct PlaygroundVariantPicker<Selection: CaseIterable & Hashable>: View {
                 }
             }
     }
-    
-    private func title(for option: Selection) -> String {
-        String(describing: option)
+
+    private func label(for value: Selection) -> String {
+        if let raw = value as? any RawRepresentable,
+           let string = raw.rawValue as? String {
+            return string
+        }
+        return String(describing: value)
     }
 }
 

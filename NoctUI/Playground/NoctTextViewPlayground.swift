@@ -20,6 +20,7 @@ struct NoctTextViewPlayground: View {
     @State private var showsIcon: Option = .on
     @State private var capitalize: Option = .off
     @State private var disabled: Option = .off
+    @State private var readOnly: Option = .off
     
     private enum Field {
         case text
@@ -27,8 +28,9 @@ struct NoctTextViewPlayground: View {
     @FocusState private var focusedField: Field?
     @State private var text = ""
     
-    private var state: NoctTextFieldState {
+    private var state: NoctTextViewState {
         guard !disabled.isOn else { return .disabled }
+        guard !readOnly.isOn else { return .readOnly }
         return text.isEmpty ? .error("Message is required") : .normal
     }
     
@@ -38,7 +40,7 @@ struct NoctTextViewPlayground: View {
                 text: $text,
                 label: showsLabel.isOn ? "Message" : nil,
                 placeholder: showsPlaceholder.isOn ? "Write your message here..." : "",
-                hint: showsHint.isOn ? "Try typing" : nil,
+                hint: showsHint.isOn ? "Share additional details or context here." : nil,
                 icon: showsIcon.isOn ? .system("envelope") : nil,
                 state: state,
                 capitalize: capitalize.isOn,
@@ -63,6 +65,9 @@ struct NoctTextViewPlayground: View {
             }
             PlaygroundSection("Disabled") {
                 PlaygroundPicker($disabled)
+            }
+            PlaygroundSection("Read Only") {
+                PlaygroundPicker($readOnly)
             }
         }
         .onTapGesture {

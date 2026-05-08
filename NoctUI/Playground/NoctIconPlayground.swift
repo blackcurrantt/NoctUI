@@ -29,7 +29,7 @@ struct NoctIconPlayground: View {
             .success, .warning, .error, .info
         ]),
         Section("Utility", [
-            .close, .clear
+            .close, .clear, .eye, .eyeOff
         ]),
         Section("Navigation", [
             .chevronUp, .chevronDown, .chevronLeft, .chevronRight

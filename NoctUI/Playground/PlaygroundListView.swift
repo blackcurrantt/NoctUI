@@ -11,6 +11,7 @@ enum Playground: String, CaseIterable, Identifiable {
     case button
     case card
     case chip
+    case form
     case icon
     case textfield
     case textview
@@ -28,6 +29,7 @@ enum Playground: String, CaseIterable, Identifiable {
         case .button: NoctButtonPlayground()
         case .card: NoctCardPlayground()
         case .chip: NoctChipPlayground()
+        case .form: NoctFormPlayground()
         case .icon: NoctIconPlayground()
         case .textfield: NoctTextFieldPlayground()
         case .textview: NoctTextViewPlayground()

@@ -28,7 +28,7 @@ public struct NoctTextView: View {
     private let state: NoctTextViewState
     private let capitalize: Bool
     private let submitLabel: SubmitLabel
-    private let minHeight: CGFloat
+    private let height: CGFloat
 
     @FocusState private var isFocused: Bool
 
@@ -43,7 +43,7 @@ public struct NoctTextView: View {
         state: NoctTextViewState = .normal,
         capitalize: Bool = true,
         submitLabel: SubmitLabel = .done,
-        minHeight: CGFloat = 120
+        height: CGFloat = 120
     ) {
         self._text = text
         self.label = label
@@ -53,7 +53,7 @@ public struct NoctTextView: View {
         self.state = state
         self.capitalize = capitalize
         self.submitLabel = submitLabel
-        self.minHeight = minHeight
+        self.height = height
     }
 
     // MARK: - Body
@@ -87,7 +87,7 @@ public struct NoctTextView: View {
                         .submitLabel(submitLabel)
                         .foregroundStyle(textColor)
                         .noctTextStyle(textStyle)
-                        .frame(minHeight: minHeight)
+                        .frame(height: height)
                         .focused($isFocused)
                         .disabled(disabled)
                         .padding(.horizontal, -4)

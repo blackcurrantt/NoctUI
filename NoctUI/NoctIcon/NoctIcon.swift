@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum NoctIcon {
+public enum NoctIcon: Equatable {
     case token(NoctIconToken)
     case system(String)
     case asset(String)

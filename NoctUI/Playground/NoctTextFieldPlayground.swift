@@ -25,18 +25,21 @@ struct NoctTextFieldPlayground: View {
     private enum Accessory: String, CaseIterable, Equatable {
         case clear, secure
         case secureRevealable = "secure + revealable"
-        case chevron, none
-        var noct: NoctTextFieldAccessory? {
-            switch self {
-            case .clear: .clear
-            case .secure: .secure(revealable: false)
-            case .secureRevealable: .secure()
-            case .chevron: .chevron
-            case .none: nil
-            }
-        }
+        case chevron = "icon"
+        case checkmark = "icon + color"
+        case none
     }
     @State private var selectedAccessory: Accessory = .clear
+    var accessory: NoctTextFieldAccessory? {
+        switch selectedAccessory {
+        case .clear: .clear
+        case .secure: .secure(revealable: false)
+        case .secureRevealable: .secure()
+        case .chevron: .icon(NoctIcon(.chevronRight))
+        case .checkmark: .icon(.system("checkmark.circle.fill"), noctTheme.success)
+        case .none: nil
+        }
+    }
     
     private enum Field {
         case text
@@ -68,7 +71,7 @@ struct NoctTextFieldPlayground: View {
                 hint: showsHint.isOn ? hint : nil,
                 icon: showsIcon.isOn ? icon : nil,
                 state: state,
-                accessory: selectedAccessory.noct,
+                accessory: accessory,
                 capitalize: capitalize.isOn,
                 submitLabel: .done
             )
@@ -108,14 +111,6 @@ struct NoctTextFieldPlayground: View {
         }
         .onChange(of: selectedAccessory) { _, newValue in
             switch newValue {
-            case .clear, .none:
-                text = "noct@blackcurrantt.com"
-                label = "Email"
-                placeholder = "example@mail.com"
-                hint = "Please enter a valid email"
-                icon = .system("envelope")
-                errorMessage = "Email is required"
-
             case .secure, .secureRevealable:
                 text = "password"
                 label = "Password"
@@ -131,6 +126,14 @@ struct NoctTextFieldPlayground: View {
                 hint = "Please enter a valid country code"
                 icon = .system("globe")
                 errorMessage = "Country is required"
+                
+            default:
+                text = "noct@blackcurrantt.com"
+                label = "Email"
+                placeholder = "example@mail.com"
+                hint = "Please enter a valid email"
+                icon = .system("envelope")
+                errorMessage = "Email is required"
             }
         }
     }

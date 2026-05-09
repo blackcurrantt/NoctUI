@@ -10,7 +10,7 @@ import SwiftUI
 public enum NoctTextFieldAccessory: Equatable {
     case clear
     case secure(revealable: Bool = true)
-    case chevron
+    case icon(NoctIcon, Color? = nil)
 }
 
 struct NoctTextFieldAccessoryView: View {
@@ -51,11 +51,11 @@ struct NoctTextFieldAccessoryView: View {
                     }
                 }
                 
-            case .chevron:
+            case let .icon(icon, color):
                 NoctIconView(
-                    .chevronRight,
+                    icon,
                     size: .sm,
-                    color: iconColor
+                    color: color ?? iconColor
                 )
             }
         }

@@ -28,7 +28,9 @@ public struct NoctTextField: View {
     private let state: NoctTextFieldState
     private let accessory: NoctTextFieldAccessory?
     private let capitalize: Bool
+    private let keyboardType: UIKeyboardType
     private let submitLabel: SubmitLabel
+    private let onSubmit: (() -> Void)?
     
     @FocusState private var isFocused: Bool
     @State private var isRevealed = false
@@ -44,7 +46,9 @@ public struct NoctTextField: View {
         state: NoctTextFieldState = .normal,
         accessory: NoctTextFieldAccessory? = nil,
         capitalize: Bool = false,
-        submitLabel: SubmitLabel = .done
+        keyboardType: UIKeyboardType = .default,
+        submitLabel: SubmitLabel = .done,
+        onSubmit: (() -> Void)? = nil
     ) {
         self._text = text
         self.label = label
@@ -54,7 +58,51 @@ public struct NoctTextField: View {
         self.state = state
         self.accessory = accessory
         self.capitalize = capitalize
+        self.keyboardType = keyboardType
         self.submitLabel = submitLabel
+        self.onSubmit = onSubmit
+    }
+
+    public init<Value>(
+        text: Binding<Value>,
+        label: String? = nil,
+        placeholder: String? = nil,
+        hint: String? = nil,
+        icon: NoctIcon? = nil,
+        state: NoctTextFieldState = .normal,
+        accessory: NoctTextFieldAccessory? = nil,
+        capitalize: Bool = false,
+        keyboardType: UIKeyboardType = .numberPad,
+        submitLabel: SubmitLabel = .done,
+        onSubmit: (() -> Void)? = nil
+    ) where Value: LosslessStringConvertible & AdditiveArithmetic & Equatable {
+        self.init(
+            text: Binding(
+                get: {
+                    guard text.wrappedValue != .zero else { return "" }
+                    return String(text.wrappedValue)
+                },
+                set: { newText in
+                    guard !newText.isEmpty else {
+                        text.wrappedValue = .zero
+                        return
+                    }
+
+                    guard let newValue = Value(newText) else { return }
+                    text.wrappedValue = newValue
+                }
+            ),
+            label: label,
+            placeholder: placeholder,
+            hint: hint,
+            icon: icon,
+            state: state,
+            accessory: accessory,
+            capitalize: capitalize,
+            keyboardType: keyboardType,
+            submitLabel: submitLabel,
+            onSubmit: onSubmit
+        )
     }
     
     // MARK: - Body
@@ -126,12 +174,16 @@ public struct NoctTextField: View {
             }
         }
         .textInputAutocapitalization(capitalize ? .sentences : .never)
+        .keyboardType(keyboardType)
         .disableAutocorrection(true)
         .submitLabel(submitLabel)
         .noctTextStyle(textStyle)
         .foregroundStyle(textColor)
         .focused($isFocused)
         .disabled(state.disabled)
+        .onSubmit {
+            onSubmit?()
+        }
     }
 }
 

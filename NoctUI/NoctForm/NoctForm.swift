@@ -78,6 +78,7 @@ public struct NoctForm<Form, Content: View>: View {
     public var body: some View {
         VStack(spacing: spacing) {
             content {
+                dismissFocus()
                 onSubmit(NoctFormResult(form: form))
             }
         }

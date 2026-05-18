@@ -9,123 +9,101 @@ import SwiftUI
 
 // MARK: - NoctFormContext
 
-@Observable
-public final class NoctFormContext {
-    var values: [AnyHashable: Any] = [:]
-    var submit: (() -> Void)?
+public final class NoctFormContext<Form> {
+    fileprivate let form: Binding<Form>
 
-    func register<Value>(key: some Hashable, value: Value) {
-        values[AnyHashable(key)] = value
+    init(form: Binding<Form>) {
+        self.form = form
     }
-    
-    func update<Value>(key: some Hashable, value: Value) {
-        values[AnyHashable(key)] = value
+
+    func binding<Value>(for keyPath: WritableKeyPath<Form, Value>) -> Binding<Value> {
+        Binding(
+            get: {
+                return self.form.wrappedValue[keyPath: keyPath]
+            },
+            set: { newValue in
+                self.form.wrappedValue[keyPath: keyPath] = newValue
+            }
+        )
+    }
+}
+
+private struct NoctFormContextKey: EnvironmentKey {
+    static let defaultValue: Any? = nil
+}
+
+private extension EnvironmentValues {
+    var noctFormContext: Any? {
+        get { self[NoctFormContextKey.self] }
+        set { self[NoctFormContextKey.self] = newValue }
     }
 }
 
 // MARK: - NoctFormResult
 
-public struct NoctFormResult {
-    fileprivate let values: [AnyHashable: Any]
-    
-    public subscript<T>(_ key: some Hashable) -> T? {
-        values[AnyHashable(key)] as? T
-    }
+public struct NoctFormResult<Form> {
+    fileprivate let form: Form
 
-    public var dictionary: [AnyHashable: Any] {
-        values
+    public subscript<Value>(_ keyPath: KeyPath<Form, Value>) -> Value {
+        form[keyPath: keyPath]
     }
 }
 
 // MARK: - NoctForm
 
-public struct NoctForm<Content: View>: View {
-    @State private var context = NoctFormContext()
-
+public struct NoctForm<Form, Content: View>: View {
+    @Binding private var form: Form
     private let spacing: CGFloat
-    private let content: Content
-    private let onSubmit: (NoctFormResult) -> Void
+    private let content: (_ onSubmit: @escaping () -> Void) -> Content
+    private let onSubmit: (NoctFormResult<Form>) -> Void
 
     public init(
+        _ form: Binding<Form>,
         spacing: CGFloat = 16,
-        @ViewBuilder content: () -> Content,
-        onSubmit: @escaping (NoctFormResult) -> Void
+        @ViewBuilder content: @escaping (_ onSubmit: @escaping () -> Void) -> Content,
+        onSubmit: @escaping (NoctFormResult<Form>) -> Void
     ) {
+        self._form = form
         self.spacing = spacing
-        self.content = content()
+        self.content = content
         self.onSubmit = onSubmit
     }
 
     public var body: some View {
         VStack(spacing: spacing) {
-            content
+            content {
+                onSubmit(NoctFormResult(form: form))
+            }
         }
         .frame(
             maxWidth: .infinity,
             maxHeight: .infinity,
             alignment: .top
         )
-        .environment(context)
-        .task {
-            context.submit = {
-                let result = NoctFormResult(values: context.values)
-                onSubmit(result)
-            }
-        }
+        .environment(\.noctFormContext, NoctFormContext(form: $form))
     }
 }
 
 // MARK: - NoctFormInput
 
-public struct NoctFormInput<Key: Hashable, Value, Content: View>: View {
-    @Environment(NoctFormContext.self) private var context
-    @Binding private var value: Value
+public struct NoctFormInput<Form, Value, Content: View>: View {
+    @Environment(\.noctFormContext) private var context
     
-    private let key: Key
+    private let keyPath: WritableKeyPath<Form, Value>
     private let content: (Binding<Value>) -> Content
 
     public init(
-        _ key: Key,
-        _ value: Binding<Value>,
+        _ keyPath: WritableKeyPath<Form, Value>,
         @ViewBuilder content: @escaping (Binding<Value>) -> Content
     ) {
-        self.key = key
-        self._value = value
+        self.keyPath = keyPath
         self.content = content
     }
 
     public var body: some View {
-        let trackedBinding = Binding(
-            get: { value },
-            set: { newValue in
-                value = newValue
-                context.update(key: key, value: newValue)
-            }
-        )
-        content(trackedBinding)
-            .onAppear {
-                context.register(key: key, value: value)
-            }
-    }
-}
-
-// MARK: - NoctFormSubmitModifier
-
-public struct NoctFormSubmitModifier: ViewModifier {
-    @Environment(NoctFormContext.self) private var context
-
-    public func body(content: Content) -> some View {
-        content
-            .simultaneousGesture(
-                TapGesture().onEnded {
-                    context.submit?()
-                }
-            )
-    }
-}
-
-public extension View {
-    func noctFormSubmit() -> some View {
-        modifier(NoctFormSubmitModifier())
+        if let context = context as? NoctFormContext<Form> {
+            content(context.binding(for: keyPath))
+                .id(keyPath)
+        }
     }
 }

@@ -8,33 +8,40 @@
 import SwiftUI
 
 struct NoctFormPlayground: View {
-    private enum FormInput {
-        case name
-        case bio
+    private struct ProfileForm {
+        var name: String = ""
+        var age: String = ""
+        var bio: String = ""
     }
     
-    @State private var name = ""
-    @State private var bio = ""
+    @State private var form = ProfileForm()
 
     var body: some View {
-        NoctForm {
-            NoctFormInput(FormInput.name, $name) {
+        NoctForm($form) { onSubmit in
+            NoctFormInput(\ProfileForm.name) {
                 NoctTextField(text: $0, label: "Name")
             }
 
-            NoctFormInput(FormInput.bio, $bio) {
+            NoctFormInput(\ProfileForm.age) {
+                NoctTextField(text: $0, label: "Age")
+            }
+            
+            NoctFormInput(\ProfileForm.bio) {
                 NoctTextView(text: $0, label: "Bio")
             }
             
-            Button("Submit") { }
-                .buttonStyle(NoctButtonStyle.primary())
-                .noctFormSubmit()
+            Button("Submit") {
+                onSubmit()
+            }
+            .buttonStyle(NoctButtonStyle.primary())
 
         } onSubmit: { result in
-            let name: String? = result[FormInput.name]
-            let bio: String? = result[FormInput.bio]
-            print(name ?? "")
-            print(bio ?? "")
+            let name: String? = result[\.name]
+            let age: String? = result[\.age]
+            let bio: String? = result[\.bio]
+            print("Name: ", name ?? "")
+            print("Age: ", age ?? "")
+            print("Bio: ", bio ?? "")
         }
         .padding()
     }

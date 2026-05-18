@@ -44,7 +44,10 @@ struct NoctTextViewPlayground: View {
                 icon: showsIcon.isOn ? .system("envelope") : nil,
                 state: state,
                 capitalize: capitalize.isOn,
-                submitLabel: .done
+                submitLabel: .done,
+                onSubmit: {
+                    focusedField = nil
+                }
             )
             .focused($focusedField, equals: .text)
         } config: {

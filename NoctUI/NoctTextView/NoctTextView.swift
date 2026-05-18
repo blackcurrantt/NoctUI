@@ -28,6 +28,7 @@ public struct NoctTextView: View {
     private let state: NoctTextViewState
     private let capitalize: Bool
     private let submitLabel: SubmitLabel
+    private let onSubmit: (() -> Void)?
     private let height: CGFloat
 
     @FocusState private var isFocused: Bool
@@ -42,7 +43,8 @@ public struct NoctTextView: View {
         icon: NoctIcon? = nil,
         state: NoctTextViewState = .normal,
         capitalize: Bool = true,
-        submitLabel: SubmitLabel = .done,
+        submitLabel: SubmitLabel = .return,
+        onSubmit: (() -> Void)? = nil,
         height: CGFloat = 120
     ) {
         self._text = text
@@ -53,6 +55,7 @@ public struct NoctTextView: View {
         self.state = state
         self.capitalize = capitalize
         self.submitLabel = submitLabel
+        self.onSubmit = onSubmit
         self.height = height
     }
 
@@ -92,6 +95,9 @@ public struct NoctTextView: View {
                         .disabled(disabled)
                         .padding(.horizontal, -4)
                         .padding(.vertical, -8)
+                        .onSubmit {
+                            onSubmit?()
+                        }
                 }
             }
             .padding(.horizontal, 12)
@@ -164,7 +170,7 @@ private extension NoctTextView {
             return isFocused ? noctTheme.primary : noctTheme.border
         }
     }
-
+    
     var borderWidth: CGFloat {
         isFocused ? 2 : 1.5
     }

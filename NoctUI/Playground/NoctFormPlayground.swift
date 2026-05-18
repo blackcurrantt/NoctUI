@@ -10,7 +10,7 @@ import SwiftUI
 struct NoctFormPlayground: View {
     private struct ProfileForm {
         var name: String = ""
-        var age: String = ""
+        var age: Int = 0
         var bio: String = ""
     }
     
@@ -37,13 +37,12 @@ struct NoctFormPlayground: View {
 
         } onSubmit: { result in
             let name: String? = result[\.name]
-            let age: String? = result[\.age]
+            let age: Int = result[\.age]
             let bio: String? = result[\.bio]
             print("Name: ", name ?? "")
-            print("Age: ", age ?? "")
+            print("Age: ", age)
             print("Bio: ", bio ?? "")
         }
         .padding()
     }
 }
-

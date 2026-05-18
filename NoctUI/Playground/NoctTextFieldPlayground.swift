@@ -73,7 +73,10 @@ struct NoctTextFieldPlayground: View {
                 state: state,
                 accessory: accessory,
                 capitalize: capitalize.isOn,
-                submitLabel: .done
+                submitLabel: .done,
+                onSubmit: {
+                    focusedField = nil
+                }
             )
             .focused($focusedField, equals: .text)
         } config: {

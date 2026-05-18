@@ -6,6 +6,9 @@
 //
 
 import SwiftUI
+#if canImport(UIKit)
+import UIKit
+#endif
 
 // MARK: - NoctFormContext
 
@@ -54,17 +57,20 @@ public struct NoctFormResult<Form> {
 public struct NoctForm<Form, Content: View>: View {
     @Binding private var form: Form
     private let spacing: CGFloat
+    private let dismissOnTapOutside: Bool
     private let content: (_ onSubmit: @escaping () -> Void) -> Content
     private let onSubmit: (NoctFormResult<Form>) -> Void
 
     public init(
         _ form: Binding<Form>,
         spacing: CGFloat = 16,
+        dismissOnTapOutside: Bool = true,
         @ViewBuilder content: @escaping (_ onSubmit: @escaping () -> Void) -> Content,
         onSubmit: @escaping (NoctFormResult<Form>) -> Void
     ) {
         self._form = form
         self.spacing = spacing
+        self.dismissOnTapOutside = dismissOnTapOutside
         self.content = content
         self.onSubmit = onSubmit
     }
@@ -80,7 +86,29 @@ public struct NoctForm<Form, Content: View>: View {
             maxHeight: .infinity,
             alignment: .top
         )
+        .background {
+            Color.clear
+                .contentShape(Rectangle())
+                .onTapGesture {
+                    if dismissOnTapOutside {
+                        dismissFocus()
+                    }
+                }
+        }
         .environment(\.noctFormContext, NoctFormContext(form: $form))
+    }
+}
+
+private extension NoctForm {
+    func dismissFocus() {
+        #if canImport(UIKit)
+        UIApplication.shared.sendAction(
+            #selector(UIResponder.resignFirstResponder),
+            to: nil,
+            from: nil,
+            for: nil
+        )
+        #endif
     }
 }
 

@@ -17,26 +17,6 @@ public struct NoctToastView: View {
         self.state = state
     }
     
-    private var background: Color {
-        if let background = state.background {
-            return background
-        } else if let provided = state.backgroundProvider?(noctTheme) {
-            return provided
-        } else {
-            return noctTheme.toast
-        }
-    }
-    
-    private var foreground: Color {
-        if let foreground = state.foreground {
-            return foreground
-        } else if let provided = state.foregroundProvider?(noctTheme) {
-            return provided
-        } else {
-            return noctTheme.textInverse
-        }
-    }
-    
     private var alignment: Alignment {
         switch state.position {
         case .top: return .top
@@ -54,12 +34,24 @@ public struct NoctToastView: View {
     }
     
     public var body: some View {
-        toast
+        let colors = resolvedColors
+        
+        toast(
+            background: colors.background,
+            foreground: colors.foreground
+        )
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: alignment)
             .padding(edgeInsets)
     }
     
-    private var toast: some View {
+    private var resolvedColors: (background: Color, foreground: Color) {
+        (
+            background: state.background ?? state.backgroundProvider?(noctTheme) ?? noctTheme.toast,
+            foreground: state.foreground ?? state.foregroundProvider?(noctTheme) ?? noctTheme.textInverse
+        )
+    }
+    
+    private func toast(background: Color, foreground: Color) -> some View {
         HStack(spacing: 12) {
             if let icon = state.icon {
                 NoctIconView(icon, size: .lg, color: foreground)
@@ -78,7 +70,7 @@ public struct NoctToastView: View {
             }
             Spacer()
             if let action = state.action {
-                actionView(action)
+                actionView(action, foreground: foreground)
             }
         }
         .padding(.horizontal, 16)
@@ -96,7 +88,7 @@ public struct NoctToastView: View {
     }
     
     @ViewBuilder
-    func actionView(_ action: NoctToastAction) -> some View {
+    private func actionView(_ action: NoctToastAction, foreground: Color) -> some View {
         switch action.view {
         case let .text(text):
             Button(text) {

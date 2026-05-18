@@ -35,27 +35,32 @@ public struct NoctToastContainer<Content: View>: View {
         .onAppear {
             NoctToast.presenter = presenter
         }
+        .onDisappear {
+            guard NoctToast.presenter === presenter else { return }
+            NoctToast.presenter = nil
+        }
     }
     
     private func transition(for position: NoctToastPosition) -> AnyTransition {
-        let insertion: AnyTransition
-        let removal: AnyTransition = .opacity
-        
         switch position {
         case .top:
-            insertion = .move(edge: .top)
-                .combined(with: .opacity)
-                .combined(with: .scale(scale: 0.96))
-            
+            return NoctToastTransitions.top
         case .bottom:
-            insertion = .move(edge: .bottom)
-                .combined(with: .opacity)
-                .combined(with: .scale(scale: 0.96))
+            return NoctToastTransitions.bottom
         }
-        
+    }
+}
+
+private enum NoctToastTransitions {
+    static let top = toastTransition(edge: .top)
+    static let bottom = toastTransition(edge: .bottom)
+
+    private static func toastTransition(edge: Edge) -> AnyTransition {
         return .asymmetric(
-            insertion: insertion,
-            removal: removal
+            insertion: .move(edge: edge)
+                .combined(with: .opacity)
+                .combined(with: .scale(scale: 0.96)),
+            removal: .opacity
         )
     }
 }

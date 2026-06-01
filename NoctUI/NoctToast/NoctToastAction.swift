@@ -5,8 +5,6 @@
 //  Created by blackcurrantt
 //
 
-import SwiftUI
-
 public struct NoctToastAction {
     enum ViewType {
         case text(String)

@@ -5,8 +5,6 @@
 //  Created by blackcurrantt
 //
 
-import SwiftUI
-
 public enum NoctToast {
     @MainActor static weak var presenter: NoctToastPresenter?
     

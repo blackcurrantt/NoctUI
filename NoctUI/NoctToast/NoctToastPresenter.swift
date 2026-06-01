@@ -46,7 +46,10 @@ final class NoctToastPresenter {
 
             if isCurrentGeneration(generation) {
                 await dismissAndWait()
-                task = nil
+
+                if isCurrentGeneration(generation) {
+                    task = nil
+                }
             }
         }
     }

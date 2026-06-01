@@ -36,8 +36,11 @@ public struct NoctToastContainer<Content: View>: View {
             NoctToast.presenter = presenter
         }
         .onDisappear {
-            guard NoctToast.presenter === presenter else { return }
-            NoctToast.presenter = nil
+            presenter.dismiss()
+            
+            if NoctToast.presenter === presenter {
+                NoctToast.presenter = nil
+            }
         }
     }
     

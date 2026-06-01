@@ -5,7 +5,7 @@
 //  Created by blackcurrantt
 //
 
-import Observation
+import Foundation
 import SwiftUI
 
 public enum NoctToastDuration {

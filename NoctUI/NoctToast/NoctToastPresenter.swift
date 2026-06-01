@@ -12,18 +12,27 @@ import SwiftUI
 final class NoctToastPresenter {
     var currentState: NoctToastState?
     
+    @ObservationIgnored
     private var task: Task<Void, Never>?
+
+    @ObservationIgnored
     private var continuation: CheckedContinuation<Void, Never>?
+
+    @ObservationIgnored
+    private var generation = 0
 
     func show(_ state: NoctToastState) {
         task?.cancel()
-        
         finishCurrentCycle()
+        generation &+= 1
+        let generation = generation
 
         task = Task {
             if currentState != nil {
                 await dismissAndWait()
             }
+
+            guard isCurrentGeneration(generation) else { return }
             
             currentState = state
             
@@ -35,14 +44,20 @@ final class NoctToastPresenter {
                 return
             }
 
-            if !Task.isCancelled {
+            if isCurrentGeneration(generation) {
                 await dismissAndWait()
+
+                if isCurrentGeneration(generation) {
+                    task = nil
+                }
             }
         }
     }
 
     func dismiss() {
         task?.cancel()
+        task = nil
+        generation &+= 1
         currentState = nil
         finishCurrentCycle()
     }
@@ -64,9 +79,11 @@ final class NoctToastPresenter {
     private func finishCurrentCycle() {
         guard let continuation else { return }
         self.continuation = nil
-        Task { @MainActor in
-            continuation.resume()
-        }
+        continuation.resume()
+    }
+
+    private func isCurrentGeneration(_ generation: Int) -> Bool {
+        self.generation == generation && !Task.isCancelled
     }
 }
 

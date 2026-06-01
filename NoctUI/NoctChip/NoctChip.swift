@@ -9,6 +9,7 @@ import SwiftUI
 
 public struct NoctChip: View {
     @Environment(\.noctTheme) private var noctTheme
+    @Environment(\.isEnabled) private var environmentIsEnabled
     
     private let title: String
     private let style: NoctChipStyle
@@ -81,8 +82,12 @@ private struct NoctChipPressStyle: ButtonStyle {
 }
 
 private extension NoctChip {
+    var isEffectivelyEnabled: Bool {
+        isEnabled && environmentIsEnabled
+    }
+
     var backgroundColor: Color {
-        guard isEnabled else { return noctTheme.muted }
+        guard isEffectivelyEnabled else { return noctTheme.muted }
         switch style {
         case .filled:
             return isSelected ? noctTheme.primary : noctTheme.secondary
@@ -94,7 +99,7 @@ private extension NoctChip {
     }
     
     var borderColor: Color {
-        guard isEnabled else { return noctTheme.muted }
+        guard isEffectivelyEnabled else { return noctTheme.muted }
         switch style {
         case .outlined:
             return isSelected ? noctTheme.primary : noctTheme.border
@@ -117,7 +122,7 @@ private extension NoctChip {
     }
     
     var textColor: Color {
-        guard isEnabled else { return noctTheme.textDisabled }
+        guard isEffectivelyEnabled else { return noctTheme.textDisabled }
         switch style {
         case .filled:
             return noctTheme.textDefault

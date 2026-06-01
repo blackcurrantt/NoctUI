@@ -39,25 +39,20 @@ extension NoctShadow {
     )
 }
 
-// MARK: - Modifiers
-
-struct NoctShadowModifier: ViewModifier {
-    let config: NoctShadow?
-    
-    func body(content: Content) -> some View {
-        content.shadow(
-            color: config?.color ?? .clear,
-            radius: config?.radius ?? 0,
-            x: config?.x ?? 0,
-            y: config?.y ?? 0
-        )
-    }
-}
-
 // MARK: - View Extensions
 
 extension View {
+    @ViewBuilder
     public func noctShadow(_ config: NoctShadow?) -> some View {
-        modifier(NoctShadowModifier(config: config))
+        if let config {
+            shadow(
+                color: config.color,
+                radius: config.radius,
+                x: config.x,
+                y: config.y
+            )
+        } else {
+            self
+        }
     }
 }

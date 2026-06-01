@@ -10,6 +10,28 @@ import SwiftUI
 
 public enum NoctToastDuration {
     public static let `default`: TimeInterval = 3.0
+
+    static let maximumNanoseconds =
+        (UInt64.max / nanosecondsPerSecond) * nanosecondsPerSecond
+
+    private static let nanosecondsPerSecond: UInt64 = 1_000_000_000
+
+    static func nanoseconds(for duration: TimeInterval) -> UInt64 {
+        guard duration.isFinite, duration > 0 else { return 0 }
+
+        let maximumSeconds = maximumNanoseconds / nanosecondsPerSecond
+        guard duration < TimeInterval(maximumSeconds) else {
+            return maximumNanoseconds
+        }
+
+        let seconds = UInt64(duration)
+        let fractionalNanoseconds = UInt64(
+            (duration - TimeInterval(seconds))
+                * TimeInterval(nanosecondsPerSecond)
+        )
+
+        return seconds * nanosecondsPerSecond + fractionalNanoseconds
+    }
 }
 
 public enum NoctToastPosition {

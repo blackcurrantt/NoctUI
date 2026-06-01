@@ -1,5 +1,5 @@
 //
-//  NoctToastStatet+Variant.swift
+//  NoctToastState+Variant.swift
 //  NoctUI
 //
 //  Created by blackcurrantt

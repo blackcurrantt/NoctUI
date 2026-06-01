@@ -38,7 +38,9 @@ final class NoctToastPresenter {
             
             do {
                 try await Task.sleep(
-                    nanoseconds: UInt64(state.duration * 1_000_000_000)
+                    nanoseconds: NoctToastDuration.nanoseconds(
+                        for: state.duration
+                    )
                 )
             } catch {
                 return

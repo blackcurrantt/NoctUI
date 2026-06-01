@@ -16,14 +16,14 @@ components during development.
 ## Installation
 
 In Xcode, open your app project and choose **File > Add Package
-Dependencies...**. Enter this repository URL and add the `NoctUI` library to
-your app target.
+Dependencies...**. Enter `https://github.com/blackcurrantt/NoctUI.git` and add
+the `NoctUI` library to your app target.
 
 Or add NoctUI to your own `Package.swift`:
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/<your-account>/NoctUI.git", from: "0.1.0")
+    .package(url: "https://github.com/blackcurrantt/NoctUI.git", branch: "main")
 ]
 ```
 
@@ -266,9 +266,13 @@ You can also supply a custom typography implementation with
 
 ## Development
 
-Open `NoctUI.xcodeproj` to run the component playground app. To validate the
-Swift package manifest from the command line:
+Open `NoctUI.xcodeproj` to run the component playground app. NoctUI is an
+iOS-only package, so validate the manifest and compile the library for iOS from
+the command line:
 
 ```sh
 swift package dump-package
+swift build \
+    --triple arm64-apple-ios17.0 \
+    --sdk "$(xcrun --sdk iphoneos --show-sdk-path)"
 ```

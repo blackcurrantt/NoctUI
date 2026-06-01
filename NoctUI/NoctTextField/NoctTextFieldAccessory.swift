@@ -15,6 +15,7 @@ public enum NoctTextFieldAccessory: Equatable {
 
 struct NoctTextFieldAccessoryView: View {
     @Environment(\.noctTheme) private var noctTheme
+    @Environment(\.isEnabled) private var environmentIsEnabled
     
     let accessory: NoctTextFieldAccessory
     let text: Binding<String>
@@ -26,7 +27,7 @@ struct NoctTextFieldAccessoryView: View {
         VStack {
             switch accessory {
             case .clear:
-                if !state.disabled, !text.wrappedValue.isEmpty {
+                if isInteractive, !text.wrappedValue.isEmpty {
                     Button {
                         text.wrappedValue = ""
                     } label: {
@@ -39,7 +40,7 @@ struct NoctTextFieldAccessoryView: View {
                 }
                 
             case let .secure(revealable):
-                if !state.disabled, revealable {
+                if isInteractive, revealable {
                     Button {
                         isRevealed.toggle()
                     } label: {
@@ -68,8 +69,12 @@ struct NoctTextFieldAccessoryView: View {
 // MARK: - Styling
 
 private extension NoctTextFieldAccessoryView {
+    var isInteractive: Bool {
+        environmentIsEnabled && !state.disabled
+    }
+
     var iconColor: Color {
-        state.isDisabled
+        state.isDisabled || !environmentIsEnabled
             ? noctTheme.textDisabled
             : noctTheme.textSubtle
     }

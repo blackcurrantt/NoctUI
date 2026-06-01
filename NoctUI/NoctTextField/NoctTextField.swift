@@ -17,6 +17,7 @@ public enum NoctTextFieldState: Equatable {
 public struct NoctTextField: View {
     @Environment(\.noctTheme) private var noctTheme
     @Environment(\.noctTypography) private var noctTypography
+    @Environment(\.isEnabled) private var environmentIsEnabled
     
     // MARK: - Properties
     
@@ -220,29 +221,33 @@ private extension NoctTextField {
     }
     
     var iconColor: Color {
-        state.isDisabled ? noctTheme.textDisabled : noctTheme.textSubtle
+        isEffectivelyDisabled ? noctTheme.textDisabled : noctTheme.textSubtle
     }
     
     var textColor: Color {
-        state.isDisabled ? noctTheme.textDisabled : noctTheme.textDefault
+        isEffectivelyDisabled ? noctTheme.textDisabled : noctTheme.textDefault
     }
     
     var backgroundColor: Color {
-        state.isDisabled ? noctTheme.muted : noctTheme.surface
+        isEffectivelyDisabled ? noctTheme.muted : noctTheme.surface
     }
     
     var borderColor: Color {
+        guard !isEffectivelyDisabled else { return noctTheme.border }
+
         switch state {
         case .error:
             return noctTheme.error
-        case .disabled:
-            return noctTheme.border
         default:
             return isFocused ? noctTheme.primary : noctTheme.border
         }
     }
     
     var borderWidth: CGFloat {
-        isFocused ? 2 : 1.5
+        isFocused && !isEffectivelyDisabled ? 2 : 1.5
+    }
+
+    var isEffectivelyDisabled: Bool {
+        state.isDisabled || !environmentIsEnabled
     }
 }

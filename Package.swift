@@ -26,6 +26,11 @@ let package = Package(
                 "SharedUI",
                 "Utils"
             ]
+        ),
+        .testTarget(
+            name: "NoctUITests",
+            dependencies: ["NoctUI"],
+            path: "Tests/NoctUITests"
         )
     ]
 )

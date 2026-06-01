@@ -16,6 +16,11 @@ public enum NoctChipStyle {
 public struct NoctChipColor {
     public let normal: Color
     public let selected: Color
+
+    public init(normal: Color, selected: Color) {
+        self.normal = normal
+        self.selected = selected
+    }
 }
 
 public struct NoctChipCustomStyle {

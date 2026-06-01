@@ -16,7 +16,7 @@ public struct NoctToastAction {
     
     init(
         _ view: ViewType,
-        _ handler: @escaping () -> Void
+        _ handler: @escaping @MainActor () -> Void
     ) {
         self.view = view
         self.handler = handler

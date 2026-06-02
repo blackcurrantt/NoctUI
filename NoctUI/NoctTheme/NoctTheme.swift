@@ -69,7 +69,7 @@ extension NoctTheme {
     
     // MARK: - Shapes
     
-    public var buttonShape: NoctShape { .standard }
+    public var buttonShape: NoctShape { .pill }
 }
 
 public struct NoctLunarTheme: NoctTheme {

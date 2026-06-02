@@ -39,5 +39,5 @@ public struct SolarTheme: NoctTheme {
     
     // MARK: - Shapes
     
-    public var buttonShape: NoctShape { .pill }
+    public var buttonShape: NoctShape { .standard }
 }

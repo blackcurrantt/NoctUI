@@ -14,23 +14,6 @@ let package = Package(
         )
     ],
     targets: [
-        .target(
-            name: "NoctUI",
-            path: "NoctUI",
-            exclude: [
-                "AppTheme",
-                "Assets.xcassets",
-                "NoctUIApp.swift",
-                "Playground",
-                "RootView.swift",
-                "SharedUI",
-                "Utils"
-            ]
-        ),
-        .testTarget(
-            name: "NoctUITests",
-            dependencies: ["NoctUI"],
-            path: "Tests/NoctUITests"
-        )
+        .target(name: "NoctUI")
     ]
 )

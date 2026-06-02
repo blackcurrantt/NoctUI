@@ -16,6 +16,12 @@
 			path = NoctUI;
 			sourceTree = "<group>";
 		};
+		E1DCA0202F9A877B00FD76B1 /* NoctUI Library */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			name = "NoctUI Library";
+			path = Sources/NoctUI;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -33,6 +39,7 @@
 			isa = PBXGroup;
 			children = (
 				E1DCA0122F9A877B00FD76B1 /* NoctUI */,
+				E1DCA0202F9A877B00FD76B1 /* NoctUI Library */,
 				E1DCA0112F9A877B00FD76B1 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -62,6 +69,7 @@
 			);
 			fileSystemSynchronizedGroups = (
 				E1DCA0122F9A877B00FD76B1 /* NoctUI */,
+				E1DCA0202F9A877B00FD76B1 /* NoctUI Library */,
 			);
 			name = NoctUI;
 			packageProductDependencies = (
